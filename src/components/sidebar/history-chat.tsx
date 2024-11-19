@@ -8,12 +8,12 @@ function HistoryChat() {
 
     
     const goChatScreen = () => {
-        navigate("/chat")
+        navigate("/chat/123")
     }
 
     return (
         <div>
-            <SidebarGroupLabel>Lịch sử</SidebarGroupLabel>
+            <SidebarGroupLabel>Lịch sử trò chuyện</SidebarGroupLabel>
             <SidebarGroupContent>
                 <SidebarMenu>
                     {list.map((item, index) => (

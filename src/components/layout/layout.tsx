@@ -5,9 +5,12 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { ChevronDown, LogOut } from "lucide-react";
 import ListBot from "../common/list-bot";
+import { useGetCurrentChatBot } from "@/redux/hooks/chat-bot";
 
 export default function Layout() {
   const navigate = useNavigate();
+
+  const chatBot = useGetCurrentChatBot()
 
   const handleLogout = () => {
     navigate("/login")
@@ -20,19 +23,18 @@ export default function Layout() {
       <SidebarInset className="h-screen">
         <div className="flex justify-between items-center bg-neutral-50 p-2 my-2 mr-2 rounded-md shadow border">
           <div className="flex items-center">
-            <SidebarTrigger className="mr-5"/>
+            <SidebarTrigger className="mr-5" />
             <Popover>
               <PopoverTrigger className="flex bg-neutral-100 px-2 py-1 border rounded-md">
-                  <p className="mr-3">Chat GPT</p>
-                  <ChevronDown />
+                <p className="mr-3">{chatBot ?? "Tất cả"}</p>
+                <ChevronDown />
               </PopoverTrigger>
 
-              <PopoverContent align="start"  className="w-[450px] p-1">
+              <PopoverContent align="start" className="w-[450px] p-1">
                 <ListBot />
               </PopoverContent>
             </Popover>
           </div>
-
 
           <Popover>
             <PopoverTrigger>
