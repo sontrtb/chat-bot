@@ -16,8 +16,8 @@ function HistoryChat() {
             <SidebarGroupLabel>Lịch sử trò chuyện</SidebarGroupLabel>
             <SidebarGroupContent>
                 <SidebarMenu>
-                    {list.map((item, index) => (
-                        <SidebarMenuItem key={index}>
+                    {list.map((item) => (
+                        <SidebarMenuItem key={item}>
                             <SidebarMenuButton onClick={goChatScreen}>
                                 <span>{"Hello chat"}</span>
                             </SidebarMenuButton>

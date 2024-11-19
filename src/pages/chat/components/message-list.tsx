@@ -7,8 +7,8 @@ function MessageList() {
     return (
         <ScrollArea className="h-full pb-3 px-10">
             {
-                listMess.map((mess, index) => (
-                    <MessageItem key={index} isSend={false} />
+                listMess.map((mess) => (
+                    <MessageItem key={mess} isSend={false}/>
                 ))
             }
         </ScrollArea>
