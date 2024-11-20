@@ -20,7 +20,7 @@ export function AppSidebar() {
     }
 
     return (
-        <Sidebar variant="floating">
+        <Sidebar variant="floating" >
             <SidebarHeader>
             </SidebarHeader>
             <SidebarContent>

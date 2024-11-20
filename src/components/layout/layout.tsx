@@ -17,11 +17,11 @@ export default function Layout() {
   }
 
   return (
-    <SidebarProvider>
+    <SidebarProvider className="bg-[url('/images/background.png')] bg-no-repeat bg-auto bg-right-top">
       <AppSidebar />
 
-      <SidebarInset className="h-screen">
-        <div className="flex justify-between items-center bg-neutral-50 p-2 my-2 mr-2 rounded-md shadow border">
+      <SidebarInset className="h-screen pl-2">
+        <div className="flex justify-between items-center bg-[#ffffff80] p-2 my-2 mr-2 rounded-md shadow border">
           <div className="flex items-center">
             <SidebarTrigger className="mr-5" />
             <Popover>
@@ -45,6 +45,11 @@ export default function Layout() {
             </PopoverTrigger>
 
             <PopoverContent className="w-60 p-0">
+              <div className="flex items-center hover:bg-neutral-100 p-2 rounded" onClick={handleLogout}>
+                <LogOut />
+                <p className="ml-2 text-sm">Đăng xuất</p>
+              </div>
+              <div className="border-[0.5px]"/>
               <div className="flex items-center hover:bg-neutral-100 p-2 rounded" onClick={handleLogout}>
                 <LogOut />
                 <p className="ml-2 text-sm">Đăng xuất</p>
