@@ -1,16 +1,41 @@
 import { ScrollArea } from "@/components/ui/scroll-area"
 import MessageItem from "./message-item"
+import { IMessage } from "@/types/message";
+import MessageItemTyping from "./message-item-typing";
+import { Dispatch, useEffect, useRef } from "react";
 
-function MessageList() {
-    const listMess = [1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 6]
+interface IMessageListProps {
+    listMess: IMessage[];
+    setListMess: Dispatch<React.SetStateAction<IMessage[]>>
+}
+
+function MessageList(props: IMessageListProps) {
+    const { listMess, setListMess } = props;
+
+    const lateRef = useRef<HTMLDivElement>(null);
+
+    const scrollToBottom = () => {
+        lateRef.current?.scrollIntoView({
+            behavior: "smooth"
+        })
+    }
+
+    useEffect(() => {
+        scrollToBottom()
+    }, [listMess])
 
     return (
-        <ScrollArea className="h-full pb-3 px-10">
-            {
-                listMess.map((mess) => (
-                    <MessageItem key={mess} isSend={false}/>
-                ))
-            }
+        <ScrollArea className="h-full pb-3 px-10 items-center">
+            <div className="max-w-2xl mx-auto">
+                {
+                    listMess.map((mess) => (
+                        <MessageItem key={mess.id} message={mess} />
+                    ))
+                }
+                <MessageItemTyping setListMess={setListMess} scrollToBottom={scrollToBottom}/>
+            </div>
+
+            <div ref={lateRef} className="h-8"/>
         </ScrollArea>
     )
 }

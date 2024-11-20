@@ -1,27 +1,29 @@
 import { cn } from "@/lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { IMessage } from "@/types/message";
+import { memo } from "react";
 
 interface IMessageItemProps {
-    isSend: boolean
+    message: IMessage
 }
 
 function MessageItem(props: IMessageItemProps) {
-    const { isSend } = props;
+    const {message } = props;
 
     return (
-        <div className={cn("mb-3 flex", isSend ? "justify-end" : "justify-start")}>
+        <div className={cn("mb-3 flex", message.isSend ? "justify-end" : "justify-start")}>
             {
-                isSend ?
-                    <p className="px-5 py-2.5 bg-neutral-100 rounded-full text-sm w-fit">
-                        Xin chao toi la GPT
+                message.isSend ?
+                    <p className="px-5 py-2.5 bg-neutral-100 rounded-3xl text-sm w-fit">
+                        {message.message}
                     </p> :
-                    <div className="flex items-center">
+                    <div className="flex">
                         <Avatar className="h-8 w-8">
                             <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
                             <AvatarFallback>CN</AvatarFallback>
                         </Avatar>
-                        <p className="ml-2 px-5 py-2.5 bg-neutral-50 rounded-full text-sm w-fit ">
-                            Xin chao toi la GPT
+                        <p className="ml-2 px-5 py-2.5 bg-neutral-50 rounded-3xl text-sm w-fit ">
+                            {message.message}
                         </p>
                     </div>
             }
@@ -29,4 +31,4 @@ function MessageItem(props: IMessageItemProps) {
     )
 }
 
-export default MessageItem
+export default memo(MessageItem)

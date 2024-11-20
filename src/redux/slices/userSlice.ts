@@ -1,21 +1,22 @@
+import { IUser } from "@/types/user";
 import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-export interface IChatBotState {
-  chatbot: string | undefined
+export interface IUserState {
+  user: IUser | undefined
 }
 
-const initState: IChatBotState = {
-  chatbot: undefined
+const initState: IUserState = {
+  user: undefined
 };
 
-const chatBotSlice = createSlice({
-  name: "chatbot",
+const userSlice = createSlice({
+  name: "user",
   initialState: initState,
   reducers: {
-    setChatBot: (state, action: PayloadAction<string | undefined>) => {
-      return { ...state, chatbot: action.payload };
+    setUser: (state, action: PayloadAction<IUser | undefined>) => {
+      return { ...state, user: action.payload };
     },
   },
 });
-export const { setChatBot } = chatBotSlice.actions;
-export default chatBotSlice;
+export const { setUser } = userSlice.actions;
+export default userSlice;

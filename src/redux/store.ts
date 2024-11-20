@@ -6,7 +6,7 @@ import rootReducer from "./rootReducer";
 const persistConfig = {
   key: "root",
   storage,
-  blacklist: ["page"],
+  blacklist: ["chatBot", "messageTyping"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
