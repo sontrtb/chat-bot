@@ -1,23 +1,23 @@
-import { ILoginBody, login } from "@/api/auth";
+import { ILoginBody } from "@/api/auth";
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useNavigate } from "react-router-dom";
 import { useForm, SubmitHandler } from "react-hook-form"
-import { useSetUser } from "@/redux/hooks/user";
+// import { useSetUser } from "@/redux/hooks/user";
 
 function Login() {
     const navigate = useNavigate();
-    const setUser = useSetUser();
+    // const setUser = useSetUser();
 
     const {
         register,
         handleSubmit,
-        formState: { errors },
+        // formState: { errors },
     } = useForm<ILoginBody>()
 
-    const onSubmit: SubmitHandler<ILoginBody> = (data) => {
+    const onSubmit: SubmitHandler<ILoginBody> = () => {
         // login(data).then((res) => {
         //     console.log("res", res)
         //     setUser(res)

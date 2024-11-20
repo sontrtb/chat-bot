@@ -1,4 +1,4 @@
-import rootApi, { type IDataResponse } from "./api";
+import rootApi from "./api";
 
 export interface ISendMessBody {
     message: string;

@@ -1,8 +1,8 @@
 import { useParams } from "react-router-dom";
 import MessageInput from "./components/message-input"
 import MessageList from "./components/message-list"
-import { sendMess } from "@/api/chat";
-import axios from "axios";
+// import { sendMess } from "@/api/chat";
+// import axios from "axios";
 import { useState } from "react";
 import { IMessage } from "@/types/message";
 import { useSetMessageTyping } from "@/redux/hooks/message-typing";
