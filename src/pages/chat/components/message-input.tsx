@@ -21,7 +21,7 @@ function MessageInput(props: IMessageInputProps) {
     }
 
     return (
-        <div className="bg-neutral-100 rounded-full flex py-1 w-full h-fit max-w-2xl mx-auto">
+        <div className="bg-neutral-100 rounded-full flex py-1 w-full h-fit max-w-3xl mx-auto">
             <input
                 disabled={messageTyping.isTyping}
                 value={text}

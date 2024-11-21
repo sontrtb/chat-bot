@@ -2,18 +2,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useGetCurrentMessageTyping, useSetMessageTypingDone } from "@/redux/hooks/message-typing";
 import { IMessage } from "@/types/message";
 import { Dispatch, Fragment, useEffect, useState } from "react";
-
-function makeid(length: number) {
-    let result = '';
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789                                        ';
-    const charactersLength = characters.length;
-    let counter = 0;
-    while (counter < length) {
-      result += characters.charAt(Math.floor(Math.random() * charactersLength));
-      counter += 1;
-    }
-    return result;
-}
+import { marked } from "marked"
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface IMessageItemTypingProps {
     setListMess: Dispatch<React.SetStateAction<IMessage[]>>
@@ -21,40 +11,76 @@ interface IMessageItemTypingProps {
 }
 
 function MessageItemTyping(props: IMessageItemTypingProps) {
-    const {setListMess, scrollToBottom} = props
+    const { setListMess, scrollToBottom } = props
 
     const messageTyping = useGetCurrentMessageTyping()
     const setMessageTypingDone = useSetMessageTypingDone()
 
+    const [isLoading, setIsLoading] = useState(false)
     const [textTmp, setTextTmp] = useState("")
 
-    useEffect(() => {
-        let timeOut: NodeJS.Timeout;
-        if(messageTyping.isTyping) {
-            let textMessTmp = ''
-            const interval = setInterval(() => {
-                textMessTmp += makeid(2)
-                setTextTmp(`${textMessTmp}`)
-                scrollToBottom()
-            }, 30)
+    const getMessage = async (message: string) => {
+        setIsLoading(true)
+        fetch(`${import.meta.env.VITE_API_URL}/c/chat`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                "responseType": "stream"
+            },
+            body: JSON.stringify({ message: message })
+        })
+            .then(response => response.body?.getReader())
+            .then(reader => {
+                const decoder = new TextDecoder();
+                let textMessTmp = ''
 
-            timeOut = setTimeout(() => {
-                clearInterval(interval)
-                setMessageTypingDone()
-                const newMess: IMessage = {
-                    id: new Date().getTime(),
-                    message: textMessTmp,
-                    isSend: false
+                function readStream() {
+                    reader?.read().then(({ done, value }) => {
+                        if (done) {
+                            setMessageTypingDone()
+                            const newMess: IMessage = {
+                                id: new Date().getTime(),
+                                message: textMessTmp,
+                                isSend: false
+                            }
+                            setListMess(pre => [...pre, newMess])
+                            setTextTmp("")
+                            return;
+                        }
+
+                        const data = decoder.decode(value, { stream: true });
+                        const text =
+                            data.split("data:")
+                                .filter(t => t.length > 0)
+                                .map(t => JSON.parse(t).result.message)
+                                .join("")
+
+                        textMessTmp += text
+                        setTextTmp(`${textMessTmp}`)
+                        scrollToBottom()
+
+                        readStream();
+                    });
                 }
-                setListMess(pre => [...pre, newMess])
-                setTextTmp("")
-            }, 5000)
-        }
 
-        return () => clearTimeout(timeOut)
+                readStream();
+            })
+            .catch(error => {
+                setMessageTypingDone()
+                console.error('Error sending POST request:', error);
+            })
+            .finally(() => {
+                setIsLoading(false)
+            })
+    }
+
+    useEffect(() => {
+        if (messageTyping.isTyping) {
+            getMessage(messageTyping.message ?? "")
+        }
     }, [messageTyping])
 
-    if(!messageTyping.isTyping) return <Fragment />
+    if (!messageTyping.isTyping) return <Fragment />
 
     return (
         <div className={"mb-3 flex justify-start"}>
@@ -63,9 +89,14 @@ function MessageItemTyping(props: IMessageItemTypingProps) {
                     <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
                     <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
-                <p className="ml-2 px-5 py-2.5 bg-neutral-50 rounded-3xl text-sm w-fit ">
-                    {textTmp}
-                </p>
+                {
+                    isLoading ?
+                        <Skeleton className="h-8 w-96 rounded-md ml-4 mt-2" /> :
+                        <div
+                            className="ml-4 pt-1 w-fit text-neutral-700 leading-8"
+                            dangerouslySetInnerHTML={{ __html: marked.parse(textTmp) }}
+                        />
+                }
             </div>
         </div>
     )

@@ -26,7 +26,7 @@ function MessageList(props: IMessageListProps) {
 
     return (
         <ScrollArea className="h-full pb-3 px-10 items-center">
-            <div className="max-w-2xl mx-auto">
+            <div className="max-w-3xl mx-auto">
                 {
                     listMess.map((mess) => (
                         <MessageItem key={mess.id} message={mess} />
