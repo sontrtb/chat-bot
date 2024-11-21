@@ -14,7 +14,7 @@ function AccordionBot() {
     const botSelect = listBot.find(bot => idBotSelect === bot.id)
     
     return (
-        <div className="absolute z-10">
+        <div className="absolute z-10 top-20">
             <Accordion type="single" collapsible >
                 <AccordionItem value="item-1" className="w-12 bg-[#ffffff80] p-1 rounded-lg shadow">
                     <AccordionContent>

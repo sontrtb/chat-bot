@@ -2,9 +2,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { type RootState } from "../store";
 import {  setChatBot } from "../slices/chatBotSlice";
 
-const useSetChatBot = (): ((chatBot?: string) => void) => {
+const useSetChatBot = (): ((chatBot: string) => void) => {
   const dispatch = useDispatch();
-  const setChatBotStore = (chatBot?: string): void => {
+  const setChatBotStore = (chatBot: string): void => {
     dispatch(setChatBot(chatBot));
   };
   return setChatBotStore;

@@ -6,6 +6,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { ChevronDown, LogOut } from "lucide-react";
 import ListBot from "../common/list-bot";
 import { useGetCurrentChatBot } from "@/redux/hooks/chat-bot";
+import AccordionBot from "@/pages/chat/components/accordion-bot";
 
 export default function Layout() {
   const navigate = useNavigate();
@@ -17,7 +18,9 @@ export default function Layout() {
   }
 
   return (
-    <SidebarProvider className="bg-[url('/images/background.png')] bg-no-repeat bg-auto bg-right-top">
+    <SidebarProvider
+      // className="bg-[url('/images/background.png')] bg-no-repeat bg-auto bg-right-top"
+    >
       <AppSidebar />
 
       <SidebarInset className="h-screen pl-2">
@@ -58,6 +61,7 @@ export default function Layout() {
           </Popover>
         </div>
 
+        <AccordionBot />
         <Outlet />
       </SidebarInset>
     </SidebarProvider>

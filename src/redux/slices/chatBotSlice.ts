@@ -1,18 +1,18 @@
 import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 export interface IChatBotState {
-  chatbot: string | undefined
+  chatbot: string
 }
 
 const initState: IChatBotState = {
-  chatbot: undefined
+  chatbot: "all"
 };
 
 const chatBotSlice = createSlice({
   name: "chatbot",
   initialState: initState,
   reducers: {
-    setChatBot: (state, action: PayloadAction<string | undefined>) => {
+    setChatBot: (state, action: PayloadAction<string>) => {
       return { ...state, chatbot: action.payload };
     },
   },

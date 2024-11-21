@@ -5,8 +5,14 @@ import Copilot from "@/assets/bot/copilot.png"
 import Frame from "@/assets/bot/frame.png"
 import Gemini from "@/assets/bot/gemini.png"
 import ChatGPT from "@/assets/bot/chat_GPT.png"
+import All from "@/assets/bot/all.png"
 
 export const listBot = [
+    {
+        id: "all",
+        icon: All,
+        name: "Kết hợp models",
+    },
     {
         id: "ChatGPT",
         icon: ChatGPT,
