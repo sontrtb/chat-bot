@@ -21,7 +21,7 @@ export function AppSidebar() {
     const theme = useGetCurrentTheme()
 
     const goHomeScreen = () => {
-        setChatBot(undefined)
+        setChatBot("all")
         navigate("/")
     }
 
