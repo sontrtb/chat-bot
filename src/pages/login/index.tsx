@@ -11,11 +11,15 @@ import RainbowRing from "@/assets/login/rainbow_ring.png"
 import Rectangle2 from "@/assets/login/rectangle_2.png"
 import { Separator } from "@/components/ui/separator";
 import { Checkbox } from "@/components/ui/checkbox";
+import { TypeAnimation } from 'react-type-animation';
+import { useGetCurrentTheme } from "@/redux/hooks/theme";
+import { cn } from "@/lib/utils";
 // import { useSetUser } from "@/redux/hooks/user";
 
 function Login() {
     const navigate = useNavigate();
     // const setUser = useSetUser();
+    const theme = useGetCurrentTheme()
 
     const {
         register,
@@ -38,18 +42,48 @@ function Login() {
     return (
         <div className="grid grid-cols-12 gap-4 h-screen relative">
             <div className="col-span-6 flex justify-center flex-col pl-24">
-                <h1 className="text-6xl">Chào mừng trở lại!</h1>
-                <h3 className="text-2xl border border-2 px-3 py-1 mt-3 border-black">
-                    Học tập. Nghiên cứu. Sáng tạo. Tất cả trong một!
-                </h3>
-                <div className="h-24"/>
+                <TypeAnimation
+                    sequence={[
+                        'Chào mừng trở lại!',
+                        1000,
+                    ]}
+                    cursor={false}
+                    speed={50}
+                    className="font-medium text-6xl"
+                />
+                <TypeAnimation
+                    sequence={[
+                        'Với chatbot, bạn có thể học tập!',
+                        800,
+                        'Với chatbot, bạn có thể nghiên cứu!',
+                        800,
+                        'Với chatbot, bạn có thể sáng tạo!',
+                        800,
+                        'Tất cả trong một!',
+                        1000,
+                    ]}
+                    speed={50}
+                    repeat={Infinity}
+                    className="font-medium text-2xl mt-3"
+                />
+                <div className="h-24" />
             </div>
             <div className="col-span-6 flex justify-end items-center pr-24">
                 <Card className="w-[500px] z-10 bg-login-form-background backdrop-blur-sm">
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <CardHeader>
-                            <CardTitle className="text-2xl">Bắt đầu khám phá!</CardTitle>
-                            <CardDescription>Deploy your new project in one-click.</CardDescription>
+                            <CardTitle className="text-2xl">
+                                <TypeAnimation
+                                    sequence={[
+                                        'Bắt đầu khám phá!',
+                                        1000,
+                                    ]}
+                                    cursor={false}
+                                    speed={50}
+                                    className="text-2xl"
+                                />
+                            </CardTitle>
+                            <CardDescription>Đăng nhập tài khoản của bạn</CardDescription>
                         </CardHeader>
                         <CardContent>
                             <div>
@@ -73,7 +107,7 @@ function Login() {
 
                             <Button className="w-full bg-gradient-to-r from-[#628EFF] via-[#8740CD] to-[#580475] mt-6" type="submit">Đăng nhập</Button>
 
-                            <p className="text-sm text-right my-4">Lấy lại mật khẩu</p>
+                            <p className="text-sm text-right my-4 underline">Lấy lại mật khẩu</p>
 
                             <div className="flex items-center justify-between">
                                 <Separator className="w-40" />
@@ -81,7 +115,7 @@ function Login() {
                                 <Separator className="w-40" />
                             </div>
 
-                            <img src={LoginSocia} className="h-8 w-full object-contain mt-3" style={{ zIndex: -1 }} />
+                            <img src={LoginSocia} className="h-8 w-full object-contain mt-3" />
 
                         </CardContent>
                         <CardFooter className="block opacity-60">
@@ -96,9 +130,9 @@ function Login() {
                 </Card>
 
             </div>
-            <img src={Rectangle} className="w-36 absolute bottom-16 right-96" style={{ zIndex: -1 }} />
-            <img src={Rectangle2} className="w-52 absolute top-16 left-[40%]" style={{ zIndex: -1 }} />
-            <img src={RainbowRing} className="h-[400px] absolute bottom-0 left-0" style={{ zIndex: -1 }} />
+            <img src={Rectangle} className={cn("w-36 absolute bottom-16 right-96 animate-float duration-10000", theme === "dark" && "brightness-50")} />
+            <img src={Rectangle2} className={cn("w-56 absolute top-20 left-[40%] animate-float", theme === "dark" && "brightness-50")} />
+            <img src={RainbowRing} className={cn("h-[400px] absolute bottom-0 left-0", theme === "dark" && "brightness-50")} />
         </div>
     )
 }
