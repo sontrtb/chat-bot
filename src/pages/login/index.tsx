@@ -9,17 +9,20 @@ import Rectangle from "@/assets/login/rectangle.png"
 import LoginSocia from "@/assets/login/login_social.png"
 import RainbowRing from "@/assets/login/rainbow_ring.png"
 import Rectangle2 from "@/assets/login/rectangle_2.png"
+import Logo from "@/assets/logo/logo.png"
 import { Separator } from "@/components/ui/separator";
 import { Checkbox } from "@/components/ui/checkbox";
 import { TypeAnimation } from 'react-type-animation';
-import { useGetCurrentTheme } from "@/redux/hooks/theme";
+import { useGetCurrentTheme, useSetTheme } from "@/redux/hooks/theme";
 import { cn } from "@/lib/utils";
+import { Switch } from "@/components/ui/switch";
 // import { useSetUser } from "@/redux/hooks/user";
 
 function Login() {
     const navigate = useNavigate();
     // const setUser = useSetUser();
     const theme = useGetCurrentTheme()
+    const setTheme = useSetTheme();
 
     const {
         register,
@@ -42,6 +45,7 @@ function Login() {
     return (
         <div className="grid grid-cols-12 gap-4 h-screen relative">
             <div className="col-span-6 flex justify-center flex-col pl-24">
+                <img src={Logo} className="w-20 absolute top-6 left-8" />
                 <TypeAnimation
                     sequence={[
                         'Chào mừng trở lại!',
@@ -69,6 +73,16 @@ function Login() {
                 <div className="h-24" />
             </div>
             <div className="col-span-6 flex justify-end items-center pr-24">
+                <div className="flex items-center space-x-2 absolute top-6 right-8">
+                    <Switch
+                        id="airplane-mode"
+                        checked={theme === "dark"}
+                        onCheckedChange={e => {
+                            setTheme(e ? "dark" : "light")
+                        }}
+                    />
+                    <Label htmlFor="airplane-mode">Chế độ tối</Label>
+                </div>
                 <Card className="w-[500px] z-10 bg-login-form-background backdrop-blur-sm">
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <CardHeader>
@@ -130,7 +144,7 @@ function Login() {
                 </Card>
 
             </div>
-            <img src={Rectangle} className={cn("w-36 absolute bottom-16 right-96 animate-float duration-10000", theme === "dark" && "brightness-50")} />
+            <img src={Rectangle} className="w-36 absolute bottom-16 right-96 animate-float duration-10000" />
             <img src={Rectangle2} className={cn("w-56 absolute top-20 left-[40%] animate-float", theme === "dark" && "brightness-50")} />
             <img src={RainbowRing} className={cn("h-[400px] absolute bottom-0 left-0", theme === "dark" && "brightness-50")} />
         </div>
