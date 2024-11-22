@@ -5,6 +5,7 @@ import { IMessage } from "@/types/message";
 import { Dispatch, Fragment, useEffect, useState } from "react";
 import { marked } from "marked"
 import { Skeleton } from "@/components/ui/skeleton";
+import { useGetCurrentChatBot } from "@/redux/hooks/chat-bot";
 
 interface IMessageItemTypingProps {
     setListMess: Dispatch<React.SetStateAction<IMessage[]>>
@@ -16,7 +17,10 @@ function MessageItemTyping(props: IMessageItemTypingProps) {
 
     const messageTyping = useGetCurrentMessageTyping()
     const setMessageTypingDone = useSetMessageTypingDone()
+
     const user = useGetUser()
+
+    const botSelect = useGetCurrentChatBot()
 
     const [isLoading, setIsLoading] = useState(false)
     const [textTmp, setTextTmp] = useState("")
@@ -27,16 +31,16 @@ function MessageItemTyping(props: IMessageItemTypingProps) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                "responseType": "stream",
+                // "responseType": "stream",
                 "Authorization": `Bearer ${user?.token}`
             },
             body: JSON.stringify({
                 message: message,
                 conId: "",
-                target: "5bdfbf9f-70c4-49e5-873c-353f0a40373d"
+                target: botSelect.id
             })
         })
-            .then(response => response.body?.getReader())
+            .then(async response => response.body?.getReader())
             .then(reader => {
                 const decoder = new TextDecoder();
                 let textMessTmp = ''
@@ -56,12 +60,17 @@ function MessageItemTyping(props: IMessageItemTypingProps) {
                         }
 
                         const data = decoder.decode(value, { stream: true });
-                        const text =
-                            data.split("data:")
+
+                        let text = "";
+                        if(data.includes("data:")) {
+                            text = data.split("data:")
                                 .filter(t => t.length > 0)
                                 .map(t => JSON.parse(t).result.message)
                                 .join("")
-
+                        } else {
+                            const dataParse = JSON.parse(data)
+                            text = dataParse.message
+                        }
                         textMessTmp += text
                         setTextTmp(`${textMessTmp}`)
                         scrollToBottom()
@@ -100,7 +109,7 @@ function MessageItemTyping(props: IMessageItemTypingProps) {
                     isLoading ?
                         <Skeleton className="h-8 w-96 rounded-md ml-4 mt-2" /> :
                         <article
-                            className="prose ml-4 pt-1 w-fit"
+                            className="prose dark:prose-invert ml-4 pt-1 w-fit"
                             dangerouslySetInnerHTML={{ __html: marked.parse(textTmp) }}
                         />
                 }

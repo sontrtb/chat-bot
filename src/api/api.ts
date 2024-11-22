@@ -53,11 +53,6 @@ async function rootApi<T = undefined>(
         resolve(res.data.result)
       })
       .catch((err: AxiosError<IDataResponse<T>>) => {
-        if (defaultOptions.displayError) {
-          // notificationError({
-          //   message: err.response?.data.message ?? "Có lỗi xảy ra",
-          // });
-        }
         rejects(err.response?.data);
       });
   });

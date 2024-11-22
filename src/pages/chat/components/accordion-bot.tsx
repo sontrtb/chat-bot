@@ -4,14 +4,28 @@ import {
     AccordionItem,
     AccordionTrigger,
 } from "@/components/ui/accordion"
-import { listBot } from "@/const/bot"
 import { useGetCurrentChatBot, useSetChatBot } from "@/redux/hooks/chat-bot"
 import { cn } from "@/lib/utils"
+import { useEffect } from "react"
+import { getListBot } from "@/api/bot"
+import { useGetListChatBot, useSetListChatBot } from "@/redux/hooks/chat-list-bot"
 
 function AccordionBot() {
     const setChatBot = useSetChatBot()
-    const idBotSelect = useGetCurrentChatBot()
-    const botSelect = listBot.find(bot => idBotSelect === bot.id)
+    const botSelect = useGetCurrentChatBot()
+
+    const setListChatBot = useSetListChatBot()
+    const listBot =  useGetListChatBot()
+
+    const getList = async () => {
+        getListBot().then(res => {
+            setListChatBot(res)
+        })   
+    }
+
+    useEffect(() => {
+        getList()
+    }, [])
     
     return (
         <div className="absolute z-10 top-4">
@@ -22,16 +36,16 @@ function AccordionBot() {
                             listBot.map(bot => (
                                 <img
                                     key={bot.id}
-                                    src={bot.icon}
-                                    className={cn("w-10 p-2 hover:bg-neutral-200 rounded my-1 cursor-pointer", idBotSelect === bot.id ? "border" : 'border-transparent')}
-                                    onClick={() => setChatBot(bot.id)}
+                                    src={import.meta.env.VITE_API_URL + bot.icon}
+                                    className={cn("w-10 p-2 hover:bg-neutral-200 rounded my-1 cursor-pointer", botSelect.id === bot.id ? "border" : 'border-transparent')}
+                                    onClick={() => setChatBot(bot)}
                                 />
                             ))
                         }
                         <div className="border"/>
                     </AccordionContent>
                     <AccordionTrigger className="w-full flex-col">
-                        <img src={botSelect?.icon} className="w-10  p-2 " />
+                        <img src={import.meta.env.VITE_URL + botSelect?.icon} className="w-10  p-2" />
                     </AccordionTrigger>
                 </AccordionItem>
             </Accordion>

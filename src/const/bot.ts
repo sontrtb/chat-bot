@@ -7,7 +7,7 @@ import Gemini from "@/assets/bot/gemini.png"
 import ChatGPT from "@/assets/bot/chat_GPT.png"
 import All from "@/assets/bot/all.png"
 
-export const listBot = [
+const listBot = [
     {
         id: "all",
         icon: All,
@@ -49,3 +49,5 @@ export const listBot = [
         name: "Gemini",
     },
 ]
+
+console.log("listBot", listBot)

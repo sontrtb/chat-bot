@@ -11,8 +11,6 @@ interface IMessageItemProps {
 function MessageItem(props: IMessageItemProps) {
     const { message } = props;
 
-    console.log("marked.parse(message.message)", marked.parse(message.message))
-
     return (
         <div className={cn("mb-3 flex", message.isSend ? "justify-end" : "justify-start")}>
             {
@@ -27,7 +25,7 @@ function MessageItem(props: IMessageItemProps) {
                                 <AvatarFallback>CN</AvatarFallback>
                             </Avatar>
                             <article
-                                className="prose ml-4 pt-1 w-fit"
+                                className="prose dark:prose-invert ml-4 pt-1 w-fit"
                                 dangerouslySetInnerHTML={{ __html: marked.parse(message.message) }}
                             />
                         </div>

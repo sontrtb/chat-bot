@@ -1,4 +1,4 @@
-import { listBot } from "@/const/bot";
+
 import { useGetCurrentChatBot } from "@/redux/hooks/chat-bot";
 import { useGetCurrentMessageTyping } from "@/redux/hooks/message-typing";
 import { CirclePause, Send } from "lucide-react"
@@ -14,8 +14,7 @@ function MessageInput(props: IMessageInputProps) {
 
     const messageTyping = useGetCurrentMessageTyping()
 
-    const idBotSelect = useGetCurrentChatBot()
-    const botSelect = listBot.find(bot => idBotSelect === bot.id)
+    const botSelect = useGetCurrentChatBot()
 
     const [text, setText] = useState("")
 
