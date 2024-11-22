@@ -25,7 +25,7 @@ function HistoryChat() {
             </SidebarGroupLabel>
             <SidebarGroupContent>
                 <SidebarMenu>
-                    {getHistoryQuery.data?.reverse().map((item) => (
+                    {getHistoryQuery.data?.map((item) => (
                         <SidebarMenuItem key={item.id} className="my-1">
                             <SidebarMenuButton onClick={() => goChatScreen(item.id)}>
                                 <span>{item.summary}</span>
