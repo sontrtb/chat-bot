@@ -1,20 +1,12 @@
 import { IBot } from "@/types/chatbot";
 import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
-import All from "@/assets/bot/all.png"
 
 export interface IChatBotState {
-  chatbot: IBot
+  chatbot?: IBot
 }
 
 const initState: IChatBotState = {
-  chatbot: {
-    id: "all",
-    name: "Tất cả model",
-    icon: All,
-    description: "Tất cả model",
-    model: "all",
-    service: "all"
-  }
+  chatbot: undefined
 };
 
 const chatBotSlice = createSlice({

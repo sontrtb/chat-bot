@@ -52,7 +52,7 @@ function MessageInput(props: IMessageInputProps) {
                     <p className="text-sm ml-3 font-light">Bạn đang sử dụng</p>
                     <div className="p-px ml-2 bg-gradient-to-r from-cyan-500 to-pink-500 rounded-lg">
                         <div className="flex bg-secondary px-3 py-1 rounded-lg items-center">
-                            <img src={botSelect?.icon} className="w-4 h-4 mr-2" />
+                            <img src={import.meta.env.VITE_API_URL + botSelect?.icon} className="w-4 h-4 mr-2" />
                             <p className="text-sm font-light">{botSelect?.name}</p>
                         </div>
                     </div>

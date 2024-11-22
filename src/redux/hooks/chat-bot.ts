@@ -11,7 +11,7 @@ const useSetChatBot = (): ((chatBot: IBot) => void) => {
   return setChatBotStore;
 };
 
-const useGetCurrentChatBot = (): IBot => {
+const useGetCurrentChatBot = (): IBot | undefined => {
   const chatBot = useSelector((state: RootState) => state.chatBot);
   return chatBot.chatbot;
 };

@@ -20,6 +20,9 @@ function AccordionBot() {
     const getList = async () => {
         getListBot().then(res => {
             setListChatBot(res)
+            if(!botSelect) {
+                setChatBot(res[0])
+            }
         })   
     }
 
@@ -37,7 +40,7 @@ function AccordionBot() {
                                 <img
                                     key={bot.id}
                                     src={import.meta.env.VITE_API_URL + bot.icon}
-                                    className={cn("w-10 p-2 hover:bg-neutral-200 rounded my-1 cursor-pointer", botSelect.id === bot.id ? "border" : 'border-transparent')}
+                                    className={cn("w-10 p-2 hover:bg-neutral-200 rounded my-1 cursor-pointer", botSelect?.id === bot.id ? "border" : 'border-transparent')}
                                     onClick={() => setChatBot(bot)}
                                 />
                             ))
@@ -45,7 +48,7 @@ function AccordionBot() {
                         <div className="border"/>
                     </AccordionContent>
                     <AccordionTrigger className="w-full flex-col">
-                        <img src={import.meta.env.VITE_URL + botSelect?.icon} className="w-10  p-2" />
+                        <img src={import.meta.env.VITE_API_URL + botSelect?.icon} className="w-10  p-2" />
                     </AccordionTrigger>
                 </AccordionItem>
             </Accordion>
