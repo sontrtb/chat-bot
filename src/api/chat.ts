@@ -1,3 +1,4 @@
+import { IMessage } from "@/types/message";
 import rootApi from "./api";
 
 export interface ISendMessBody {
@@ -13,6 +14,7 @@ export interface IHistory {
 const path = {
     history: "/c/cons",
     sendMess: "/c/chat",
+    mesages: "c/his/"
 };
 
 const sendMess = async (data: ISendMessBody): Promise<unknown> => {
@@ -34,4 +36,13 @@ const getHistory = async (): Promise<IHistory[]> => {
     );
 };
 
-export { sendMess, getHistory };
+const getMesages = async (id: string): Promise<IMessage[]> => {
+    return await rootApi(
+        {
+            url: path.mesages + id,
+            method: "get",
+        },
+    );
+};
+
+export { sendMess, getHistory, getMesages };

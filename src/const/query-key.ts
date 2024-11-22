@@ -1,5 +1,7 @@
 const queryKey = {
-    getHistory: 'getHistory'
+    getHistory: 'getHistory',
+    getMessage: 'getMessage',
+    getListBot: 'getListBot'
 }
 
 export default queryKey

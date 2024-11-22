@@ -3,6 +3,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { IMessage } from "@/types/message";
 import { memo } from "react";
 import { marked } from "marked";
+import { useGetUser } from "@/redux/hooks/user";
 
 interface IMessageItemProps {
     message: IMessage
@@ -11,10 +12,14 @@ interface IMessageItemProps {
 function MessageItem(props: IMessageItemProps) {
     const { message } = props;
 
+    const user = useGetUser()
+
+    const isSend = user?.id === message.userId
+
     return (
-        <div className={cn("mb-3 flex", message.isSend ? "justify-end" : "justify-start")}>
+        <div className={cn("mb-3 flex", isSend ? "justify-end" : "justify-start")}>
             {
-                message.isSend ?
+                isSend ?
                     <p className="px-5 py-2.5 rounded-3xl w-fit leading-8 bg-secondary">
                         {message.message}
                     </p> :

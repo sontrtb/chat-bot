@@ -1,7 +1,7 @@
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
 import { AppSidebar } from "./app-sidebar"
-import AccordionBot from "@/pages/chat/components/accordion-bot";
 import ContentSidebar from "../sidebar/content-sidebar";
+import AccordionBot from "../common/accordion-bot";
 
 export default function Layout() {
 
@@ -11,7 +11,6 @@ export default function Layout() {
     className="bg-[url('/images/background.png')] bg-no-repeat bg-auto bg-right-top"
     >
       <AppSidebar />
-
       <SidebarInset className="h-screen pl-2">
         <ContentSidebar />
         <AccordionBot />

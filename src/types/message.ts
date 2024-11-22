@@ -1,5 +1,7 @@
 export interface IMessage {
     id: number;
+    conId?: string;
+    logTime?: string;
     message: string;
-    isSend: boolean;
+    userId: string;
 }

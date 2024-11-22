@@ -6,6 +6,7 @@ import { Dispatch, Fragment, useEffect, useState } from "react";
 import { marked } from "marked"
 import { Skeleton } from "@/components/ui/skeleton";
 import { useGetCurrentChatBot } from "@/redux/hooks/chat-bot";
+import { useSearchParams } from "react-router-dom";
 
 interface IMessageItemTypingProps {
     setListMess: Dispatch<React.SetStateAction<IMessage[]>>
@@ -14,6 +15,9 @@ interface IMessageItemTypingProps {
 
 function MessageItemTyping(props: IMessageItemTypingProps) {
     const { setListMess, scrollToBottom } = props
+
+    const [searchParams, setSearchParams] = useSearchParams();
+    const conId = searchParams.get("conId")
 
     const messageTyping = useGetCurrentMessageTyping()
     const setMessageTypingDone = useSetMessageTypingDone()
@@ -25,26 +29,26 @@ function MessageItemTyping(props: IMessageItemTypingProps) {
     const [isLoading, setIsLoading] = useState(false)
     const [textTmp, setTextTmp] = useState("")
 
-    const getMessage = async (message: string) => {
+    const getMessage = async (mess?: string) => {
         setIsLoading(true)
         fetch(`${import.meta.env.VITE_API_URL}/c/chat`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                // "responseType": "stream",
+                "responseType": "stream",
                 "Authorization": `Bearer ${user?.token}`
             },
             body: JSON.stringify({
-                message: message,
-                conId: "",
-                target: botSelect.id
+                message: mess,
+                conId: conId,
+                target: botSelect?.id
             })
         })
             .then(async response => response.body?.getReader())
             .then(reader => {
                 const decoder = new TextDecoder();
                 let textMessTmp = ''
-
+                // const conIdTmp = ''
                 function readStream() {
                     reader?.read().then(({ done, value }) => {
                         if (done) {
@@ -52,10 +56,17 @@ function MessageItemTyping(props: IMessageItemTypingProps) {
                             const newMess: IMessage = {
                                 id: new Date().getTime(),
                                 message: textMessTmp,
-                                isSend: false
+                                userId: "bot"
                             }
                             setListMess(pre => [...pre, newMess])
                             setTextTmp("")
+
+                            if(!conId) {
+                                setSearchParams(params => {
+                                    params.set("conId", "new")
+                                    return params
+                                })
+                            }
                             return;
                         }
 
@@ -63,10 +74,12 @@ function MessageItemTyping(props: IMessageItemTypingProps) {
 
                         let text = "";
                         if(data.includes("data:")) {
-                            text = data.split("data:")
+                            const dataMess = data.split("data:")
                                 .filter(t => t.length > 0)
-                                .map(t => JSON.parse(t).result.message)
-                                .join("")
+                                .map(t => JSON.parse(t).result)
+                            text = dataMess.map(m => m.message).join("")
+                            
+                            console.log("dataMess", dataMess)
                         } else {
                             const dataParse = JSON.parse(data)
                             text = dataParse.message
@@ -92,7 +105,7 @@ function MessageItemTyping(props: IMessageItemTypingProps) {
 
     useEffect(() => {
         if (messageTyping.isTyping) {
-            getMessage(messageTyping.message ?? "")
+            getMessage(messageTyping.message)
         }
     }, [messageTyping])
 

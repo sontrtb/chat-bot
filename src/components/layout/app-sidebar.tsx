@@ -13,7 +13,7 @@ import {
 import HistoryChat from "../sidebar/history-chat"
 import { Button } from "../ui/button"
 import { useNavigate } from "react-router-dom";
-import { useSetChatBot } from "@/redux/hooks/chat-bot";
+// import { useSetChatBot } from "@/redux/hooks/chat-bot";
 import { Switch } from "../ui/switch";
 import { useSetTheme, useGetCurrentTheme } from "@/redux/hooks/theme";
 import Logo from "@/assets/logo/logo.png"
@@ -21,7 +21,7 @@ import { LogOut, Moon, PanelRightOpen, Plus, UserRound } from "lucide-react";
 
 export function AppSidebar() {
     const navigate = useNavigate();
-    const setChatBot = useSetChatBot()
+    // const setChatBot = useSetChatBot()
 
     const setTheme = useSetTheme();
     const theme = useGetCurrentTheme()
@@ -29,14 +29,14 @@ export function AppSidebar() {
     const { toggleSidebar } = useSidebar()
 
     const goHomeScreen = () => {
-        setChatBot({
-            id: "all",
-            name: "Tất cả model",
-            icon: "",
-            description: "Tất cả model",
-            model: "all",
-            service: "all"
-        })
+        // setChatBot({
+        //     id: "all",
+        //     name: "Tất cả model",
+        //     icon: "",
+        //     description: "Tất cả model",
+        //     model: "all",
+        //     service: "all"
+        // })
         navigate("/")
     }
 

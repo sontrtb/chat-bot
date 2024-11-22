@@ -44,20 +44,20 @@ function Login() {
                 <img src={Logo} className="w-20 absolute top-6 left-8 brightness-200" />
                 <TypeAnimation
                     sequence={[
-                        'Chào mừng trở lại!',
+                        'Văn phòng UBND Hà Nội',
                         1000,
                     ]}
                     cursor={false}
                     speed={50}
-                    className="font-medium text-6xl"
+                    className="font-medium text-5xl"
                 />
                 <TypeAnimation
                     sequence={[
-                        'Với chatbot, bạn có thể học tập!',
+                        'Với trợ lý ảo, bạn có thể học tập!',
                         800,
-                        'Với chatbot, bạn có thể nghiên cứu!',
+                        'Với trợ lý ảo, bạn có thể nghiên cứu!',
                         800,
-                        'Với chatbot, bạn có thể sáng tạo!',
+                        'Với trợ lý ảo, bạn có thể sáng tạo!',
                         800,
                         'Tất cả trong một!',
                         1000,

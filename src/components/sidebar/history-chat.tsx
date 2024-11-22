@@ -8,16 +8,14 @@ import { getHistory } from "@/api/chat";
 function HistoryChat() {
     const navigate = useNavigate();
 
-    const goChatScreen = () => {
-        navigate("/chat/123")
+    const goChatScreen = (id: string) => {
+        navigate(`/chat?conId=${id}`)
     }
 
     const getHistoryQuery = useQuery({
         queryKey: [queryKey.getHistory],
         queryFn: getHistory
     })
-
-    console.log("getHistoryQuery", getHistoryQuery.data)
 
     return (
         <div className="mt-3">
@@ -27,10 +25,10 @@ function HistoryChat() {
             </SidebarGroupLabel>
             <SidebarGroupContent>
                 <SidebarMenu>
-                    {getHistoryQuery.data?.map((item) => (
+                    {getHistoryQuery.data?.reverse().map((item) => (
                         <SidebarMenuItem key={item.id} className="my-1">
-                            <SidebarMenuButton onClick={goChatScreen}>
-                                <span className="text-xs">{item.summary.length > 0 ? item.summary.length: "Tin nhắn cũ"}</span>
+                            <SidebarMenuButton onClick={() => goChatScreen(item.id)}>
+                                <span>{item.summary}</span>
                             </SidebarMenuButton>
                         </SidebarMenuItem>
                     ))}
