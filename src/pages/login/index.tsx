@@ -1,4 +1,4 @@
-import { ILoginBody } from "@/api/auth";
+import { ILoginBody, login } from "@/api/auth";
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -16,36 +16,32 @@ import { TypeAnimation } from 'react-type-animation';
 import { useGetCurrentTheme, useSetTheme } from "@/redux/hooks/theme";
 import { cn } from "@/lib/utils";
 import { Switch } from "@/components/ui/switch";
-// import { useSetUser } from "@/redux/hooks/user";
+import { useSetUser } from "@/redux/hooks/user";
 
 function Login() {
     const navigate = useNavigate();
-    // const setUser = useSetUser();
+    const setUser = useSetUser();
     const theme = useGetCurrentTheme()
     const setTheme = useSetTheme();
 
     const {
         register,
         handleSubmit,
-        // formState: { errors },
     } = useForm<ILoginBody>()
 
-    const onSubmit: SubmitHandler<ILoginBody> = () => {
-        // login(data).then((res) => {
-        //     console.log("res", res)
-        //     setUser(res)
-        //     navigate("/")
-        // }).catch((err) => {
-        //     console.log("err", err)
-        // })
-
-        navigate("/")
+    const onSubmit: SubmitHandler<ILoginBody> = (data) => {
+        login(data).then((res) => {
+            setUser(res)
+            navigate("/")
+        }).catch((err) => {
+            console.log("err", err)
+        })
     }
 
     return (
         <div className="grid grid-cols-12 gap-4 h-screen relative">
             <div className="col-span-6 flex justify-center flex-col pl-24">
-                <img src={Logo} className="w-20 absolute top-6 left-8" />
+                <img src={Logo} className="w-20 absolute top-6 left-8 brightness-200" />
                 <TypeAnimation
                     sequence={[
                         'Chào mừng trở lại!',

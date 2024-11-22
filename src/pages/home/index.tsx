@@ -32,7 +32,7 @@ function HomeScreen() {
             </div>
 
             <div className="grid grid-cols-3 gap-8 w-[66rem] mb-16">
-                <div className="p-4 bg-neutral-100 rounded-lg flex items-start">
+                <div className="p-4 bg-secondary rounded-lg flex items-start">
                     <div className="mr-3 w-56 h-36">
                         <h3 className="font-semibold mb-1">Sức mạnh toàn diện</h3>
                         <TypeAnimation
@@ -47,7 +47,7 @@ function HomeScreen() {
                     </div>
                     <img src={Feture1} className="w-16 object-contain" />
                 </div>
-                <div className="p-4 bg-neutral-100 rounded-lg flex items-start">
+                <div className="p-4 bg-secondary rounded-lg flex items-start">
                     <div className="mr-3 w-56 h-36">
                         <h3 className="font-semibold mb-1">Tốc độ vượt trội</h3>
                         <TypeAnimation
@@ -62,7 +62,7 @@ function HomeScreen() {
                     </div>
                     <img src={Feture2} className="w-16 object-contain" />
                 </div>
-                <div className="p-4 bg-neutral-100 rounded-lg flex items-start">
+                <div className="p-4 bg-secondary rounded-lg flex items-start">
                     <div className="mr-3 w-56 h-36">
                         <h3 className="font-semibold mb-1 flex-1">Linh hoạt theo nhu cầu</h3>
                         <TypeAnimation

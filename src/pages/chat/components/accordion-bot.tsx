@@ -14,16 +14,16 @@ function AccordionBot() {
     const botSelect = listBot.find(bot => idBotSelect === bot.id)
     
     return (
-        <div className="absolute z-10 top-20">
+        <div className="absolute z-10 top-4">
             <Accordion type="single" collapsible >
-                <AccordionItem value="item-1" className="w-12 bg-[#ffffff80] p-1 rounded-lg shadow">
+                <AccordionItem value="item-1" className="w-12 bg-secondary p-1 rounded-lg shadow">
                     <AccordionContent>
                         {
                             listBot.map(bot => (
                                 <img
                                     key={bot.id}
                                     src={bot.icon}
-                                    className={cn("w-10 p-2 hover:bg-neutral-200 rounded my-1 cursor-pointer border", idBotSelect !== bot.id && "border-[#ffffff80]")}
+                                    className={cn("w-10 p-2 hover:bg-neutral-200 rounded my-1 cursor-pointer", idBotSelect === bot.id ? "border" : 'border-transparent')}
                                     onClick={() => setChatBot(bot.id)}
                                 />
                             ))

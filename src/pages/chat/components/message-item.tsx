@@ -15,7 +15,7 @@ function MessageItem(props: IMessageItemProps) {
         <div className={cn("mb-3 flex", message.isSend ? "justify-end" : "justify-start")}>
             {
                 message.isSend ?
-                    <p className="px-5 py-2.5 bg-neutral-100 rounded-3xl w-fit leading-8">
+                    <p className="px-5 py-2.5 rounded-3xl w-fit leading-8">
                         {message.message}
                     </p> :
                     <div>
@@ -25,7 +25,7 @@ function MessageItem(props: IMessageItemProps) {
                                 <AvatarFallback>CN</AvatarFallback>
                             </Avatar>
                             <div
-                                className="ml-4 pt-1 w-fit text-neutral-700 leading-8"
+                                className="ml-4 pt-1 w-fit leading-8"
                                 dangerouslySetInnerHTML={{ __html: marked.parse(message.message) }}
                             />
                         </div>

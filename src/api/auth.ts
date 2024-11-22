@@ -8,7 +8,7 @@ export interface ILoginBody {
 
 
 const path = {
-  login: "/u/signin",
+  login: "/u/login",
 };
 
 const login = async (data: ILoginBody): Promise<IUser> => {

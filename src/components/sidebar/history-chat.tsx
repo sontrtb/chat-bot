@@ -1,25 +1,28 @@
 import { useNavigate } from "react-router-dom";
 import { SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "../ui/sidebar"
+import { Separator } from "../ui/separator";
 
 function HistoryChat() {
     const navigate = useNavigate();
 
-    const list = [1, 2, 3, 4, 5, 6]
+    const list = ["Lựa chọn biểu đồ phù hợp", "Total Sale là gì?", "Chi phí sử dụng ElasticSearch", "Quy đổi thời gian"]
 
-    
     const goChatScreen = () => {
         navigate("/chat/123")
     }
 
     return (
-        <div>
-            <SidebarGroupLabel>Lịch sử trò chuyện</SidebarGroupLabel>
+        <div className="mt-3">
+            <SidebarGroupLabel>
+                Lịch sử hội thoại
+                <Separator className="w-24 ml-3 mt-1" />
+            </SidebarGroupLabel>
             <SidebarGroupContent>
                 <SidebarMenu>
                     {list.map((item) => (
-                        <SidebarMenuItem key={item}>
+                        <SidebarMenuItem key={item} className="my-1">
                             <SidebarMenuButton onClick={goChatScreen}>
-                                <span>{"Hello chat"}</span>
+                                <span className="text-xs">{item}</span>
                             </SidebarMenuButton>
                         </SidebarMenuItem>
                     ))}

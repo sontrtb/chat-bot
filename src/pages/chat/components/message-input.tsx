@@ -21,14 +21,13 @@ function MessageInput(props: IMessageInputProps) {
 
     const handleSubmit = () => {
         if (messageTyping.isTyping || text.length === 0) return;
-
         onSubmit?.(text)
         setText("")
     }
 
     return (
         <div className="">
-            <div className="bg-neutral-100 rounded-xl py-1 w-full h-fit max-w-3xl mx-auto">
+            <div className="bg-secondary rounded-xl py-1 w-full h-fit max-w-3xl mx-auto">
                 <textarea
                     disabled={messageTyping.isTyping}
                     value={text}
@@ -39,7 +38,7 @@ function MessageInput(props: IMessageInputProps) {
                         }
                     }}
                     style={{ resize: "none" }}
-                    className="h-16 outline-none bg-neutral-100 flex-1 px-4 font-light rounded-xl pt-2"
+                    className="h-16 outline-none bg-secondary w-full flex-1 px-4 font-light rounded-xl pt-2"
                     placeholder="Nhập tin nhắn..."
                 />
                 <div className="flex justify-end mx-1 pb-1">
@@ -53,7 +52,7 @@ function MessageInput(props: IMessageInputProps) {
                 <div className="max-w-3xl mx-auto flex mt-2 items-center">
                     <p className="text-sm ml-3 font-light">Bạn đang sử dụng</p>
                     <div className="p-px ml-2 bg-gradient-to-r from-cyan-500 to-pink-500 rounded-lg">
-                        <div className="flex bg-white px-3 py-1 rounded-lg items-center">
+                        <div className="flex bg-secondary px-3 py-1 rounded-lg items-center">
                             <img src={botSelect?.icon} className="w-4 h-4 mr-2" />
                             <p className="text-sm font-light">{botSelect?.name}</p>
                         </div>

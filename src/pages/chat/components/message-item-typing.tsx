@@ -1,5 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useGetCurrentMessageTyping, useSetMessageTypingDone } from "@/redux/hooks/message-typing";
+import { useGetUser } from "@/redux/hooks/user";
 import { IMessage } from "@/types/message";
 import { Dispatch, Fragment, useEffect, useState } from "react";
 import { marked } from "marked"
@@ -15,6 +16,7 @@ function MessageItemTyping(props: IMessageItemTypingProps) {
 
     const messageTyping = useGetCurrentMessageTyping()
     const setMessageTypingDone = useSetMessageTypingDone()
+    const user = useGetUser()
 
     const [isLoading, setIsLoading] = useState(false)
     const [textTmp, setTextTmp] = useState("")
@@ -25,9 +27,14 @@ function MessageItemTyping(props: IMessageItemTypingProps) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                "responseType": "stream"
+                "responseType": "stream",
+                "Authorization": `Bearer ${user?.token}`
             },
-            body: JSON.stringify({ message: message })
+            body: JSON.stringify({
+                message: message,
+                conId: "",
+                target: "5bdfbf9f-70c4-49e5-873c-353f0a40373d"
+            })
         })
             .then(response => response.body?.getReader())
             .then(reader => {
@@ -93,7 +100,7 @@ function MessageItemTyping(props: IMessageItemTypingProps) {
                     isLoading ?
                         <Skeleton className="h-8 w-96 rounded-md ml-4 mt-2" /> :
                         <div
-                            className="ml-4 pt-1 w-fit text-neutral-700 leading-8"
+                            className="ml-4 pt-1 w-fit leading-8"
                             dangerouslySetInnerHTML={{ __html: marked.parse(textTmp) }}
                         />
                 }
@@ -103,3 +110,4 @@ function MessageItemTyping(props: IMessageItemTypingProps) {
 }
 
 export default MessageItemTyping
+
