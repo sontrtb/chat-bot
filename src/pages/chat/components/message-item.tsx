@@ -11,11 +11,13 @@ interface IMessageItemProps {
 function MessageItem(props: IMessageItemProps) {
     const { message } = props;
 
+    console.log("marked.parse(message.message)", marked.parse(message.message))
+
     return (
         <div className={cn("mb-3 flex", message.isSend ? "justify-end" : "justify-start")}>
             {
                 message.isSend ?
-                    <p className="px-5 py-2.5 rounded-3xl w-fit leading-8">
+                    <p className="px-5 py-2.5 rounded-3xl w-fit leading-8 bg-secondary">
                         {message.message}
                     </p> :
                     <div>
@@ -24,8 +26,8 @@ function MessageItem(props: IMessageItemProps) {
                                 <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
                                 <AvatarFallback>CN</AvatarFallback>
                             </Avatar>
-                            <div
-                                className="ml-4 pt-1 w-fit leading-8"
+                            <article
+                                className="prose ml-4 pt-1 w-fit"
                                 dangerouslySetInnerHTML={{ __html: marked.parse(message.message) }}
                             />
                         </div>
