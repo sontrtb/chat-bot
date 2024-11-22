@@ -29,7 +29,14 @@ export function AppSidebar() {
     const { toggleSidebar } = useSidebar()
 
     const goHomeScreen = () => {
-        setChatBot("all")
+        setChatBot({
+            id: "all",
+            name: "Tất cả model",
+            icon: "",
+            description: "Tất cả model",
+            model: "all",
+            service: "all"
+        })
         navigate("/")
     }
 
