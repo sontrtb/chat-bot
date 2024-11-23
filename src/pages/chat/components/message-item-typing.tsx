@@ -120,7 +120,7 @@ function MessageItemTyping(props: IMessageItemTypingProps) {
                 </Avatar>
                 {
                     isLoading ?
-                        <Skeleton className="h-8 w-96 rounded-md ml-4 mt-2" /> :
+                        <Skeleton className="h-8 w-1/2 md:w-96 rounded-md ml-4 mt-2" /> :
                         <article
                             className="prose dark:prose-invert ml-4 pt-1 w-fit"
                             dangerouslySetInnerHTML={{ __html: marked.parse(textTmp) }}

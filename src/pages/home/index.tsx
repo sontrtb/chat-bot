@@ -36,20 +36,20 @@ function HomeScreen() {
     }
 
     return (
-        <div className="m-auto">
-            <h1 className="text-3xl font-semibold mb-1 w-[48rem] m-auto">
+        <div className="m-auto p-2 md:p-0">
+            <h1 className="text-xl md:text-3xl font-semibold mb-1 w-full md:w-[48rem] m-auto">
                 <span className="bg-gradient-to-r from-violet-500 via-yellow-500 to-red-500 text-transparent bg-clip-text">
                     VĂN PHÒNG ỦY BAN NHÂN DÂN THÀNH PHỐ HÀ NỘI
                 </span>
             </h1>
-            <h1 className="text-3xl font-semibold w-[48rem] m-auto">Trợ lý ảo</h1>
+            <h1 className="text-xl md:text-3xl font-semibold w-full md:w-[48rem] m-auto">Trợ lý ảo</h1>
 
-            <div className="h-56 w-[48rem] m-auto flex-col bg-no-repeat bg-contain bg-[url('/images/bg-home.png')] flex justify-center items-center">
+            <div className="h-56 w-full md:w-[48rem] m-auto flex-col bg-no-repeat bg-contain bg-[url('/images/bg-home.png')] flex justify-center items-center">
                 <div className="h-2" />
                 <Button size="lg" className="h-12">D'ASSISTANT</Button>
             </div>
 
-            <div className="grid grid-cols-3 gap-8 w-[66rem] mb-16">
+            <div className="grid grid-cols-3 gap-8 w-full md:w-[66rem] mb-16">
                 {
                     getListBotQuery.data?.map(bot => (
                         <div

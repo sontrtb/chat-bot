@@ -15,7 +15,6 @@ function ContentSidebar() {
         navigate("/login")
     }
     
-
     const { open, isMobile } = useSidebar()
 
     return (

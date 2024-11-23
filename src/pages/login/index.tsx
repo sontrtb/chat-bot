@@ -40,8 +40,7 @@ function Login() {
 
     return (
         <div className="grid grid-cols-12 gap-4 h-screen relative">
-            <div className="col-span-6 flex justify-center flex-col pl-24">
-                <img src={Logo} className="w-20 absolute top-6 left-8 brightness-200" />
+            <div className="hidden md:flex col-span-6 justify-center flex-col pl-24">
                 <TypeAnimation
                     sequence={[
                         'Văn phòng UBND Hà Nội',
@@ -68,7 +67,7 @@ function Login() {
                 />
                 <div className="h-24" />
             </div>
-            <div className="col-span-6 flex justify-end items-center pr-24">
+            <div className="flex justify-end items-center md:pr-24 md:py-4  md:col-span-6 col-span-12">
                 <div className="flex items-center space-x-2 absolute top-6 right-8">
                     <Switch
                         id="airplane-mode"
@@ -79,7 +78,7 @@ function Login() {
                     />
                     <Label htmlFor="airplane-mode">Chế độ tối</Label>
                 </div>
-                <Card className="w-[500px] z-10 bg-login-form-background backdrop-blur-sm">
+                <Card className="md:w-[500px] m-auto w-11/12 z-10 bg-login-form-background backdrop-blur-sm">
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <CardHeader>
                             <CardTitle className="text-2xl">
@@ -119,7 +118,7 @@ function Login() {
 
                             <p className="text-sm text-right my-4 underline">Lấy lại mật khẩu</p>
 
-                            <div className="flex items-center justify-between">
+                            <div className="hidden md:flex items-center justify-between">
                                 <Separator className="w-40" />
                                 <p className="text-sm text-center">Tài khoản khác</p>
                                 <Separator className="w-40" />
@@ -128,7 +127,7 @@ function Login() {
                             <img src={LoginSocia} className="h-8 w-full object-contain mt-3" />
 
                         </CardContent>
-                        <CardFooter className="block opacity-60">
+                        <CardFooter className="hidden md:block opacity-60">
                             <p className="text-sm text-center my-4 w-full font-medium">Cần tạo tài khoản nhanh</p>
                             <div className="grid grid-cols-3">
                                 <p className="col-span-1 text-sm underline w-full text-center">Lưu ý</p>
@@ -140,9 +139,10 @@ function Login() {
                 </Card>
 
             </div>
+            <img src={Logo} className="w-20 absolute top-6 left-8 brightness-200" />
             <img src={Rectangle} className="w-36 absolute bottom-16 right-96 animate-float duration-10000" />
-            <img src={Rectangle2} className={cn("w-56 absolute top-20 left-[40%] animate-float", theme === "dark" && "brightness-50")} />
-            <img src={RainbowRing} className={cn("h-[400px] absolute bottom-0 left-0", theme === "dark" && "brightness-50")} />
+            <img src={Rectangle2} className={cn("w-56 absolute top-32 md:top-20 left-[40%] animate-float", theme === "dark" && "brightness-50")} />
+            <img src={RainbowRing} className={cn("h-[400px] absolute bottom-0 left-0 hidden md:block", theme === "dark" && "brightness-50")} /> 
         </div>
     )
 }
