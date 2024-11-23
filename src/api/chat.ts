@@ -14,7 +14,8 @@ export interface IHistory {
 const path = {
     history: "/c/cons",
     sendMess: "/c/chat",
-    mesages: "c/his/"
+    mesages: "c/his/",
+    createNewChat: "/c/con"
 };
 
 const sendMess = async (data: ISendMessBody): Promise<unknown> => {
@@ -45,4 +46,13 @@ const getMesages = async (id: string): Promise<IMessage[]> => {
     );
 };
 
-export { sendMess, getHistory, getMesages };
+const createNewChat = async (): Promise<string> => {
+    return await rootApi(
+        {
+            url: path.createNewChat,
+            method: "get",
+        },
+    );
+};
+
+export { sendMess, getHistory, getMesages, createNewChat };

@@ -1,4 +1,3 @@
-
 import { useGetCurrentChatBot } from "@/redux/hooks/chat-bot";
 import { useGetCurrentMessageTyping } from "@/redux/hooks/message-typing";
 import { CirclePause, Send } from "lucide-react"
@@ -6,11 +5,10 @@ import { useState } from "react";
 
 interface IMessageInputProps {
     onSubmit?: (text: string) => void;
-    showBot?: boolean;
 }
 
 function MessageInput(props: IMessageInputProps) {
-    const { onSubmit, showBot = true } = props;
+    const { onSubmit } = props;
 
     const messageTyping = useGetCurrentMessageTyping()
 
@@ -25,39 +23,24 @@ function MessageInput(props: IMessageInputProps) {
     }
 
     return (
-        <div className="">
-            <div className="bg-secondary rounded-xl py-1 w-full h-fit max-w-3xl mx-auto">
-                <textarea
-                    disabled={messageTyping.isTyping}
-                    value={text}
-                    onChange={e => setText(e.target.value)}
-                    onKeyDown={e => {
-                        if (e.key === 'Enter') {
-                            handleSubmit()
-                        }
-                    }}
-                    style={{ resize: "none" }}
-                    className="h-16 outline-none bg-secondary w-full flex-1 px-4 font-light rounded-xl pt-2"
-                    placeholder="Nhập tin nhắn..."
-                />
-                <div className="flex justify-end mx-1 pb-1">
-                    <button className="cursor-pointer p-2 bg-neutral-800 mr-1 rounded-full" onClick={handleSubmit}>
-                        {messageTyping.isTyping ? <CirclePause size="18px" color="white" /> : <Send size="18px" color="white" />}
-                    </button>
-                </div>
-            </div>
-            {
-                showBot &&
-                <div className="max-w-3xl mx-auto flex mt-2 items-center">
-                    <p className="text-sm ml-3 font-light">Bạn đang sử dụng</p>
-                    <div className="p-px ml-2 bg-gradient-to-r from-cyan-500 to-pink-500 rounded-lg">
-                        <div className="flex bg-secondary px-3 py-1 rounded-lg items-center">
-                            <img src={import.meta.env.VITE_API_URL + botSelect?.icon} className="w-4 h-4 mr-2" />
-                            <p className="text-sm font-light">{botSelect?.name}</p>
-                        </div>
-                    </div>
-                </div>
-            }
+        <div className="bg-secondary rounded-full py-3 w-full h-fit max-w-3xl mx-auto flex items-center px-2">
+            <img src={import.meta.env.VITE_API_URL + botSelect?.icon} className="w-8 h-8 ml-2" />
+            <input
+                disabled={messageTyping.isTyping}
+                value={text}
+                onChange={e => setText(e.target.value)}
+                onKeyDown={e => {
+                    if (e.key === 'Enter') {
+                        handleSubmit()
+                    }
+                }}
+                style={{ resize: "none" }}
+                className="outline-none bg-secondary w-full flex-1 px-4 font-light"
+                placeholder="Hãy hỏi tôi..."
+            />
+            <button className="cursor-pointer mr-3" onClick={handleSubmit}>
+                {messageTyping.isTyping ? <CirclePause size="24px" className="text-primary" /> : <Send size="24px" className="text-primary" />}
+            </button>
 
         </div>
     )

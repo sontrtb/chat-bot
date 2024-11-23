@@ -3,22 +3,36 @@ import { useNavigate } from "react-router-dom";
 import { useSetMessageTyping } from "@/redux/hooks/message-typing";
 import { Button } from "@/components/ui/button";
 import { TypeAnimation } from 'react-type-animation';
-
-import Feture1 from "@/assets/home/feture_1.png"
-import Feture2 from "@/assets/home/feture_2.png"
-import Feture3 from "@/assets/home/feture_3.png"
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { createNewChat } from "@/api/chat";
+import queryKey from "@/const/query-key";
+import { getListBot } from "@/api/bot";
+import { useSetChatBot } from "@/redux/hooks/chat-bot";
 
 function HomeScreen() {
     const navigate = useNavigate();
 
     const setMessageTyping = useSetMessageTyping()
+    const setChatBot = useSetChatBot()
+
+    const createChatMutation = useMutation({
+        mutationFn: createNewChat
+    })
+
+    const getListBotQuery = useQuery({
+        queryKey: [queryKey.getListBot],
+        queryFn: getListBot
+    })
 
     const handleSendMess = (mess: string) => {
-        setTimeout(() => {
-            setMessageTyping(mess)
-        }, 500)
-
-        navigate("/chat")
+        createChatMutation.mutate(undefined, {
+            onSuccess: (res) => {
+                setTimeout(() => {
+                    setMessageTyping(mess)
+                }, 500)
+                navigate(`/chat?conId=${res}`)
+            }
+        })
     }
 
     return (
@@ -36,51 +50,29 @@ function HomeScreen() {
             </div>
 
             <div className="grid grid-cols-3 gap-8 w-[66rem] mb-16">
-                <div className="p-4 bg-secondary rounded-lg flex items-start">
-                    <div className="mr-3 w-56 h-36">
-                        <h3 className="font-semibold mb-1">Sức mạnh toàn diện</h3>
-                        <TypeAnimation
-                            sequence={[
-                                'Khai thác trí tuệ từ các nền tảng AI mạnh mẽ nhất hiện nay. Từ phân tích ngôn ngữ, tạo nội dung, đến thiết kế sáng tạo - mọi thứ đều nằm trong tầm tay bạn!',
-                                3000,
-                            ]}
-                            cursor
-                            speed={50}
-                            className="text-sm font-light"
-                        />
-                    </div>
-                    <img src={Feture1} className="w-16 object-contain" />
-                </div>
-                <div className="p-4 bg-secondary rounded-lg flex items-start">
-                    <div className="mr-3 w-56 h-36">
-                        <h3 className="font-semibold mb-1">Tốc độ vượt trội</h3>
-                        <TypeAnimation
-                            sequence={[
-                                'Không cần chờ đợi lâu - câu trả lời, hình ảnh hoặc giải pháp của bạn sẽ đến chỉ trong tích tắc. Tăng tốc ý tưởng và giải quyết vấn đề nhanh hơn bao giờ hết!',
-                                3000,
-                            ]}
-                            cursor
-                            speed={50}
-                            className="text-sm font-light"
-                        />
-                    </div>
-                    <img src={Feture2} className="w-16 object-contain" />
-                </div>
-                <div className="p-4 bg-secondary rounded-lg flex items-start">
-                    <div className="mr-3 w-56 h-36">
-                        <h3 className="font-semibold mb-1 flex-1">Linh hoạt theo nhu cầu</h3>
-                        <TypeAnimation
-                            sequence={[
-                                'Lựa chọn đúng mô hình cho các mục đích được tối ưu riêng hoặc kết hợp tất cả để đạt hiệu quả cao nhất - tùy theo nhu cầu của bạn!',
-                                3000,
-                            ]}
-                            cursor
-                            speed={50}
-                            className="text-sm font-light"
-                        />
-                    </div>
-                    <img src={Feture3} className="w-16 object-contain" />
-                </div>
+                {
+                    getListBotQuery.data?.map(bot => (
+                        <div
+                            className="p-3 cursor-pointer bg-secondary rounded-lg flex items-start"
+                            onClick={() => setChatBot(bot)}
+                        >
+                            <div className="mr-3 w-60 h-20">
+                                <h3 className="font-semibold mb-1">{bot.name}</h3>
+                                <TypeAnimation
+                                    sequence={[
+                                        bot.description,
+                                        2000,
+                                    ]}
+                                    cursor
+                                    speed={50}
+                                    className="text-sm font-light"
+                                />
+                            </div>
+                            <img src={import.meta.env.VITE_API_URL + bot.icon} className="w-12 object-contain" />
+                        </div>
+                    ))
+                }
+
             </div>
 
             <MessageInput onSubmit={handleSendMess} />
