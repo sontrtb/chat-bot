@@ -58,7 +58,7 @@ function ContentSidebar() {
                             <Tooltip>
                                 <TooltipTrigger>
                                     <Button
-                                        variant="ghost"
+                                        variant="secondary"
                                         size="icon"
                                         className="border"
                                         onClick={() => {

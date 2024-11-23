@@ -54,24 +54,24 @@ function HomeScreen() {
             <div className="grid-cols-3 gap-3 md:gap-8 w-full md:w-[66rem] grid mb-16">
                 {
                     getListBotQuery.data?.map(bot => (
-                        <div
-                            className="justify-end p-3 cursor-pointer bg-secondary rounded-lg flex md:flex-row flex-col-reverse md:items-start hover:shadow items-center"
-                            onClick={() => setChatBot(bot)}
-                        >
-                            <div className="md:mr-3 md:w-60 md:h-20">
-                                <h3 className="text-center md:text-left md:font-normal md:font-semibold mt-2 md:mt-0">{bot.name}</h3>
-                                <TypeAnimation
-                                    sequence={[
-                                        bot.description,
-                                        2000,
-                                    ]}
-                                    cursor
-                                    speed={50}
-                                    className="hidden md:block text-sm font-light"
-                                />
+                            <div
+                                className="justify-end p-3 cursor-pointer bg-secondary rounded-lg flex md:flex-row flex-col-reverse md:items-start hover:shadow items-center hover:scale-105 transition-transform duration-300 transform"
+                                onClick={() => setChatBot(bot)}
+                            >
+                                <div className="md:mr-3 md:w-60 md:h-20">
+                                    <h3 className="text-center md:text-left md:font-normal md:font-semibold mt-2 md:mt-0">{bot.name}</h3>
+                                    <TypeAnimation
+                                        sequence={[
+                                            bot.description,
+                                            2000,
+                                        ]}
+                                        cursor
+                                        speed={50}
+                                        className="hidden md:block text-sm font-light"
+                                    />
+                                </div>
+                                <img src={import.meta.env.VITE_API_URL + bot.icon} className="w-1/2 md:w-12 object-contain" />
                             </div>
-                            <img src={import.meta.env.VITE_API_URL + bot.icon} className="w-1/2 md:w-12 object-contain" />
-                        </div>
                     ))
                 }
 
