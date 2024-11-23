@@ -3,6 +3,7 @@ import ChatScreen from "@/pages/chat";
 import HomeScreen from "@/pages/home";
 import Login from "@/pages/login";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import UnauthenticatedProtectedRoute from "./unauthenticated-protected-route";
 
 const router = createBrowserRouter([
     {
@@ -12,7 +13,10 @@ const router = createBrowserRouter([
     },
     {
         path: "/",
-        element: <Layout />,
+        element:
+            <UnauthenticatedProtectedRoute>
+                <Layout />
+            </UnauthenticatedProtectedRoute>,
         children: [
             {
                 path: "/",

@@ -13,15 +13,15 @@ import {
 import HistoryChat from "../sidebar/history-chat"
 import { Button } from "../ui/button"
 import { useNavigate } from "react-router-dom";
-// import { useSetChatBot } from "@/redux/hooks/chat-bot";
 import { Switch } from "../ui/switch";
 import { useSetTheme, useGetCurrentTheme } from "@/redux/hooks/theme";
 import Logo from "@/assets/logo/logo.png"
 import { LogOut, Moon, PanelRightOpen, Plus, UserRound } from "lucide-react";
+import { useLogoutUser } from "@/redux/hooks/user";
 
 export function AppSidebar() {
     const navigate = useNavigate();
-    // const setChatBot = useSetChatBot()
+    const logOut = useLogoutUser()
 
     const setTheme = useSetTheme();
     const theme = useGetCurrentTheme()
@@ -33,7 +33,8 @@ export function AppSidebar() {
     }
 
     const handleLogout = () => {
-        navigate("/login")
+        logOut()
+        window.open("/login")
     }
 
     return (

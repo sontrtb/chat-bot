@@ -4,13 +4,17 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { LogOut } from "lucide-react";
 import { SidebarTrigger, useSidebar } from "@/components/ui/sidebar"
 import { cn } from "@/lib/utils";
+import { useLogoutUser } from "@/redux/hooks/user";
 
 function ContentSidebar() {
     const navigate = useNavigate();
 
+    const logOut = useLogoutUser()
     const handleLogout = () => {
+        logOut()
         navigate("/login")
     }
+    
 
     const { open, isMobile } = useSidebar()
 

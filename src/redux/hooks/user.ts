@@ -16,6 +16,12 @@ const useGetUser = (): IUser | undefined => {
   return user.user;
 };
 
+const useLogoutUser = () => {
+  const logout = () => {
+    localStorage.clear();
+  }
+  return logout;
+};
 
-export { useSetUser, useGetUser };
+export { useSetUser, useGetUser, useLogoutUser };
  
