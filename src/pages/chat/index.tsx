@@ -42,7 +42,9 @@ function ChatScreen() {
     return (
         <div className="flex flex-col h-[calc(100vh_-_80px)] p-3">
             <MessageList listMess={listMess} setListMess={setListMess}/>
-            <MessageInput onSubmit={sendMessage} />
+            {/* <div style={{position: "sticky", bottom: 10}}> */}
+                <MessageInput onSubmit={sendMessage} />
+            {/* </div> */}
         </div>
     )
 }

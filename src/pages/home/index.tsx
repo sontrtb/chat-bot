@@ -40,18 +40,18 @@ function HomeScreen() {
             <h1 className="text-xl md:text-3xl font-semibold mb-1 w-full md:w-[48rem] m-auto">
                 VĂN PHÒNG ỦY BAN NHÂN DÂN THÀNH PHỐ HÀ NỘI
             </h1>
-            <h1 className="text-xl md:text-3xl font-semibold w-full md:w-[48rem] m-auto">
+            <h1 className="text-xl md:text-3xl font-semibold w-full md:w-[48rem] m-auto mb-8 md:mb-0">
                 <span className="bg-gradient-to-r from-violet-500 via-yellow-500 to-red-500 text-transparent bg-clip-text">
                     Chọn AI để bắt đầu hội thoại
                 </span>
             </h1>
 
-            <div className="h-56 w-full md:w-[48rem] m-auto flex-col bg-no-repeat bg-contain bg-[url('/images/bg-home.png')] flex justify-center items-center">
+            <div className="hidden md:flex h-56 w-full md:w-[48rem] m-auto flex-col bg-no-repeat bg-contain bg-[url('/images/bg-home.png')] justify-center items-center">
                 <div className="h-2" />
                 <Button size="lg" className="h-12">D'ASSISTANT</Button>
             </div>
 
-            <div className="grid-cols-3 gap-3 md:gap-8 w-full md:w-[66rem] grid mb-16">
+            <div className="grid-cols-3 gap-3 md:gap-8 w-full md:w-[66rem] grid mb-8 md:mb-16">
                 {
                     getListBotQuery.data?.map(bot => (
                             <div
@@ -70,11 +70,10 @@ function HomeScreen() {
                                         className="hidden md:block text-sm font-light"
                                     />
                                 </div>
-                                <img src={import.meta.env.VITE_API_URL + bot.icon} className="w-1/2 md:w-12 object-contain" />
+                                <img src={import.meta.env.VITE_API_URL + bot.icon} className="w-1/3 md:w-12 object-contain" />
                             </div>
                     ))
                 }
-
             </div>
 
             <MessageInput onSubmit={handleSendMess} />
