@@ -1,7 +1,6 @@
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
 import { AppSidebar } from "./app-sidebar"
 import ContentSidebar from "../sidebar/content-sidebar";
-import AccordionBot from "../common/accordion-bot";
 
 export default function Layout() {
 
@@ -13,7 +12,6 @@ export default function Layout() {
       <AppSidebar />
       <SidebarInset className="h-screen pl-2">
         <ContentSidebar />
-        <AccordionBot />
       </SidebarInset>
     </SidebarProvider>
   )

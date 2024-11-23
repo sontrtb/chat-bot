@@ -38,26 +38,28 @@ function HomeScreen() {
     return (
         <div className="m-auto p-2 md:p-0">
             <h1 className="text-xl md:text-3xl font-semibold mb-1 w-full md:w-[48rem] m-auto">
+                VĂN PHÒNG ỦY BAN NHÂN DÂN THÀNH PHỐ HÀ NỘI
+            </h1>
+            <h1 className="text-xl md:text-3xl font-semibold w-full md:w-[48rem] m-auto">
                 <span className="bg-gradient-to-r from-violet-500 via-yellow-500 to-red-500 text-transparent bg-clip-text">
-                    VĂN PHÒNG ỦY BAN NHÂN DÂN THÀNH PHỐ HÀ NỘI
+                    Chọn AI để bắt đầu hội thoại
                 </span>
             </h1>
-            <h1 className="text-xl md:text-3xl font-semibold w-full md:w-[48rem] m-auto">Trợ lý ảo</h1>
 
             <div className="h-56 w-full md:w-[48rem] m-auto flex-col bg-no-repeat bg-contain bg-[url('/images/bg-home.png')] flex justify-center items-center">
                 <div className="h-2" />
                 <Button size="lg" className="h-12">D'ASSISTANT</Button>
             </div>
 
-            <div className="grid grid-cols-3 gap-8 w-full md:w-[66rem] mb-16">
+            <div className="grid-cols-3 gap-3 md:gap-8 w-full md:w-[66rem] grid mb-16">
                 {
                     getListBotQuery.data?.map(bot => (
                         <div
-                            className="p-3 cursor-pointer bg-secondary rounded-lg flex items-start"
+                            className="justify-end p-3 cursor-pointer bg-secondary rounded-lg flex md:flex-row flex-col-reverse md:items-start hover:shadow items-center"
                             onClick={() => setChatBot(bot)}
                         >
-                            <div className="mr-3 w-60 h-20">
-                                <h3 className="font-semibold mb-1">{bot.name}</h3>
+                            <div className="md:mr-3 md:w-60 md:h-20">
+                                <h3 className="text-center md:text-left md:font-normal md:font-semibold mt-2 md:mt-0">{bot.name}</h3>
                                 <TypeAnimation
                                     sequence={[
                                         bot.description,
@@ -65,10 +67,10 @@ function HomeScreen() {
                                     ]}
                                     cursor
                                     speed={50}
-                                    className="text-sm font-light"
+                                    className="hidden md:block text-sm font-light"
                                 />
                             </div>
-                            <img src={import.meta.env.VITE_API_URL + bot.icon} className="w-12 object-contain" />
+                            <img src={import.meta.env.VITE_API_URL + bot.icon} className="w-1/2 md:w-12 object-contain" />
                         </div>
                     ))
                 }

@@ -11,10 +11,23 @@ import queryKey from "@/const/query-key"
 import { useQuery } from "@tanstack/react-query"
 import { useEffect } from "react"
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "../ui/hover-card"
+import { useIsMobile } from "@/hooks/use-mobile"
+import {
+    Drawer,
+    DrawerContent,
+    DrawerHeader,
+    DrawerTitle,
+    DrawerTrigger,
+} from "@/components/ui/drawer"
+import { Button } from "../ui/button"
+import { Card, CardContent } from "../ui/card"
+
 
 function AccordionBot() {
     const setChatBot = useSetChatBot()
     const botSelect = useGetCurrentChatBot()
+
+    const isMobile = useIsMobile()
 
     const getListBotQuery = useQuery({
         queryKey: [queryKey.getListBot],
@@ -27,8 +40,42 @@ function AccordionBot() {
         }
     }, [botSelect, getListBotQuery.data, setChatBot])
 
+    if (isMobile) {
+        return (
+            <Drawer>
+                <DrawerTrigger asChild>
+                    <Button size="icon" variant="outline">
+                        <img src={import.meta.env.VITE_API_URL + botSelect?.icon} className="w-10 h-10 p-2" />
+                    </Button>
+                </DrawerTrigger>
+                <DrawerContent className="h-72">
+                    <DrawerHeader className="text-left">
+                        <DrawerTitle>Chọn AI</DrawerTitle>
+                    </DrawerHeader>
+                    <div className="flex justify-around">
+                        {
+                            getListBotQuery.data?.map(bot => (
+                                <img
+                                    src={import.meta.env.VITE_API_URL + bot.icon}
+                                    className={cn("w-10 h-10 p-2 hover:bg-neutral-200 rounded my-1 cursor-pointer", botSelect?.id === bot.id ? "border" : 'border-transparent')}
+                                    onClick={() => setChatBot(bot)}
+                                />
+                            ))
+                        }
+                    </div>
+                    <Card className="mx-4 pt-4">
+                        <CardContent>
+                            <h3 className="text-xl font-semibold bg-gradient-to-r from-violet-500 via-yellow-500 to-red-500 text-transparent bg-clip-text">{botSelect?.name}</h3>
+                            <p>{botSelect?.description}</p>
+                        </CardContent>
+                    </Card>
+                </DrawerContent>
+            </Drawer>
+        )
+    }
+
     return (
-        <div className="absolute z-10 top-4">
+        <div>
             <Accordion type="single" collapsible defaultValue="item-1">
                 <AccordionItem value="item-1" className="w-12 bg-secondary p-1 rounded-lg shadow">
                     <AccordionContent>
