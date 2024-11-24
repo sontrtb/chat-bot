@@ -29,9 +29,6 @@ export default defineConfig({
           }
         ]
       },
-      workbox: {
-        cleanupOutdatedCaches: true,
-      }
     })
   ],
   resolve: {
