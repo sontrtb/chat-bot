@@ -1,7 +1,7 @@
 import { useGetCurrentChatBot } from "@/redux/hooks/chat-bot";
 import { useGetCurrentMessageTyping } from "@/redux/hooks/message-typing";
 import { CirclePause, Send } from "lucide-react"
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface IMessageInputProps {
     onSubmit?: (text: string) => void;
@@ -10,6 +10,8 @@ interface IMessageInputProps {
 
 function MessageInput(props: IMessageInputProps) {
     const { onSubmit, autoFocus } = props;
+
+    const inputRef = useRef<HTMLInputElement>(null)
 
     const messageTyping = useGetCurrentMessageTyping()
 
@@ -23,10 +25,17 @@ function MessageInput(props: IMessageInputProps) {
         setText("")
     }
 
+    useEffect(() => {
+        if(!messageTyping.isTyping && autoFocus) {
+            inputRef.current?.focus()
+        }
+    }, [autoFocus, messageTyping.isTyping])
+
     return (
         <div className="bg-secondary rounded-full py-2 md:py-3 w-full h-fit max-w-3xl mx-auto flex items-center px-1 md:px-2">
             <img src={import.meta.env.VITE_API_URL + botSelect?.icon} className="w-8 h-8 ml-2" />
             <input
+                ref={inputRef}
                 autoFocus={autoFocus}
                 disabled={messageTyping.isTyping}
                 value={text}

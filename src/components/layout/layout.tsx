@@ -6,7 +6,7 @@ export default function Layout() {
   
   return (
     <SidebarProvider
-    className="bg-[url('/images/background.png')] bg-no-repeat bg-auto bg-right-top"
+    className="bg-[url('/images/background.png')] bg-no-repeat bg-cover bg-center"
     >
       <AppSidebar />
       <SidebarInset className="h-screen pl-2">

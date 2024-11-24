@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { IMessage } from "@/types/message";
-import { memo } from "react";
+import { memo, useState } from "react";
 import { marked } from "marked";
 import { useGetUser } from "@/redux/hooks/user";
 import { useQueryClient } from "@tanstack/react-query";
@@ -9,7 +9,6 @@ import queryKey from "@/const/query-key";
 import { IBot } from "@/types/chatbot";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Copy, RefreshCcw } from "lucide-react";
-// import { useSetMessageTyping } from "@/redux/hooks/message-typing";
 
 interface IMessageItemProps {
     message: IMessage
@@ -21,13 +20,23 @@ function MessageItem(props: IMessageItemProps) {
     const user = useGetUser()
     const isSend = user?.id === message.userId
 
-    // const setMessageTyping = useSetMessageTyping()
-
     const queryClient = useQueryClient()
     const listBot = queryClient.getQueryData<IBot[] | undefined>([queryKey.getListBot])
     const botSend = listBot?.find(bot => bot.id === message.userId)
 
-    const retryRenderMessage = (message: IMessage) => {
+    const [isCoppyDone, setIsCopyDone] = useState(false)
+
+    const handleCoppy = () => {
+        navigator.clipboard.writeText(message.message)
+        .then(() => {
+            setIsCopyDone(true)
+            setTimeout(() => {
+                setIsCopyDone(false)
+            }, 300)
+        })
+    }
+
+    const retryRenderMessage = () => {
         console.log(message.message)
     }
 
@@ -46,15 +55,16 @@ function MessageItem(props: IMessageItemProps) {
                             </Avatar>
                             <div>
                                 <article
-                                    className="prose dark:prose-invert ml-4 md:w-fit w-4/5 p-3 shadow-xl rouder rounded-xl border"
+                                    className={cn(
+                                        "bg-secondary/30 prose dark:prose-invert ml-4 md:w-fit w-4/5 p-3 shadow-xl rouder rounded-xl border transition-transform duration-300 transform",
+                                        isCoppyDone ? "scale-95 backdrop-brightness-90" : ""
+                                    )}
                                     dangerouslySetInnerHTML={{ __html: marked.parse(message.message) as string }}
                                 />
                                 <div className="ml-4 mt-1 p-2">
                                     <TooltipProvider>
                                         <Tooltip>
-                                            <TooltipTrigger onClick={() => {
-                                                navigator.clipboard.writeText(message.message)
-                                            }}>
+                                            <TooltipTrigger onClick={handleCoppy}>
                                                 <Copy size={18} className="mx-2"/>
                                             </TooltipTrigger>
                                             <TooltipContent side="bottom">
@@ -62,9 +72,7 @@ function MessageItem(props: IMessageItemProps) {
                                             </TooltipContent>
                                         </Tooltip>
                                         <Tooltip>
-                                            <TooltipTrigger onClick={() => {
-                                                retryRenderMessage(message)
-                                            }}>
+                                            <TooltipTrigger onClick={retryRenderMessage}>
                                                 <RefreshCcw size={18} className="mx-2"/>
                                             </TooltipTrigger>
                                             <TooltipContent side="bottom">

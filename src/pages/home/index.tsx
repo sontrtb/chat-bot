@@ -81,7 +81,7 @@ function HomeScreen() {
                                         className="hidden md:block text-sm font-light"
                                     />
                                 </div>
-                                <img src={import.meta.env.VITE_API_URL + bot.icon} className="w-1/3 md:w-12 object-contain" />
+                                <img src={import.meta.env.VITE_API_URL + bot.icon} className="h-8 md:h-auto md:w-12 object-contain" />
                             </div>
                     ))
                 }
