@@ -5,10 +5,11 @@ import { useState } from "react";
 
 interface IMessageInputProps {
     onSubmit?: (text: string) => void;
+    autoFocus?: boolean;
 }
 
 function MessageInput(props: IMessageInputProps) {
-    const { onSubmit } = props;
+    const { onSubmit, autoFocus } = props;
 
     const messageTyping = useGetCurrentMessageTyping()
 
@@ -23,9 +24,10 @@ function MessageInput(props: IMessageInputProps) {
     }
 
     return (
-        <div className="bg-secondary rounded-full py-3 w-full h-fit max-w-3xl mx-auto flex items-center px-2">
+        <div className="bg-secondary rounded-full py-2 md:py-3 w-full h-fit max-w-3xl mx-auto flex items-center px-1 md:px-2">
             <img src={import.meta.env.VITE_API_URL + botSelect?.icon} className="w-8 h-8 ml-2" />
             <input
+                autoFocus={autoFocus}
                 disabled={messageTyping.isTyping}
                 value={text}
                 onChange={e => setText(e.target.value)}

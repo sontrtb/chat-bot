@@ -8,12 +8,16 @@ import { createNewChat } from "@/api/chat";
 import queryKey from "@/const/query-key";
 import { getListBot } from "@/api/bot";
 import { useSetChatBot } from "@/redux/hooks/chat-bot";
+import { IMessage } from "@/types/message";
+import { useGetUser } from "@/redux/hooks/user";
 
 function HomeScreen() {
     const navigate = useNavigate();
 
     const setMessageTyping = useSetMessageTyping()
     const setChatBot = useSetChatBot()
+
+    const user = useGetUser()
 
     const createChatMutation = useMutation({
         mutationFn: createNewChat
@@ -25,12 +29,19 @@ function HomeScreen() {
     })
 
     const handleSendMess = (mess: string) => {
+        const newMess: IMessage= {
+            id: -1,
+            message: mess,
+            userId: user?.id ?? "me"
+        }
         createChatMutation.mutate(undefined, {
             onSuccess: (res) => {
                 setTimeout(() => {
                     setMessageTyping(mess)
                 }, 500)
-                navigate(`/chat?conId=${res}`)
+                navigate(`/chat?conId=${res}`, {
+                    state: newMess
+                })
             }
         })
     }

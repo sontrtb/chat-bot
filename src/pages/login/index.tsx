@@ -1,7 +1,7 @@
 import { ILoginBody, login } from "@/api/auth";
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
+import { Input, PasswordInput } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useNavigate } from "react-router-dom";
 import { useForm, SubmitHandler } from "react-hook-form"
@@ -104,7 +104,12 @@ function Login() {
                             </div>
                             <div className="mt-3">
                                 <Label htmlFor="password">Mật khẩu</Label>
-                                <Input id="password" className="mt-1" placeholder="Mật khẩu..." {...register("password", { required: true })} />
+                                <PasswordInput
+                                    id="password"
+                                    className="mt-1"
+                                    placeholder="Mật khẩu..."
+                                    {...register("password", { required: true })}
+                                />
                             </div>
 
                             <div className="flex items-center space-x-2 mt-3">

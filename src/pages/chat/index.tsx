@@ -1,4 +1,4 @@
-import { useSearchParams } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 import MessageInput from "./components/message-input"
 import MessageList from "./components/message-list"
 import { useEffect, useState } from "react";
@@ -13,6 +13,8 @@ function ChatScreen() {
     const [searchParams] = useSearchParams();
     const conId = searchParams.get("conId")
 
+    const { state } = useLocation();
+
     const setMessageTyping = useSetMessageTyping()
     const user = useGetUser()
 
@@ -21,12 +23,14 @@ function ChatScreen() {
     const getMessagesQuery = useQuery({
         queryKey: [queryKey.getMessage, conId],
         queryFn: () => getMesages(conId ?? ""),
-        enabled: !!conId && conId !== "new",
+        enabled: !!conId,
     })
 
     useEffect(() => {
-        setListMess(getMessagesQuery.data?.reverse() ?? [])
-    }, [getMessagesQuery.data])
+        const initList = state ? [state] : []
+        setListMess([...initList, ...getMessagesQuery.data ?? [],].reverse() ?? [])
+        window.history.replaceState({}, '')
+    }, [getMessagesQuery.data, state])
 
     const sendMessage = async (message: string) => {
         const newMess: IMessage = {
@@ -35,16 +39,16 @@ function ChatScreen() {
             message: message
         }
         setListMess(pre => [...pre, newMess])
-        
+
         setMessageTyping(message)
     }
 
     return (
-        <div className="flex flex-col h-[calc(100vh_-_80px)] p-3">
-            <MessageList listMess={listMess} setListMess={setListMess}/>
-            {/* <div style={{position: "sticky", bottom: 10}}> */}
-                <MessageInput onSubmit={sendMessage} />
-            {/* </div> */}
+        <div className="flex flex-col h-[calc(100vh_-_80px)]">
+            <MessageList listMess={listMess} setListMess={setListMess} />
+            <div className="pb-4">
+                <MessageInput onSubmit={sendMessage} autoFocus />
+            </div>
         </div>
     )
 }

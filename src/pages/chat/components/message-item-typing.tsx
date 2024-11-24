@@ -85,8 +85,6 @@ function MessageItemTyping(props: IMessageItemTypingProps) {
                                 .filter(t => t.length > 0)
                                 .map(t => JSON.parse(t).result)
                             text = dataMess.map(m => m.message).join("")
-                            
-                            console.log("dataMess", dataMess)
                         } else {
                             const dataParse = JSON.parse(data)
                             text = dataParse.message
@@ -129,7 +127,7 @@ function MessageItemTyping(props: IMessageItemTypingProps) {
                     isLoading ?
                         <Skeleton className="h-8 w-1/2 md:w-96 rounded-md ml-4 mt-2" /> :
                         <article
-                            className="prose dark:prose-invert ml-4 pt-1 md:w-fit w-4/5"
+                            className="prose dark:prose-invert ml-4 pt-1 md:w-fit w-4/5  p-3 shadow-xl rouder rounded-xl border"
                             dangerouslySetInnerHTML={{ __html: marked.parse(textTmp) as string }}
                         />
                 }
