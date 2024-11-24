@@ -31,7 +31,7 @@ function MessageItem(props: IMessageItemProps) {
                             </Avatar>
                             <article
                                 className="prose dark:prose-invert ml-4 pt-1 md:w-fit w-3/4"
-                                dangerouslySetInnerHTML={{ __html: marked.parse(message.message) }}
+                                dangerouslySetInnerHTML={{ __html: marked.parse(message.message) as string }}
                             />
                         </div>
                     </div>

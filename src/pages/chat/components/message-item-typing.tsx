@@ -123,7 +123,7 @@ function MessageItemTyping(props: IMessageItemTypingProps) {
                         <Skeleton className="h-8 w-1/2 md:w-96 rounded-md ml-4 mt-2" /> :
                         <article
                             className="prose dark:prose-invert ml-4 pt-1 md:w-fit w-3/4"
-                            dangerouslySetInnerHTML={{ __html: marked.parse(textTmp) }}
+                            dangerouslySetInnerHTML={{ __html: marked.parse(textTmp) as string }}
                         />
                 }
             </div>
