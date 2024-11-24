@@ -4,6 +4,9 @@ import { IMessage } from "@/types/message";
 import { memo } from "react";
 import { marked } from "marked";
 import { useGetUser } from "@/redux/hooks/user";
+import { useQueryClient } from "@tanstack/react-query";
+import queryKey from "@/const/query-key";
+import { IBot } from "@/types/chatbot";
 
 interface IMessageItemProps {
     message: IMessage
@@ -13,8 +16,11 @@ function MessageItem(props: IMessageItemProps) {
     const { message } = props;
 
     const user = useGetUser()
-
     const isSend = user?.id === message.userId
+
+    const queryClient = useQueryClient()
+    const listBot = queryClient.getQueryData<IBot[] | undefined>([queryKey.getListBot])
+    const botSend = listBot?.find(bot => bot.id === message.userId)
 
     return (
         <div className={cn("mb-3 flex", isSend ? "justify-end" : "justify-start")}>
@@ -26,8 +32,8 @@ function MessageItem(props: IMessageItemProps) {
                     <div>
                         <div className="flex">
                             <Avatar className="h-8 w-8">
-                                <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-                                <AvatarFallback>CN</AvatarFallback>
+                                <AvatarImage src={import.meta.env.VITE_API_URL + botSend?.icon} alt="Icon bot send" />
+                                <AvatarFallback>AI</AvatarFallback>
                             </Avatar>
                             <article
                                 className="prose dark:prose-invert ml-4 pt-1 md:w-fit w-3/4"

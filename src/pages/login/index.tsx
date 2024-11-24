@@ -17,6 +17,7 @@ import { useGetCurrentTheme, useSetTheme } from "@/redux/hooks/theme";
 import { cn } from "@/lib/utils";
 import { Switch } from "@/components/ui/switch";
 import { useSetUser } from "@/redux/hooks/user";
+import { useMutation } from "@tanstack/react-query";
 
 function Login() {
     const navigate = useNavigate();
@@ -29,13 +30,15 @@ function Login() {
         handleSubmit,
     } = useForm<ILoginBody>()
 
-    const onSubmit: SubmitHandler<ILoginBody> = (data) => {
-        login(data).then((res) => {
+    const loginMuation = useMutation({
+        mutationFn: login,
+        onSuccess: (res) => {
             setUser(res)
             navigate("/")
-        }).catch((err) => {
-            console.log("err", err)
-        })
+        }
+    })
+    const onSubmit: SubmitHandler<ILoginBody> = (data) => {
+        loginMuation.mutate(data)
     }
 
     return (
@@ -114,7 +117,13 @@ function Login() {
                                 </label>
                             </div>
 
-                            <Button className="w-full bg-gradient-to-r from-[#628EFF] via-[#8740CD] to-[#580475] mt-6" type="submit">Đăng nhập</Button>
+                            <Button
+                                className="w-full bg-gradient-to-r from-[#628EFF] via-[#8740CD] to-[#580475] mt-6"
+                                type="submit"
+                                disabled={loginMuation.isPending}
+                            >
+                                Đăng nhập
+                            </Button>
 
                             <p className="text-sm text-right my-4 underline">Lấy lại mật khẩu</p>
 

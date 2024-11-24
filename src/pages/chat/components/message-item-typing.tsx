@@ -7,6 +7,9 @@ import { marked } from "marked"
 import { Skeleton } from "@/components/ui/skeleton";
 import { useGetCurrentChatBot } from "@/redux/hooks/chat-bot";
 import { useSearchParams } from "react-router-dom";
+import { useQueryClient } from "@tanstack/react-query";
+import queryKey from "@/const/query-key";
+import { IBot } from "@/types/chatbot";
 
 interface IMessageItemTypingProps {
     setListMess: Dispatch<React.SetStateAction<IMessage[]>>
@@ -28,6 +31,10 @@ function MessageItemTyping(props: IMessageItemTypingProps) {
 
     const [isLoading, setIsLoading] = useState(false)
     const [textTmp, setTextTmp] = useState("")
+
+    const queryClient = useQueryClient()
+    const listBot = queryClient.getQueryData<IBot[] | undefined>([queryKey.getListBot])
+    const botSend = listBot?.find(bot => bot.id === botSelect?.id)
 
     const getMessage = async (mess?: string) => {
         setIsLoading(true)
@@ -56,7 +63,7 @@ function MessageItemTyping(props: IMessageItemTypingProps) {
                             const newMess: IMessage = {
                                 id: new Date().getTime(),
                                 message: textMessTmp,
-                                userId: "bot"
+                                userId: botSelect?.id ?? "bot"
                             }
                             setListMess(pre => [...pre, newMess])
                             setTextTmp("")
@@ -115,8 +122,8 @@ function MessageItemTyping(props: IMessageItemTypingProps) {
         <div className={"mb-3 flex justify-start"}>
             <div className="flex">
                 <Avatar className="h-8 w-8">
-                    <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-                    <AvatarFallback>CN</AvatarFallback>
+                    <AvatarImage src={import.meta.env.VITE_API_URL + botSend?.icon} alt="Icon AI" />
+                    <AvatarFallback>AI</AvatarFallback>
                 </Avatar>
                 {
                     isLoading ?

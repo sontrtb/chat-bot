@@ -40,10 +40,10 @@ function ContentSidebar() {
                 </Popover>
             </div>
 
-            <div className={cn("absolute flex gap-2 top-4", isMobile ? "flex-row" : "flex-col")}>
+            <div className={cn("absolute flex gap-2 top-4 z-10", isMobile ? "flex-row" : "flex-col")}>
                 {
                     (!open || isMobile) &&
-                    <>
+                    <div className="md:fixed md:bottom-6 flex md:flex-col gap-2 md:left-4">
                         <TooltipProvider delayDuration={0}>
                             <Tooltip>
                                 <TooltipTrigger>
@@ -62,7 +62,7 @@ function ContentSidebar() {
                                         size="icon"
                                         className="border"
                                         onClick={() => {
-
+                                            navigate("/")
                                         }}
                                     >
                                         <PlusIcon style={{ height: "28px", width: "28px" }} />
@@ -73,7 +73,7 @@ function ContentSidebar() {
                                 </TooltipContent>
                             </Tooltip>
                         </TooltipProvider>
-                    </>
+                    </div>
                 }
                 <AccordionBot />
             </div>
