@@ -4,6 +4,7 @@ import axios, {
   type AxiosRequestConfig,
 } from "axios";
 import { store } from "../redux/store";
+import { toast } from 'react-toastify';
 
 export enum EStatus {
   SUCCESS = "success",
@@ -14,6 +15,8 @@ export interface IDataResponse<T = unknown> {
   code: EStatus;
   message?: string;
   result: T;
+  statusCode?: string;
+  body?: string
 }
 
 interface IRootApiOptions {
@@ -50,9 +53,18 @@ async function rootApi<T = undefined>(
     apiClient
       .request(config)
       .then((res: AxiosResponse<IDataResponse<T>>): void => {
+        if(res.data.statusCode === "BAD_REQUEST") {
+          if(defaultOptions?.displayError) {
+            toast.error(res?.data?.body ?? "Có lỗi xảy ra")
+          }
+          rejects(res.data);
+        }
         resolve(res.data.result)
       })
       .catch((err: AxiosError<IDataResponse<T>>) => {
+        if(defaultOptions?.displayError) {
+          toast.error(err.response?.data?.message ?? "Có lỗi xảy ra")
+        }
         rejects(err.response?.data);
       });
   });
