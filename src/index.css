@@ -151,4 +151,10 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  @media only screen and (max-width: 768px) {
+    pre {
+      width: 75vw;
+    }
+  }
 }
