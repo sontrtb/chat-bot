@@ -12,9 +12,9 @@ export default defineConfig({
         enabled: true,
       },
       manifest: {
-        name: 'My Awesome App',
-        short_name: 'MyApp',
-        description: 'My Awesome App description',
+        name: `D'ASSISTANT`,
+        short_name: `D'ASSISTANT`,
+        description: 'Trí tuệ nhân tạo văn phòng uỷ ban nhân dân thành phố Hà Nội',
         theme_color: '#ffffff',
         icons: [
           {
