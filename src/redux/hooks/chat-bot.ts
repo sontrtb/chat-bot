@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { type RootState } from "../store";
-import {  setChatBot } from "../slices/chatBotSlice";
+import {  setChatBot, setListChatBot } from "../slices/chatBotSlice";
 import { IBot } from "@/types/chatbot";
 
 const useSetChatBot = (): ((chatBot: IBot) => void) => {
@@ -16,5 +16,17 @@ const useGetCurrentChatBot = (): IBot | undefined => {
   return chatBot.chatbot;
 };
 
+const useSetListChatBot = (): ((chatBots: IBot[]) => void) => {
+  const dispatch = useDispatch();
+  const setListChatBotStore = (chatBots: IBot[]): void => {
+    dispatch(setListChatBot(chatBots));
+  };
+  return setListChatBotStore;
+};
 
-export { useGetCurrentChatBot, useSetChatBot };
+const useGetListChatBot = (): IBot[] => {
+  const chatBot = useSelector((state: RootState) => state.chatBot);
+  return chatBot.listChatbot;
+};
+
+export { useGetCurrentChatBot, useSetChatBot, useSetListChatBot, useGetListChatBot};

@@ -4,11 +4,9 @@ import { IMessage } from "@/types/message";
 import { memo, useState } from "react";
 import { marked } from "marked";
 import { useGetUser } from "@/redux/hooks/user";
-import { useQueryClient } from "@tanstack/react-query";
-import queryKey from "@/const/query-key";
-import { IBot } from "@/types/chatbot";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Copy, RefreshCcw } from "lucide-react";
+import { useGetListChatBot } from "@/redux/hooks/chat-bot";
 
 interface IMessageItemProps {
     message: IMessage
@@ -20,8 +18,7 @@ function MessageItem(props: IMessageItemProps) {
     const user = useGetUser()
     const isSend = user?.id === message.userId
 
-    const queryClient = useQueryClient()
-    const listBot = queryClient.getQueryData<IBot[] | undefined>([queryKey.getListBot])
+    const listBot = useGetListChatBot()
     const botSend = listBot?.find(bot => bot.id === message.userId)
 
     const [isCoppyDone, setIsCopyDone] = useState(false)

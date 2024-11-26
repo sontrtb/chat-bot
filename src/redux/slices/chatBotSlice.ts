@@ -2,11 +2,13 @@ import { IBot } from "@/types/chatbot";
 import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 export interface IChatBotState {
-  chatbot?: IBot
+  chatbot?: IBot;
+  listChatbot: IBot[]
 }
 
 const initState: IChatBotState = {
-  chatbot: undefined
+  chatbot: undefined,
+  listChatbot: []
 };
 
 const chatBotSlice = createSlice({
@@ -16,7 +18,10 @@ const chatBotSlice = createSlice({
     setChatBot: (state, action: PayloadAction<IBot>) => {
       return { ...state, chatbot: action.payload };
     },
+    setListChatBot: (state, action: PayloadAction<IBot[]>) => {
+      return { ...state, listChatbot: action.payload };
+    },
   },
 });
-export const { setChatBot } = chatBotSlice.actions;
+export const { setChatBot, setListChatBot } = chatBotSlice.actions;
 export default chatBotSlice;

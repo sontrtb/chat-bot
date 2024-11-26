@@ -2,14 +2,11 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useGetCurrentMessageTyping, useSetMessageTypingDone } from "@/redux/hooks/message-typing";
 import { useGetUser } from "@/redux/hooks/user";
 import { IMessage } from "@/types/message";
-import { Dispatch, Fragment, useEffect, useState } from "react";
+import { Dispatch, Fragment, useEffect, useRef, useState } from "react";
 import { marked } from "marked"
 import { Skeleton } from "@/components/ui/skeleton";
-import { useGetCurrentChatBot } from "@/redux/hooks/chat-bot";
+import { useGetCurrentChatBot, useGetListChatBot } from "@/redux/hooks/chat-bot";
 import { useSearchParams } from "react-router-dom";
-import { useQueryClient } from "@tanstack/react-query";
-import queryKey from "@/const/query-key";
-import { IBot } from "@/types/chatbot";
 
 interface IMessageItemTypingProps {
     setListMess: Dispatch<React.SetStateAction<IMessage[]>>
@@ -32,10 +29,10 @@ function MessageItemTyping(props: IMessageItemTypingProps) {
     const [isLoading, setIsLoading] = useState(false)
     const [textTmp, setTextTmp] = useState("")
 
-    const queryClient = useQueryClient()
-    const listBot = queryClient.getQueryData<IBot[] | undefined>([queryKey.getListBot])
+    const listBot = useGetListChatBot()
     const botSend = listBot?.find(bot => bot.id === botSelect?.id)
 
+    const readerRef = useRef<ReadableStreamDefaultReader<Uint8Array>>()
     const getMessage = async (mess?: string) => {
         setIsLoading(true)
         fetch(`${import.meta.env.VITE_API_URL}/c/chat`, {
@@ -53,9 +50,9 @@ function MessageItemTyping(props: IMessageItemTypingProps) {
         })
             .then(async response => response.body?.getReader())
             .then(reader => {
+                readerRef.current = reader
                 const decoder = new TextDecoder();
                 let textMessTmp = ''
-                // const conIdTmp = ''
                 function readStream() {
                     reader?.read().then(({ done, value }) => {
                         if (done) {
@@ -113,6 +110,10 @@ function MessageItemTyping(props: IMessageItemTypingProps) {
             getMessage(messageTyping.message)
         }
     }, [messageTyping])
+
+    useEffect(() => {
+        readerRef.current?.cancel()
+    }, [botSelect])
 
     if (!messageTyping.isTyping) return <Fragment />
 

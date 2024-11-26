@@ -4,7 +4,7 @@ import {
     AccordionItem,
     AccordionTrigger,
 } from "@/components/ui/accordion"
-import { useGetCurrentChatBot, useSetChatBot } from "@/redux/hooks/chat-bot"
+import { useGetCurrentChatBot, useSetChatBot, useSetListChatBot } from "@/redux/hooks/chat-bot"
 import { cn } from "@/lib/utils"
 import { getListBot } from "@/api/bot"
 import queryKey from "@/const/query-key"
@@ -26,6 +26,7 @@ import { Card, CardContent } from "../ui/card"
 function AccordionBot() {
     const setChatBot = useSetChatBot()
     const botSelect = useGetCurrentChatBot()
+    const setListChatBot = useSetListChatBot()
 
     const isMobile = useIsMobile()
 
@@ -33,6 +34,10 @@ function AccordionBot() {
         queryKey: [queryKey.getListBot],
         queryFn: getListBot
     })
+
+    useEffect(() => {
+        setListChatBot(getListBotQuery.data ?? [])
+    }, [getListBotQuery.data, setListChatBot])
 
     useEffect(() => {
         if (!botSelect?.id && getListBotQuery.data?.[0]) {
