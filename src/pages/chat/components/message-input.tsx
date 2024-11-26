@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import { useGetCurrentChatBot } from "@/redux/hooks/chat-bot";
 import { useGetCurrentMessageTyping, useSetMessageTypingDone } from "@/redux/hooks/message-typing";
 import { CirclePause, Send } from "lucide-react"
@@ -19,6 +20,7 @@ function MessageInput(props: IMessageInputProps) {
     const botSelect = useGetCurrentChatBot()
 
     const [text, setText] = useState("")
+    const [isChangeBotDone, setIsChangeBotDone] = useState(false)
 
     const handleSubmit = () => {
         if (messageTyping.isTyping || text.length === 0) return;
@@ -29,6 +31,10 @@ function MessageInput(props: IMessageInputProps) {
     useEffect(() => {
         if (!messageTyping.isTyping) {
             inputRef.current?.focus()
+            setIsChangeBotDone(true)
+            setTimeout(() => {
+                setIsChangeBotDone(false)
+            }, 300)
         }
     }, [messageTyping.isTyping, botSelect])
 
@@ -37,7 +43,11 @@ function MessageInput(props: IMessageInputProps) {
     }
 
     return (
-        <div className="bg-secondary rounded-full py-2 md:py-3 w-full h-fit max-w-3xl mx-auto flex items-center px-1 md:px-2">
+        <div className={
+            cn(
+                "bg-secondary rounded-full py-2 md:py-3 w-full h-fit max-w-3xl mx-auto flex items-center px-1 md:px-2 transition-transform duration-300 transform",
+                isChangeBotDone ? "scale-105" : ""
+            )}>
             <img src={import.meta.env.VITE_API_URL + botSelect?.icon} className="w-8 h-8 ml-2" />
             <input
                 ref={inputRef}

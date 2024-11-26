@@ -10,13 +10,13 @@ import { getListBot } from "@/api/bot";
 import { useSetChatBot } from "@/redux/hooks/chat-bot";
 import { IMessage } from "@/types/message";
 import { useGetUser } from "@/redux/hooks/user";
+import { IBot } from "@/types/chatbot";
 
 function HomeScreen() {
     const navigate = useNavigate();
 
     const setMessageTyping = useSetMessageTyping()
     const setChatBot = useSetChatBot()
-
     const user = useGetUser()
 
     const createChatMutation = useMutation({
@@ -29,7 +29,7 @@ function HomeScreen() {
     })
 
     const handleSendMess = (mess: string) => {
-        const newMess: IMessage= {
+        const newMess: IMessage = {
             id: -1,
             message: mess,
             userId: user?.id ?? "me"
@@ -46,14 +46,19 @@ function HomeScreen() {
         })
     }
 
+    const changeChatBot = (bot: IBot) => {
+        setChatBot(bot)
+
+    }
+
     return (
-        <div className="m-auto p-2 md:p-0">
+        <div className="m-auto p-3 md:p-0">
             <h1 className="text-xl md:text-3xl font-semibold mb-1 w-full md:w-[48rem] m-auto">
                 VĂN PHÒNG ỦY BAN NHÂN DÂN THÀNH PHỐ HÀ NỘI
             </h1>
             <h1 className="text-xl md:text-3xl font-semibold w-full md:w-[48rem] m-auto mb-8 md:mb-0">
                 <span className="bg-gradient-to-r from-violet-500 via-yellow-500 to-red-500 text-transparent bg-clip-text">
-                    Chọn AI để bắt đầu hội thoại
+                    Sẵn sàng hỗ trợ tất cả các yêu cầu
                 </span>
             </h1>
 
@@ -62,32 +67,32 @@ function HomeScreen() {
                 <Button size="lg" className="h-12">D'ASSISTANT</Button>
             </div>
 
-            <div className="grid-cols-3 gap-3 md:gap-8 w-full md:w-[66rem] grid mb-8 md:mb-16">
+            <MessageInput onSubmit={handleSendMess} />
+
+            <div className="grid-cols-3 gap-3 md:gap-8 w-full md:w-[66rem] grid mt-8 md:m-16">
                 {
                     getListBotQuery.data?.map(bot => (
-                            <div
-                                className="justify-end p-3 cursor-pointer bg-secondary rounded-lg flex md:flex-row flex-col-reverse md:items-start hover:shadow items-center hover:scale-105 transition-transform duration-300 transform"
-                                onClick={() => setChatBot(bot)}
-                            >
-                                <div className="md:mr-3 md:w-60 md:h-20">
-                                    <h3 className="text-center md:text-left md:font-normal md:font-semibold mt-2 md:mt-0">{bot.name}</h3>
-                                    <TypeAnimation
-                                        sequence={[
-                                            bot.description,
-                                            2000,
-                                        ]}
-                                        cursor
-                                        speed={50}
-                                        className="hidden md:block text-sm font-light"
-                                    />
-                                </div>
-                                <img src={import.meta.env.VITE_API_URL + bot.icon} className="h-8 md:h-auto md:w-12 object-contain" />
+                        <div
+                            className="justify-end p-3 cursor-pointer bg-secondary rounded-lg flex md:flex-row flex-col-reverse md:items-start hover:shadow items-center hover:scale-105 transition-transform duration-300 transform"
+                            onClick={() => changeChatBot(bot)}
+                        >
+                            <div className="md:mr-3 md:w-60 md:h-20">
+                                <h3 className="text-center md:text-left md:font-normal md:font-semibold mt-2 md:mt-0">{bot.name}</h3>
+                                <TypeAnimation
+                                    sequence={[
+                                        bot.description,
+                                        2000,
+                                    ]}
+                                    cursor
+                                    speed={50}
+                                    className="hidden md:block text-sm font-light"
+                                />
                             </div>
+                            <img src={import.meta.env.VITE_API_URL + bot.icon} className="h-8 md:h-auto md:w-12 object-contain" />
+                        </div>
                     ))
                 }
             </div>
-
-            <MessageInput onSubmit={handleSendMess} autoFocus/>
         </div>
     )
 }

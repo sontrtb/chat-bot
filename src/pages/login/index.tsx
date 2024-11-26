@@ -98,12 +98,21 @@ function Login() {
                             <CardTitle className="text-2xl">
                                 <TypeAnimation
                                     sequence={[
-                                        !isMobile ? "Văn phòng UBND Hà Nội" : 'Bắt đầu khám phá!',
+                                        'Bắt đầu khám phá!',
                                         1000,
                                     ]}
                                     cursor={false}
                                     speed={50}
-                                    className="text-2xl"
+                                    className="text-2xl hidden md:block"
+                                />
+                                <TypeAnimation
+                                    sequence={[
+                                        "Văn phòng UBND Hà Nội",
+                                        1000,
+                                    ]}
+                                    cursor={false}
+                                    speed={50}
+                                    className="text-2xl block md:hidden"
                                 />
                             </CardTitle>
                             <CardDescription>{isMobile ? "Tất cả trong một!" : "Đăng nhập tài khoản của bạn"}</CardDescription>
