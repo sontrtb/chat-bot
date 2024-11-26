@@ -111,9 +111,15 @@ function MessageItemTyping(props: IMessageItemTypingProps) {
         }
     }, [messageTyping])
 
+    // cancel typing
     useEffect(() => {
-        readerRef.current?.cancel()
+            readerRef.current?.cancel()
     }, [botSelect])
+    useEffect(() => {
+        if(!messageTyping.isTyping) {
+            readerRef.current?.cancel()
+        }
+    }, [messageTyping.isTyping])
 
     if (!messageTyping.isTyping) return <Fragment />
 

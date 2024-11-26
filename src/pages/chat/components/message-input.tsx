@@ -1,5 +1,5 @@
 import { useGetCurrentChatBot } from "@/redux/hooks/chat-bot";
-import { useGetCurrentMessageTyping } from "@/redux/hooks/message-typing";
+import { useGetCurrentMessageTyping, useSetMessageTypingDone } from "@/redux/hooks/message-typing";
 import { CirclePause, Send } from "lucide-react"
 import { useEffect, useRef, useState } from "react";
 
@@ -14,6 +14,7 @@ function MessageInput(props: IMessageInputProps) {
     const inputRef = useRef<HTMLInputElement>(null)
 
     const messageTyping = useGetCurrentMessageTyping()
+    const setMessageTypingDone = useSetMessageTypingDone()
 
     const botSelect = useGetCurrentChatBot()
 
@@ -26,10 +27,14 @@ function MessageInput(props: IMessageInputProps) {
     }
 
     useEffect(() => {
-        if(!messageTyping.isTyping && autoFocus) {
+        if (!messageTyping.isTyping && autoFocus) {
             inputRef.current?.focus()
         }
     }, [autoFocus, messageTyping.isTyping])
+
+    const handleCancel = () => {
+        setMessageTypingDone()
+    }
 
     return (
         <div className="bg-secondary rounded-full py-2 md:py-3 w-full h-fit max-w-3xl mx-auto flex items-center px-1 md:px-2">
@@ -49,10 +54,14 @@ function MessageInput(props: IMessageInputProps) {
                 className="outline-none bg-secondary w-full flex-1 px-4 font-light"
                 placeholder="Hãy hỏi tôi..."
             />
-            <button className="cursor-pointer mr-3" onClick={handleSubmit}>
-                {messageTyping.isTyping ? <CirclePause size="24px" className="text-primary" /> : <Send size="24px" className="text-primary" />}
-            </button>
-
+            {messageTyping.isTyping ?
+                <button className="cursor-pointer mr-3" onClick={handleCancel}>
+                    <CirclePause size="24px" className="text-primary" />
+                </button> :
+                <button className="cursor-pointer mr-3" onClick={handleSubmit}>
+                    <Send size="24px" className="text-primary" />
+                </button>
+            }
         </div>
     )
 }
