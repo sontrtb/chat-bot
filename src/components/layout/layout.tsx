@@ -9,7 +9,7 @@ export default function Layout() {
     className="bg-[url('/images/background.png')] bg-no-repeat bg-cover bg-center"
     >
       <AppSidebar />
-      <SidebarInset className="h-screen pl-2">
+      <SidebarInset className="h-screen md:pl-2">
         <ContentSidebar />
       </SidebarInset>
     </SidebarProvider>

@@ -16,15 +16,25 @@ import { useGetCurrentTheme, useSetTheme } from "@/redux/hooks/theme";
 import { cn } from "@/lib/utils";
 import { Switch } from "@/components/ui/switch";
 import { useSetUser } from "@/redux/hooks/user";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import queryKey from "@/const/query-key";
-import { getListBot } from "@/api/bot";
+import { useMutation } from "@tanstack/react-query";
+
+import Gemma from "@/assets/bot/gemma.svg"
+import GPT from "@/assets/bot/gpt.svg"
+import Mete from "@/assets/bot/meta.svg"
+import Mistral from "@/assets/bot/mistral.svg"
+import Sonet from "@/assets/bot/sonet.svg"
+import Ubnd from "@/assets/bot/ubnd.svg"
+import { useIsMobile } from "@/hooks/use-mobile";
+
+const listBot = [Gemma, GPT, Mete, Mistral, Sonet, Ubnd]
 
 function Login() {
     const navigate = useNavigate();
     const setUser = useSetUser();
     const theme = useGetCurrentTheme()
     const setTheme = useSetTheme();
+
+    const isMobile = useIsMobile()
 
     const {
         register,
@@ -41,13 +51,6 @@ function Login() {
     const onSubmit: SubmitHandler<ILoginBody> = (data) => {
         loginMuation.mutate(data)
     }
-
-    const getListBotQuery = useQuery({
-        queryKey: [queryKey.getListBot],
-        queryFn: getListBot
-    })
-
-    console.log("getListBotQuery", getListBotQuery.data)
 
     return (
         <div className="grid grid-cols-12 gap-4 h-screen relative">
@@ -95,7 +98,7 @@ function Login() {
                             <CardTitle className="text-2xl">
                                 <TypeAnimation
                                     sequence={[
-                                        'Bắt đầu khám phá!',
+                                        !isMobile ? "Văn phòng UBND Hà Nội" : 'Bắt đầu khám phá!',
                                         1000,
                                     ]}
                                     cursor={false}
@@ -103,7 +106,7 @@ function Login() {
                                     className="text-2xl"
                                 />
                             </CardTitle>
-                            <CardDescription>Đăng nhập tài khoản của bạn</CardDescription>
+                            <CardDescription>{isMobile ? "Tất cả trong một!" : "Đăng nhập tài khoản của bạn"}</CardDescription>
                         </CardHeader>
                         <CardContent>
                             <div>
@@ -148,8 +151,8 @@ function Login() {
 
                             <div className="flex justify-center mt-4">
                                 {
-                                    getListBotQuery.data?.map(bot => (
-                                        <img src={import.meta.env.VITE_API_URL + bot.icon} className="h-10 rounded-full w-10 object-contain mx-1 p-2 bg-secondary" />
+                                    listBot.map(bot => (
+                                        <img src={bot} className="h-10 rounded-full w-10 object-contain mx-1 p-2 bg-secondary" />
                                     ))
                                 }
                             </div>
