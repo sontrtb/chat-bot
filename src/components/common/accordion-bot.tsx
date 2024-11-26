@@ -37,7 +37,7 @@ function AccordionBot() {
 
     useEffect(() => {
         setListChatBot(getListBotQuery.data ?? [])
-    }, [getListBotQuery.data, setListChatBot])
+    }, [getListBotQuery.data])
 
     useEffect(() => {
         if (!botSelect?.id && getListBotQuery.data?.[0]) {
