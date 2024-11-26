@@ -87,7 +87,7 @@ function HomeScreen() {
                 }
             </div>
 
-            <MessageInput onSubmit={handleSendMess} />
+            <MessageInput onSubmit={handleSendMess} autoFocus/>
         </div>
     )
 }

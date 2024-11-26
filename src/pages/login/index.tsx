@@ -6,7 +6,6 @@ import { Label } from "@/components/ui/label"
 import { useNavigate } from "react-router-dom";
 import { useForm, SubmitHandler } from "react-hook-form"
 import Rectangle from "@/assets/login/rectangle.png"
-import LoginSocia from "@/assets/login/login_social.png"
 import RainbowRing from "@/assets/login/rainbow_ring.png"
 import Rectangle2 from "@/assets/login/rectangle_2.png"
 import Logo from "@/assets/logo/logo.png"
@@ -17,7 +16,9 @@ import { useGetCurrentTheme, useSetTheme } from "@/redux/hooks/theme";
 import { cn } from "@/lib/utils";
 import { Switch } from "@/components/ui/switch";
 import { useSetUser } from "@/redux/hooks/user";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import queryKey from "@/const/query-key";
+import { getListBot } from "@/api/bot";
 
 function Login() {
     const navigate = useNavigate();
@@ -40,6 +41,13 @@ function Login() {
     const onSubmit: SubmitHandler<ILoginBody> = (data) => {
         loginMuation.mutate(data)
     }
+
+    const getListBotQuery = useQuery({
+        queryKey: [queryKey.getListBot],
+        queryFn: getListBot
+    })
+
+    console.log("getListBotQuery", getListBotQuery.data)
 
     return (
         <div className="grid grid-cols-12 gap-4 h-screen relative">
@@ -133,12 +141,18 @@ function Login() {
                             <p className="text-sm text-right my-4 underline">Lấy lại mật khẩu</p>
 
                             <div className="hidden md:flex items-center justify-between">
-                                <Separator className="w-40" />
-                                <p className="text-sm text-center">Tài khoản khác</p>
-                                <Separator className="w-40" />
+                                <Separator className="w-32" />
+                                <p className="text-sm text-center">Danh sách trí tuệ nhân tạo</p>
+                                <Separator className="w-32" />
                             </div>
 
-                            <img src={LoginSocia} className="h-8 w-full object-contain mt-3" />
+                            <div className="flex justify-center mt-4">
+                                {
+                                    getListBotQuery.data?.map(bot => (
+                                        <img src={import.meta.env.VITE_API_URL + bot.icon} className="h-10 rounded-full w-10 object-contain mx-1 p-2 bg-secondary" />
+                                    ))
+                                }
+                            </div>
 
                         </CardContent>
                         <CardFooter className="hidden md:block opacity-60">
@@ -156,7 +170,7 @@ function Login() {
             <img src={Logo} className="w-20 absolute top-6 left-8 brightness-200" />
             <img src={Rectangle} className="w-36 absolute bottom-16 right-96 animate-float duration-10000" />
             <img src={Rectangle2} className={cn("w-56 absolute top-32 md:top-20 left-[40%] animate-float", theme === "dark" && "brightness-50")} />
-            <img src={RainbowRing} className={cn("h-[400px] absolute bottom-0 left-0 hidden md:block", theme === "dark" && "brightness-50")} /> 
+            <img src={RainbowRing} className={cn("h-[400px] absolute bottom-0 left-0 hidden md:block", theme === "dark" && "brightness-50")} />
         </div>
     )
 }

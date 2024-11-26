@@ -27,10 +27,10 @@ function MessageInput(props: IMessageInputProps) {
     }
 
     useEffect(() => {
-        if (!messageTyping.isTyping && autoFocus) {
+        if (!messageTyping.isTyping) {
             inputRef.current?.focus()
         }
-    }, [autoFocus, messageTyping.isTyping])
+    }, [messageTyping.isTyping, botSelect])
 
     const handleCancel = () => {
         setMessageTypingDone()
