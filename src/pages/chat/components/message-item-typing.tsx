@@ -33,62 +33,71 @@ function MessageItemTyping(props: IMessageItemTypingProps) {
     const botSend = listBot?.find(bot => bot.id === botSelect?.id)
 
     const readerRef = useRef<ReadableStreamDefaultReader<Uint8Array>>()
+
     const getMessage = async (mess?: string) => {
-        setIsLoading(true)
+        setIsLoading(true);
         fetch(`${import.meta.env.VITE_API_URL}/c/chat`, {
-            method: 'POST',
+            method: "POST",
             headers: {
-                'Content-Type': 'application/json',
-                "responseType": "stream",
-                "Authorization": `Bearer ${user?.token}`
+                "Content-Type": "application/json",
+                responseType: "stream",
+                Authorization: `Bearer ${user?.token}`,
             },
             body: JSON.stringify({
                 message: mess,
                 conId: conId,
-                target: botSelect?.id
-            })
+                target: botSelect?.id,
+            }),
         })
-            .then(async response => response.body?.getReader())
-            .then(reader => {
-                readerRef.current = reader
+            .then(async (response) => response.body?.getReader())
+            .then((reader) => {
+                readerRef.current = reader;
                 const decoder = new TextDecoder();
-                let textMessTmp = ''
+                let textMessTmp = "";
+                let incompleteData = ""; // Biến lưu trữ dữ liệu chưa hoàn chỉnh
+
                 function readStream() {
                     reader?.read().then(({ done, value }) => {
                         if (done) {
-                            setMessageTypingDone()
+                            setMessageTypingDone();
                             const newMess: IMessage = {
                                 id: new Date().getTime(),
                                 message: textMessTmp,
-                                userId: botSelect?.id ?? "bot"
-                            }
-                            setListMess(pre => [...pre, newMess])
-                            setTextTmp("")
+                                userId: botSelect?.id ?? "bot",
+                            };
+                            setListMess((pre) => [...pre, newMess]);
+                            setTextTmp("");
 
-                            if(!conId) {
-                                setSearchParams(params => {
-                                    params.set("conId", "new")
-                                    return params
-                                })
+                            if (!conId) {
+                                setSearchParams((params) => {
+                                    params.set("conId", "new");
+                                    return params;
+                                });
                             }
                             return;
                         }
 
-                        const data = decoder.decode(value, { stream: true });
+                        const chunk = decoder.decode(value, { stream: true });
+                        incompleteData += chunk; // Thêm chunk mới vào incompleteData
 
-                        let text = "";
-                        if(data.includes("data:")) {
-                            const dataMess = data.split("data:")
-                                .filter(t => t.length > 0)
-                                .map(t => JSON.parse(t).result)
-                            text = dataMess.map(m => m.message).join("")
-                        } else {
-                            const dataParse = JSON.parse(data)
-                            text = dataParse.message
-                        }
-                        textMessTmp += text
-                        setTextTmp(`${textMessTmp}`)
-                        scrollToBottom()
+                        // Xử lý các JSON đầy đủ trong incompleteData
+                        let lines = incompleteData.split("\n");
+                        incompleteData = lines.pop() || ""; // Lấy phần chưa hoàn chỉnh lưu lại
+
+                        lines.forEach((line) => {
+                            if (!line.startsWith("data:")) return; // Chỉ xử lý các dòng bắt đầu với "data:"
+
+                            const jsonData = line.replace("data:", "").trim();
+                            try {
+                                const parsedData = JSON.parse(jsonData);
+                                const message = parsedData.result?.message || "";
+                                textMessTmp += message;
+                                setTextTmp(`${textMessTmp}`);
+                                scrollToBottom();
+                            } catch (error) {
+                                console.error("Invalid JSON:", error);
+                            }
+                        });
 
                         readStream();
                     });
@@ -96,14 +105,14 @@ function MessageItemTyping(props: IMessageItemTypingProps) {
 
                 readStream();
             })
-            .catch(error => {
-                setMessageTypingDone()
-                console.error('Error sending POST request:', error);
+            .catch((error) => {
+                setMessageTypingDone();
+                console.error("Error sending POST request:", error);
             })
             .finally(() => {
-                setIsLoading(false)
-            })
-    }
+                setIsLoading(false);
+            });
+    };
 
     useEffect(() => {
         if (messageTyping.isTyping) {
@@ -113,7 +122,7 @@ function MessageItemTyping(props: IMessageItemTypingProps) {
 
     // cancel typing
     useEffect(() => {
-            readerRef.current?.cancel()
+        readerRef.current?.cancel()
     }, [botSelect])
     useEffect(() => {
         if(!messageTyping.isTyping) {
