@@ -58,7 +58,7 @@ function Login() {
                     ]}
                     cursor={false}
                     speed={50}
-                    className="font-medium text-5xl leading-tight h-32"
+                    className="font-medium text-4xl"
                 />
                  <TypeAnimation
                     sequence={[
@@ -82,6 +82,7 @@ function Login() {
                         1000,
                     ]}
                     speed={50}
+                    cursor={false}
                     repeat={Infinity}
                     className="font-medium text-2xl mt-3"
                 />
