@@ -62,7 +62,7 @@ function MessageItem(props: IMessageItemProps) {
                                     <TooltipProvider>
                                         <Tooltip>
                                             <TooltipTrigger onClick={handleCoppy}>
-                                                <Copy size={18} className="mx-2"/>
+                                                <Copy size={18} className="mx-2 opacity-60"/>
                                             </TooltipTrigger>
                                             <TooltipContent side="bottom">
                                                 <p>Sao chép</p>
@@ -70,7 +70,7 @@ function MessageItem(props: IMessageItemProps) {
                                         </Tooltip>
                                         <Tooltip>
                                             <TooltipTrigger onClick={retryRenderMessage}>
-                                                <RefreshCcw size={18} className="mx-2"/>
+                                                <RefreshCcw size={18} className="mx-2 opacity-60"/>
                                             </TooltipTrigger>
                                             <TooltipContent side="bottom">
                                                 <p>Thử lại</p>

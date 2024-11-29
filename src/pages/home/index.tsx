@@ -48,11 +48,10 @@ function HomeScreen() {
 
     const changeChatBot = (bot: IBot) => {
         setChatBot(bot)
-
     }
 
     return (
-        <div className="m-auto p-3 md:p-0">
+        <div className="p-3 md:p-0 mt-24 md:mt-0">
             <h1 className="text-xl md:text-3xl font-semibold mb-1 w-full md:w-[48rem] m-auto">
                 VĂN PHÒNG ỦY BAN NHÂN DÂN THÀNH PHỐ HÀ NỘI
             </h1>

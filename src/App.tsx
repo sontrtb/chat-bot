@@ -13,14 +13,13 @@ import 'react-toastify/dist/ReactToastify.css';
 const queryClient = new QueryClient()
 
 function App() {
-
   return (
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
         <PersistGate persistor={persistor}>
           <Theme>
             <Routers />
-            <ToastContainer autoClose={2000}/>
+            <ToastContainer autoClose={2000} />
           </Theme>
         </PersistGate>
       </Provider>

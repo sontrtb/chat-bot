@@ -26,8 +26,48 @@ function ContentSidebar() {
     const { open, isMobile } = useSidebar()
 
     return (
-        <>
-            <div className="flex justify-end p-4">
+        <div  >
+            <div className="flex w-full justify-between p-4 sticky top-0 z-10">
+                <div className={cn("flex gap-2 left-4 top-4 z-10", isMobile ? "flex-row" : "flex-col")}>
+                    {
+                        (!open || isMobile) &&
+                        <div className="pl-2 md:fixed md:bottom-4 flex md:flex-col gap-2 md:left-4 items-center">
+                            <TooltipProvider delayDuration={0}>
+                                <Tooltip>
+                                    <TooltipTrigger>
+                                        <Button
+                                            variant="secondary"
+                                            size="icon"
+                                            className="border"
+                                            onClick={() => {
+                                                navigate("/")
+                                            }}
+                                        >
+                                            <PlusIcon style={{ height: "28px", width: "28px" }} />
+                                        </Button>
+                                    </TooltipTrigger>
+                                    <TooltipContent side="right">
+                                        <p>Cuộc trò chuyện mới</p>
+                                    </TooltipContent>
+                                </Tooltip>
+                            </TooltipProvider>
+                            <TooltipProvider delayDuration={0}>
+                                <Tooltip>
+                                    <TooltipTrigger>
+                                        <SidebarTrigger className="border" />
+                                    </TooltipTrigger>
+                                    <TooltipContent side="right">
+                                        <p>Mở thanh bên</p>
+                                    </TooltipContent>
+                                </Tooltip>
+                            </TooltipProvider>
+                        </div>
+                    }
+                    <div className="absolute left-28 mt-[2px] md:left-0">
+                        <AccordionBot />
+                    </div>
+                </div>
+
                 <Popover>
                     <PopoverTrigger>
                         <Avatar className="h-10 w-10 md:h-12 md:w-12">
@@ -38,11 +78,11 @@ function ContentSidebar() {
 
                     <PopoverContent className="w-60 p-0 mr-4">
                         <div className="flex items-center hover:bg-secondary p-3 rounded cursor-pointer" >
-                            <UserRound size={20}/>
+                            <UserRound size={20} />
                             <p className="ml-2 text-sm font-light">Thông tin tài khoản</p>
                         </div>
                         <div className="flex items-center hover:bg-secondary p-3 rounded cursor-pointer">
-                            <Moon  size={20}/>
+                            <Moon size={20} />
                             <p className="mx-2 text-sm font-light">Nền tối</p>
                             <Switch
                                 className="z-10"
@@ -53,57 +93,20 @@ function ContentSidebar() {
                             />
                         </div>
                         <div className="flex items-center hover:bg-secondary p-3 rounded cursor-pointer" onClick={() => { }}>
-                            <SquareArrowOutUpRight  size={20}/>
+                            <SquareArrowOutUpRight size={20} />
                             <p className="ml-2 text-sm font-light">Hỗ trợ</p>
                         </div>
-                        <div className="border"/>
+                        <div className="border" />
                         <div className="flex items-center hover:bg-secondary p-3 rounded cursor-pointer" onClick={handleLogout}>
-                            <LogOut  size={20}/>
+                            <LogOut size={20} />
                             <p className="ml-2 text-sm font-light">Đăng xuất</p>
                         </div>
                     </PopoverContent>
                 </Popover>
             </div>
-
-            <div className={cn("absolute flex gap-2 top-4 z-10", isMobile ? "flex-row" : "flex-col")}>
-                {
-                    (!open || isMobile) &&
-                    <div className="pl-2 md:fixed md:bottom-4 flex md:flex-col gap-2 md:left-4">
-                        <TooltipProvider delayDuration={0}>
-                            <Tooltip>
-                                <TooltipTrigger>
-                                    <Button
-                                        variant="secondary"
-                                        size="icon"
-                                        className="border"
-                                        onClick={() => {
-                                            navigate("/")
-                                        }}
-                                    >
-                                        <PlusIcon style={{ height: "28px", width: "28px" }} />
-                                    </Button>
-                                </TooltipTrigger>
-                                <TooltipContent side="right">
-                                    <p>Cuộc trò chuyện mới</p>
-                                </TooltipContent>
-                            </Tooltip>
-                        </TooltipProvider>
-                        <TooltipProvider delayDuration={0}>
-                            <Tooltip>
-                                <TooltipTrigger>
-                                    <SidebarTrigger className="border" />
-                                </TooltipTrigger>
-                                <TooltipContent side="right">
-                                    <p>Mở thanh bên</p>
-                                </TooltipContent>
-                            </Tooltip>
-                        </TooltipProvider>
-                    </div>
-                }
-                <AccordionBot />
-            </div>
+    
             <Outlet />
-        </>
+        </div>
     )
 }
 

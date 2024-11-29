@@ -43,9 +43,9 @@ function ChatScreen() {
     }
 
     return (
-        <div className="flex flex-col h-[calc(100vh_-_80px)] px-2 md:px-0">
+        <div className="flex flex-col px-2 md:px-0">
             <MessageList listMess={listMess} setListMess={setListMess} />
-            <div className="pb-4">
+            <div className="pb-4 pt-2 sticky bottom-0 bg-background">
                 <MessageInput onSubmit={sendMessage} autoFocus />
             </div>
         </div>

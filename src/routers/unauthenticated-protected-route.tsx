@@ -9,8 +9,6 @@ function UnauthenticatedProtectedRoute({
   const user = useGetUser()
   const isLogin = !!user?.token
 
-  console.log("isLogin", isLogin)
-
   if (!isLogin) {
     return <Navigate to={"/login"} />;
   }
