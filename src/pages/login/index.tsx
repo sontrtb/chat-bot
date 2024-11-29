@@ -58,7 +58,7 @@ function Login() {
                     ]}
                     cursor={false}
                     speed={50}
-                    className="font-medium text-4xl"
+                    className="font-medium text-4xl text-center"
                 />
                  <TypeAnimation
                     sequence={[
@@ -68,7 +68,7 @@ function Login() {
                     speed={50}
                     cursor={false}
                     repeat={Infinity}
-                    className="font-medium text-2xl mt-3"
+                    className="font-medium text-2xl mt-3 text-center"
                 />
                 <TypeAnimation
                     sequence={[
@@ -84,7 +84,7 @@ function Login() {
                     speed={50}
                     cursor={false}
                     repeat={Infinity}
-                    className="font-medium text-2xl mt-3"
+                    className="font-medium text-2xl mt-3 text-center h-20"
                 />
                 <div className="h-24" />
             </div>
@@ -114,15 +114,15 @@ function Login() {
                                 />
                                 <TypeAnimation
                                     sequence={[
-                                        "Văn phòng UBND Hà Nội",
+                                        "VĂN PHÒNG ỦY BAN NHÂN DÂN THÀNH PHỐ HÀ NỘI",
                                         1000,
                                     ]}
                                     cursor={false}
                                     speed={50}
-                                    className="text-2xl block md:hidden"
+                                    className="text-2xl block md:hidden h-20"
                                 />
                             </CardTitle>
-                            <CardDescription>{isMobile ? "Tất cả trong một!" : "Đăng nhập tài khoản của bạn"}</CardDescription>
+                            <CardDescription>{isMobile ? "HANOI ARTIFICIAL INTELLIGENCE" : "Đăng nhập tài khoản của bạn"}</CardDescription>
                         </CardHeader>
                         <CardContent>
                             <div>
