@@ -5,9 +5,6 @@ import { Input, PasswordInput } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useNavigate } from "react-router-dom";
 import { useForm, SubmitHandler } from "react-hook-form"
-import Rectangle from "@/assets/login/rectangle.png"
-import RainbowRing from "@/assets/login/rainbow_ring.png"
-import Rectangle2 from "@/assets/login/rectangle_2.png"
 import Logo from "@/assets/logo/logo.png"
 import { Separator } from "@/components/ui/separator";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -17,7 +14,6 @@ import { cn } from "@/lib/utils";
 import { Switch } from "@/components/ui/switch";
 import { useSetUser } from "@/redux/hooks/user";
 import { useMutation } from "@tanstack/react-query";
-
 import Gemma from "@/assets/bot/gemma.svg"
 import GPT from "@/assets/bot/gpt.svg"
 import Mete from "@/assets/bot/meta.svg"
@@ -57,12 +53,22 @@ function Login() {
             <div className="hidden md:flex col-span-6 justify-center flex-col pl-24">
                 <TypeAnimation
                     sequence={[
-                        'Văn phòng UBND Hà Nội',
+                        'VĂN PHÒNG UBND THÀNH PHỐ HÀ NỘI',
                         1000,
                     ]}
                     cursor={false}
                     speed={50}
-                    className="font-medium text-5xl"
+                    className="font-medium text-5xl leading-tight h-32"
+                />
+                 <TypeAnimation
+                    sequence={[
+                        'HANOI ARTIFICIAL INTELLIGENCE',
+                        1000,
+                    ]}
+                    speed={50}
+                    cursor={false}
+                    repeat={Infinity}
+                    className="font-medium text-2xl mt-3"
                 />
                 <TypeAnimation
                     sequence={[
@@ -143,7 +149,7 @@ function Login() {
                             </div>
 
                             <Button
-                                className="w-full bg-gradient-to-r from-[#628EFF] via-[#8740CD] to-[#580475] mt-6"
+                                className="w-full bg-gradient-to-r from-[#628EFF] to-[#0068b4] mt-6"
                                 type="submit"
                                 disabled={loginMuation.isPending}
                             >
@@ -179,10 +185,10 @@ function Login() {
                 </Card>
 
             </div>
-            <img src={Logo} className="w-20 absolute top-6 left-8 brightness-200" />
-            <img src={Rectangle} className="w-36 absolute bottom-16 right-96 animate-float duration-10000" />
-            <img src={Rectangle2} className={cn("w-56 absolute top-32 md:top-20 left-[40%] animate-float", theme === "dark" && "brightness-50")} />
-            <img src={RainbowRing} className={cn("h-[400px] absolute bottom-0 left-0 hidden md:block", theme === "dark" && "brightness-50")} />
+            <img src={Logo} className={cn("w-20 absolute top-6 left-8", theme === "dark" && "brightness-200")} />
+            <div className={cn("w-36 h-36 absolute bottom-16 right-96 animate-float duration-10000 bg-primary-blue rounded-full blur-sm")} />
+            <div className={cn("w-56 h-56 absolute top-32 md:top-20 left-[40%] animate-float bg-primary-blue rounded-full blur-sm", theme === "dark" && "brightness-50")} />
+            {/* <img src={RainbowRing} className={cn("h-[400px] absolute bottom-0 left-0 hidden md:block", theme === "dark" && "brightness-50")} /> */}
         </div>
     )
 }

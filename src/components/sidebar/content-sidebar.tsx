@@ -38,11 +38,11 @@ function ContentSidebar() {
 
                     <PopoverContent className="w-60 p-0 mr-4">
                         <div className="flex items-center hover:bg-secondary p-3 rounded cursor-pointer" >
-                            <UserRound size={20}/>
+                            <UserRound size={20} />
                             <p className="ml-2 text-sm font-light">Thông tin tài khoản</p>
                         </div>
                         <div className="flex items-center hover:bg-secondary p-3 rounded cursor-pointer">
-                            <Moon  size={20}/>
+                            <Moon size={20} />
                             <p className="mx-2 text-sm font-light">Nền tối</p>
                             <Switch
                                 className="z-10"
@@ -53,12 +53,12 @@ function ContentSidebar() {
                             />
                         </div>
                         <div className="flex items-center hover:bg-secondary p-3 rounded cursor-pointer" onClick={() => { }}>
-                            <SquareArrowOutUpRight  size={20}/>
+                            <SquareArrowOutUpRight size={20} />
                             <p className="ml-2 text-sm font-light">Hỗ trợ</p>
                         </div>
-                        <div className="border"/>
+                        <div className="border" />
                         <div className="flex items-center hover:bg-secondary p-3 rounded cursor-pointer" onClick={handleLogout}>
-                            <LogOut  size={20}/>
+                            <LogOut size={20} />
                             <p className="ml-2 text-sm font-light">Đăng xuất</p>
                         </div>
                     </PopoverContent>
@@ -102,6 +102,7 @@ function ContentSidebar() {
                 }
                 <AccordionBot />
             </div>
+
             <Outlet />
         </>
     )

@@ -53,12 +53,12 @@ function HomeScreen() {
 
     return (
         <div className="m-auto p-3 md:p-0">
-            <h1 className="text-xl md:text-3xl font-semibold mb-1 w-full md:w-[48rem] m-auto">
+            <h1 className="text-xl md:text-3xl font-semibold mb-1 w-full md:w-[48rem] m-auto text-center">
                 VĂN PHÒNG ỦY BAN NHÂN DÂN THÀNH PHỐ HÀ NỘI
             </h1>
-            <h1 className="text-xl md:text-3xl font-semibold w-full md:w-[48rem] m-auto mb-8 md:mb-0">
+            <h1 className="text-xl md:text-3xl font-semibold w-full md:w-[48rem] m-auto mb-8 md:mb-0 text-center">
                 <span className="bg-gradient-to-r from-violet-500 via-yellow-500 to-red-500 text-transparent bg-clip-text">
-                    Sẵn sàng hỗ trợ tất cả các yêu cầu
+                    HANOI ARTIFICIAL INTELLIGENCE
                 </span>
             </h1>
 
@@ -83,7 +83,7 @@ function HomeScreen() {
                                         bot.description,
                                         2000,
                                     ]}
-                                    cursor
+                                    cursor={false}
                                     speed={50}
                                     className="hidden md:block text-sm font-light"
                                 />

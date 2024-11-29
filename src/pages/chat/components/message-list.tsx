@@ -25,7 +25,7 @@ function MessageList(props: IMessageListProps) {
     }, [listMess])
 
     return (
-        <ScrollArea className="h-full pb-3 px-0 md:px-10 items-center">
+        <ScrollArea className="h-full pb-3 px-0 md:px-10 items-center backdrop-opacity-30">
             <div className="mx-auto w-full md:max-w-3xl">
                 {
                     listMess.map((mess) => (

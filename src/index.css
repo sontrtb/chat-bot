@@ -19,6 +19,8 @@
 
     --primary: 0 0% 9%;
 
+    --primary-blue: #0068b4;
+
     --primary-foreground: 0 0% 98%;
 
     --secondary: 0 0% 96.1%;
@@ -53,8 +55,7 @@
 
     --chart-5: 27 87% 67%;
 
-    --radius: 0.5rem
-  ;
+    --radius: 0.5rem;
 
     --sidebar-background: 0 0% 98%;
 
@@ -72,7 +73,8 @@
 
     --sidebar-ring: 217.2 91.2% 59.8%;
   
-    --login-form-background: #f3f4f6aa
+    --login-form-background: #f3f4f6aa;
+
   }
   .dark {
 
@@ -89,6 +91,8 @@
     --popover-foreground: 0 0% 98%;
 
     --primary: 0 0% 98%;
+
+    --primary-blue: #0068b4;
 
     --primary-foreground: 0 0% 9%;
 

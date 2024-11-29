@@ -53,7 +53,7 @@ function MessageItem(props: IMessageItemProps) {
                             <div>
                                 <article
                                     className={cn(
-                                        "bg-secondary/30 prose dark:prose-invert ml-4 md:w-fit w-4/5 p-3 shadow-xl rouder rounded-xl border transition-transform duration-300 transform",
+                                        "bg-secondary/50 prose dark:prose-invert ml-4 md:w-fit w-4/5 p-3 shadow-xl rouder rounded-xl border transition-transform duration-300 transform",
                                         isCoppyDone ? "scale-95 backdrop-brightness-90" : ""
                                     )}
                                     dangerouslySetInnerHTML={{ __html: marked.parse(message.message) as string }}
@@ -62,7 +62,7 @@ function MessageItem(props: IMessageItemProps) {
                                     <TooltipProvider>
                                         <Tooltip>
                                             <TooltipTrigger onClick={handleCoppy}>
-                                                <Copy size={18} className="mx-2"/>
+                                                <Copy size={18} className="mx-2 opacity-60"/>
                                             </TooltipTrigger>
                                             <TooltipContent side="bottom">
                                                 <p>Sao chép</p>
@@ -70,7 +70,7 @@ function MessageItem(props: IMessageItemProps) {
                                         </Tooltip>
                                         <Tooltip>
                                             <TooltipTrigger onClick={retryRenderMessage}>
-                                                <RefreshCcw size={18} className="mx-2"/>
+                                                <RefreshCcw size={18} className="mx-2 opacity-60"/>
                                             </TooltipTrigger>
                                             <TooltipContent side="bottom">
                                                 <p>Thử lại</p>

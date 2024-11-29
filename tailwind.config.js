@@ -25,7 +25,8 @@ export default {
     			},
     			primary: {
     				DEFAULT: 'hsl(var(--primary))',
-    				foreground: 'hsl(var(--primary-foreground))'
+    				foreground: 'hsl(var(--primary-foreground))',
+					blue: 'var(--primary-blue)'
     			},
     			secondary: {
     				DEFAULT: 'hsl(var(--secondary))',
@@ -65,7 +66,7 @@ export default {
     			},
     			login: {
     				'form-background': 'var(--login-form-background)'
-    			}
+    			},
     		},
     		keyframes: {
     			floatDiagonal: {
