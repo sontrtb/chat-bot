@@ -28,8 +28,8 @@ const useGetMessage = (props: IUseGetMessageProps) => {
     
     const [isLoading, setIsLoading] = useState(false)
 
-    const getMessage = async (messageSend?: string, target?: string) => {
-        let replyToId = ""
+    const getMessage = async (messageSend?: string, target?: string, replyToId?: string) => {
+        let replyToIdTmp = ""
         setIsLoading(true);
         fetch(`${import.meta.env.VITE_API_URL}/c/chat`, {
             method: "POST",
@@ -42,6 +42,7 @@ const useGetMessage = (props: IUseGetMessageProps) => {
                 message: messageSend,
                 conId: conId,
                 target: target,
+                replyToId: replyToId
             }),
         })
             .then(async (response) => response.body?.getReader())
@@ -61,7 +62,7 @@ const useGetMessage = (props: IUseGetMessageProps) => {
                                 userId: target ?? botSelect?.id ?? "bot",
                                 messageId: `${new Date().getTime()}`,
                                 role: ERoleMessage.ASSISTANT,
-                                replyToId: replyToId
+                                replyToId: replyToIdTmp
                             };
                             onDoneTyping?.(newMess)
 
@@ -88,7 +89,7 @@ const useGetMessage = (props: IUseGetMessageProps) => {
                             try {
                                 const parsedData = JSON.parse(jsonData);
                                 const message = parsedData.result?.message || "";
-                                replyToId =  parsedData.result?.replyToId
+                                replyToIdTmp =  parsedData.result?.replyToId
                                 textMessTmp += message;
                                 onTyping?.(`${textMessTmp}`);
                             } catch (error) {

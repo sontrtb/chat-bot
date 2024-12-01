@@ -50,12 +50,10 @@ function MessageItem(props: IMessageItemProps) {
         // console.log(message.message)
     }
 
-    console.log("listMessACurrent", listMessACurrent)
-
     const onChangeBotMess = (bot: IBot) => {
         const messACurrentTmp = listMessACurrent.find(m => m.userId === bot.id)
         if(!messACurrentTmp) {
-            getMessage(messageUser.message, bot.id)
+            getMessage(messageUser.message, bot.id, messACurrent.replyToId)
             return;
         }
 
