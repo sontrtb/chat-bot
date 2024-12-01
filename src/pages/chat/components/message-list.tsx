@@ -1,11 +1,11 @@
 import { ScrollArea } from "@/components/ui/scroll-area"
 import MessageItem from "./message-item"
-import { IMessage } from "@/types/message";
+import { IMessage, IMessageDisplay } from "@/types/message";
 import MessageItemTyping from "./message-item-typing";
 import { Dispatch, useEffect, useRef } from "react";
 
 interface IMessageListProps {
-    listMess: IMessage[];
+    listMess: IMessageDisplay;
     setListMess: Dispatch<React.SetStateAction<IMessage[]>>
 }
 
@@ -28,8 +28,12 @@ function MessageList(props: IMessageListProps) {
         <ScrollArea className="h-full pb-3 px-0 md:px-10 items-center backdrop-opacity-30">
             <div className="mx-auto w-full md:max-w-3xl">
                 {
-                    listMess.map((mess) => (
-                        <MessageItem key={mess.id} message={mess} />
+                    listMess.user.map((mess) => (
+                        <MessageItem
+                            key={mess.id}
+                            messageUser={mess}
+                            messageAssistant={listMess.assistant[mess.messageId as never] as unknown as IMessage[]}
+                        />
                     ))
                 }
                 <MessageItemTyping setListMess={setListMess} scrollToBottom={scrollToBottom}/>

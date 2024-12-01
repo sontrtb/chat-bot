@@ -1,24 +1,24 @@
 import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 export interface IMessTypingState {
-    isTyping: boolean;
-    message: string | undefined;
+    isTyping?: boolean;
+    message?: string;
+    messageId?: string;
 }
 
 const initState: IMessTypingState = {
     isTyping: false,
-    message: undefined
 };
 
 const messageTypingSlice = createSlice({
     name: "messageTyping",
     initialState: initState,
     reducers: {
-        setMessageTyping: (state, action: PayloadAction<string | undefined>) => {
-            return { ...state, message: action.payload, isTyping: true };
+        setMessageTyping: (state, action: PayloadAction<IMessTypingState>) => {
+            return { ...state, message: action.payload.message, messageId: action.payload.messageId,isTyping: true };
         },
         setMessageTypingDone: (state) => {
-            return { ...state, message: undefined, isTyping: false };
+            return { ...state, message: undefined, messageId: undefined,isTyping: false };
         },
     },
 });

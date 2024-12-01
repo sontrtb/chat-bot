@@ -2,9 +2,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { type RootState } from "../store";
 import {  setMessageTyping, setMessageTypingDone, IMessTypingState } from "../slices/mesageTyping";
 
-const useSetMessageTyping = (): ((message: string) => void) => {
+const useSetMessageTyping = (): ((message: IMessTypingState) => void) => {
   const dispatch = useDispatch();
-  const setMessageTypingStore = (message: string): void => {
+  const setMessageTypingStore = (message: IMessTypingState): void => {
     dispatch(setMessageTyping(message));
   };
   return setMessageTypingStore;

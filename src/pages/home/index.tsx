@@ -8,7 +8,7 @@ import { createNewChat } from "@/api/chat";
 import queryKey from "@/const/query-key";
 import { getListBot } from "@/api/bot";
 import { useSetChatBot } from "@/redux/hooks/chat-bot";
-import { IMessage } from "@/types/message";
+import { ERoleMessage, IMessage } from "@/types/message";
 import { useGetUser } from "@/redux/hooks/user";
 import { IBot } from "@/types/chatbot";
 
@@ -32,12 +32,17 @@ function HomeScreen() {
         const newMess: IMessage = {
             id: -1,
             message: mess,
-            userId: user?.id ?? "me"
+            userId: user?.id ?? "me",
+            messageId: "-1",
+            role: ERoleMessage.USER,
         }
         createChatMutation.mutate(undefined, {
             onSuccess: (res) => {
                 setTimeout(() => {
-                    setMessageTyping(mess)
+                    setMessageTyping({
+                        message: newMess.message,
+                        messageId: newMess.messageId
+                    })
                 }, 500)
                 navigate(`/chat?conId=${res}`, {
                     state: newMess

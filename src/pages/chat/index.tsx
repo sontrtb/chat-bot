@@ -1,8 +1,8 @@
 import { useLocation, useSearchParams } from "react-router-dom";
 import MessageInput from "./components/message-input"
 import MessageList from "./components/message-list"
-import { useEffect, useState } from "react";
-import { IMessage } from "@/types/message";
+import { useEffect, useMemo, useState } from "react";
+import { ERoleMessage, IMessage, IMessageDisplay } from "@/types/message";
 import { useSetMessageTyping } from "@/redux/hooks/message-typing";
 import { useQuery } from "@tanstack/react-query";
 import queryKey from "@/const/query-key";
@@ -35,16 +35,44 @@ function ChatScreen() {
         const newMess: IMessage = {
             id: new Date().getTime(),
             userId: user?.id ?? "me",
-            message: message
+            message: message,
+            role: ERoleMessage.USER,
+            messageId: `${new Date().getTime()}`
         }
         setListMess(pre => [...pre, newMess])
-
-        setMessageTyping(message)
+        setMessageTyping({
+            message: newMess.message,
+            messageId: newMess.messageId
+        })
     }
+
+    const listMessFormat: IMessageDisplay = useMemo(() => {
+        const listMessFormatTmp: IMessageDisplay = {
+            user: [],
+            assistant: []
+        }
+        listMess.forEach(mess => {
+            if (mess.role === ERoleMessage.USER) {
+                listMessFormatTmp.user.push(mess)
+            } else {
+                const keysArr = Object.keys(listMessFormatTmp.assistant)
+                if (!!mess.replyToId && keysArr.includes(mess.replyToId)) {
+                    (listMessFormatTmp.assistant[mess.replyToId as unknown as number] as unknown as IMessage[]).push(mess)
+                } else {
+                    (listMessFormatTmp.assistant[mess.replyToId as unknown as number] as unknown as IMessage[]) = [mess]
+                }
+            }
+
+        })
+
+        return listMessFormatTmp
+    }, [listMess])
+
+    console.log("listMessFormat", listMessFormat)
 
     return (
         <div className="flex flex-col h-[calc(100vh_-_80px)] px-2 md:px-0 bg-[url('/images/background.png')] bg-no-repeat bg-center">
-            <MessageList listMess={listMess} setListMess={setListMess} />
+            <MessageList listMess={listMessFormat} setListMess={setListMess} />
             <div className="pb-4">
                 <MessageInput onSubmit={sendMessage} autoFocus />
             </div>
