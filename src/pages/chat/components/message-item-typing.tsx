@@ -44,7 +44,12 @@ function MessageItemTyping(props: IMessageItemTypingProps) {
 
     useEffect(() => {
         if (messageTyping.isTyping) {
-            getMessage(messageTyping.message, botSelect?.id)
+            const messSend = {
+                message: messageTyping.message,
+                fileName: messageTyping.fileName,
+                fileData: messageTyping.fileData,
+            }
+            getMessage(messSend, botSelect?.id)
         }
     }, [messageTyping])
 

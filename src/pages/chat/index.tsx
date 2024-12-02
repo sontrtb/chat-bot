@@ -1,5 +1,5 @@
 import { useLocation, useSearchParams } from "react-router-dom";
-import MessageInput from "./components/message-input"
+import MessageInput, { IDataSubmitInput } from "./components/message-input"
 import MessageList from "./components/message-list"
 import { useEffect, useMemo, useState } from "react";
 import { ERoleMessage, IMessage, IMessageDisplay } from "@/types/message";
@@ -31,17 +31,20 @@ function ChatScreen() {
         setListMess([...initList, ...getMessagesQuery.data ?? []].reverse() ?? [])
     }, [getMessagesQuery.data, state])
 
-    const sendMessage = async (message: string) => {
+    const sendMessage = async (messSend: IDataSubmitInput) => {
         const newMess: IMessage = {
             id: new Date().getTime(),
             userId: user?.id ?? "me",
-            message: message,
+            message: messSend.message,
             role: ERoleMessage.USER,
             messageId: `${new Date().getTime()}`
         }
         setListMess(pre => [...pre, newMess])
         setMessageTyping({
-            message: newMess.message,
+            message: messSend.message,
+            fileName: messSend.fileName,
+            fileData: messSend.fileData,
+
             messageId: newMess.messageId
         })
     }
@@ -67,8 +70,6 @@ function ChatScreen() {
 
         return listMessFormatTmp
     }, [listMess])
-
-    console.log("listMessFormat", listMessFormat)
 
     return (
         <div className="flex flex-col h-[calc(100vh_-_80px)] px-2 md:px-0 bg-[url('/images/background.png')] bg-no-repeat bg-center">

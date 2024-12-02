@@ -10,6 +10,12 @@ interface IUseGetMessageProps {
     onTyping?:(messText: string) => void
 }
 
+export interface IMessageGetProps {
+    message?: string,
+    fileName?: string;
+    fileData?: string;
+}
+
 const useGetMessage = (props: IUseGetMessageProps) => {
     const { onDoneTyping, onTyping} = props
 
@@ -28,7 +34,7 @@ const useGetMessage = (props: IUseGetMessageProps) => {
     
     const [isLoading, setIsLoading] = useState(false)
 
-    const getMessage = async (messageSend?: string, target?: string, replyToId?: string) => {
+    const getMessage = async (messageSend?: IMessageGetProps, target?: string, replyToId?: string) => {
         let replyToIdTmp = ""
         setIsLoading(true);
         fetch(`${import.meta.env.VITE_API_URL}/c/chat`, {
@@ -39,7 +45,10 @@ const useGetMessage = (props: IUseGetMessageProps) => {
                 Authorization: `Bearer ${user?.token}`,
             },
             body: JSON.stringify({
-                message: messageSend,
+                message: messageSend?.message,
+                fileName: messageSend?.fileName,
+                fileData: messageSend?.fileData,
+
                 conId: conId,
                 target: target,
                 replyToId: replyToId

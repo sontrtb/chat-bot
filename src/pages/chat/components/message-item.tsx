@@ -66,7 +66,7 @@ function MessageItem(props: IMessageItemProps) {
         onFocus()
         const messACurrentTmp = listMessACurrent.find(m => m.userId === bot.id)
         if (!messACurrentTmp) {
-            getMessage(messageUser.message, bot.id, messACurrent.replyToId)
+            getMessage({message: messageUser.message}, bot.id, messACurrent.replyToId)
             return;
         }
 
