@@ -13,7 +13,6 @@ import {
 import HistoryChat from "../sidebar/history-chat"
 import { Button } from "../ui/button"
 import { useNavigate } from "react-router-dom";
-import Logo from "@/assets/logo/logo.png"
 import { PanelRightOpen, Plus } from "lucide-react";
 
 export function AppSidebar() {
@@ -28,7 +27,7 @@ export function AppSidebar() {
     return (
         <Sidebar>
             <SidebarHeader>
-                <img src={Logo} className="w-24 m-auto mt-6 brightness-200" />
+                <img src={"./logo.svg"} className="w-24 m-auto mt-6 brightness-200" />
             </SidebarHeader>
             <SidebarContent>
                 <SidebarGroup>

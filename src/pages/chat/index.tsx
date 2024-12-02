@@ -72,7 +72,7 @@ function ChatScreen() {
     }, [listMess])
 
     return (
-        <div className="flex flex-col h-[calc(100vh_-_80px)] px-2 md:px-0 bg-[url('/images/background.png')] bg-no-repeat bg-center">
+        <div className="flex flex-col h-[calc(100vh_-_80px)] px-2 md:px-0 bg-[url('/images/background.png')] bg-no-repeat bg-center bg-[length:80%] md:bg-[length:600px]">
             <MessageList listMess={listMessFormat} setListMess={setListMess} />
             <div className="pb-4">
                 <MessageInput onSubmit={sendMessage} autoFocus />

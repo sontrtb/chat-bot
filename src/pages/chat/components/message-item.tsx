@@ -81,7 +81,6 @@ function MessageItem(props: IMessageItemProps) {
                     {messageUser.message}
                 </p>
             </div>
-
             {
                 listMessACurrent.length > 0 &&
                 <div className="mb-3 flex justify-start mt-8">
