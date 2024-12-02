@@ -63,14 +63,17 @@ function MessageItemTyping(props: IMessageItemTypingProps) {
                     <AvatarImage src={import.meta.env.VITE_API_URL + botSend?.icon} alt="Icon AI" />
                     <AvatarFallback>AI</AvatarFallback>
                 </Avatar>
-                {
-                    isLoading ?
-                        <Skeleton className="h-8 w-1/2 md:w-96 rounded-md ml-4 mt-2" /> :
-                        <article
-                            className="bg-secondary/50 prose dark:prose-invert ml-4 pt-1 md:w-fit w-4/5  p-3 shadow-xl rouder rounded-xl border"
-                            dangerouslySetInnerHTML={{ __html: marked.parse(textTmp) as string }}
-                        />
-                }
+                <div>
+                    <div className="h-8" />
+                    {
+                        isLoading ?
+                            <Skeleton className="h-8 w-1/2 md:w-96 rounded-md ml-4 mt-2" /> :
+                            <article
+                                className="bg-secondary/50 prose dark:prose-invert ml-4 pt-1 md:w-fit w-4/5  p-3 shadow-xl rouder rounded-xl border"
+                                dangerouslySetInnerHTML={{ __html: marked.parse(textTmp) as string }}
+                            />
+                    }
+                </div>
             </div>
         </div>
     )
