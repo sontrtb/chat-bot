@@ -3,6 +3,9 @@ import rootApi from "./api";
 
 export interface ISendMessBody {
     message: string;
+    conId: string,
+    target: string,
+    replyToId: string
 }
 
 export interface IHistory {
