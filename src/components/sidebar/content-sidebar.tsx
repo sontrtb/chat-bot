@@ -31,8 +31,8 @@ function ContentSidebar() {
                 <Popover>
                     <PopoverTrigger>
                         <Avatar className="h-10 w-10 md:h-12 md:w-12">
-                            <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-                            <AvatarFallback>CN</AvatarFallback>
+                            <AvatarImage src="./images/avatar.jpeg" alt="@shadcn" />
+                            <AvatarFallback>AV</AvatarFallback>
                         </Avatar>
                     </PopoverTrigger>
 

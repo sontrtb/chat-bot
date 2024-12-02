@@ -32,6 +32,7 @@ function MessageItem(props: IMessageItemProps) {
 
     useEffect(() => {
         setMessACurrent(messageAssistant?.[0])
+        setListMessACurrent(messageAssistant ?? [])
     }, [messageAssistant])
 
     const { getMessage, isLoading } = useGetMessage({
