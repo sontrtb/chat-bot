@@ -82,50 +82,57 @@ function MessageItem(props: IMessageItemProps) {
                 </p>
             </div>
 
-            <div className="mb-3 flex justify-start mt-8">
-                <div>
-                    <div className="flex">
-                        <Avatar className="h-8 w-8">
-                            <AvatarImage src={import.meta.env.VITE_API_URL + botSelected?.icon} alt="Icon bot send" />
-                            <AvatarFallback>AI</AvatarFallback>
-                        </Avatar>
-                        <div>
-                            <MessageSelectBot onChangeBot={onChangeBotMess} botSelected={listMessACurrent.map(m => m.userId)} />
-                            {
-                                isLoading ?
-                                    <Skeleton className="h-8 w-1/2 md:w-96 rounded-md ml-4 mt-2" /> :
-                                    <article
-                                        className={cn(
-                                            "bg-secondary/50 prose dark:prose-invert ml-4 md:w-fit w-4/5 p-3 shadow-xl rouder rounded-xl border transition-transform duration-300 transform",
-                                            isFocus && "scale-95"
-                                        )}
-                                        dangerouslySetInnerHTML={{ __html: marked.parse(textTmp ?? messACurrent?.message ?? "") as string }}
-                                    />
-                            }
-                            <div className="ml-4 mt-1 p-2">
-                                <TooltipProvider>
-                                    <Tooltip>
-                                        <TooltipTrigger onClick={handleCoppy}>
-                                            <Copy size={18} className="mx-2 opacity-60" />
-                                        </TooltipTrigger>
-                                        <TooltipContent side="bottom">
-                                            <p>Sao chép</p>
-                                        </TooltipContent>
-                                    </Tooltip>
-                                    <Tooltip>
-                                        <TooltipTrigger onClick={retryRenderMessage}>
-                                            <RefreshCcw size={18} className="mx-2 opacity-60" />
-                                        </TooltipTrigger>
-                                        <TooltipContent side="bottom">
-                                            <p>Thử lại</p>
-                                        </TooltipContent>
-                                    </Tooltip>
-                                </TooltipProvider>
+            {
+                listMessACurrent.length > 0 &&
+                <div className="mb-3 flex justify-start mt-8">
+                    <div>
+                        <div className="flex">
+                            <Avatar className="h-8 w-8">
+                                <AvatarImage src={import.meta.env.VITE_API_URL + botSelected?.icon} alt="Icon bot send" />
+                                <AvatarFallback>AI</AvatarFallback>
+                            </Avatar>
+                            <div>
+                                <MessageSelectBot
+                                    onChangeBot={onChangeBotMess}
+                                    botSelected={listMessACurrent.map(m => m.userId)}
+                                    disable={!!textTmp}
+                                />
+                                {
+                                    isLoading ?
+                                        <Skeleton className="h-8 w-1/2 md:w-96 rounded-md ml-4 mt-2" /> :
+                                        <article
+                                            className={cn(
+                                                "bg-secondary/50 prose dark:prose-invert ml-4 md:w-fit w-4/5 p-3 shadow-xl rouder rounded-xl border transition-transform duration-300 transform",
+                                                isFocus && "scale-95"
+                                            )}
+                                            dangerouslySetInnerHTML={{ __html: marked.parse(textTmp ?? messACurrent?.message ?? "") as string }}
+                                        />
+                                }
+                                <div className="ml-4 mt-1 p-2">
+                                    <TooltipProvider>
+                                        <Tooltip>
+                                            <TooltipTrigger onClick={handleCoppy}>
+                                                <Copy size={18} className="mx-2 opacity-60" />
+                                            </TooltipTrigger>
+                                            <TooltipContent side="bottom">
+                                                <p>Sao chép</p>
+                                            </TooltipContent>
+                                        </Tooltip>
+                                        <Tooltip>
+                                            <TooltipTrigger onClick={retryRenderMessage}>
+                                                <RefreshCcw size={18} className="mx-2 opacity-60" />
+                                            </TooltipTrigger>
+                                            <TooltipContent side="bottom">
+                                                <p>Thử lại</p>
+                                            </TooltipContent>
+                                        </Tooltip>
+                                    </TooltipProvider>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            }
         </>
     )
 }
