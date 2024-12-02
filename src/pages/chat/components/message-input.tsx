@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import { useGetCurrentChatBot } from "@/redux/hooks/chat-bot";
 import { useGetCurrentMessageTyping, useSetMessageTypingDone } from "@/redux/hooks/message-typing";
 import { fileToBase64 } from "@/utils/base64";
-import { CirclePause, CircleX, CloudUpload, Send } from "lucide-react"
+import { CirclePause, CircleX, CloudUpload, Mic, Send } from "lucide-react"
 import { useEffect, useId, useRef, useState } from "react";
 
 export interface IDataSubmitInput {
@@ -60,6 +60,7 @@ function MessageInput(props: IMessageInputProps) {
             fileData: fileInfor?.fileData
         })
         setText("")
+        onClearFile()
     }
 
     const handleCancel = () => {
@@ -78,6 +79,10 @@ function MessageInput(props: IMessageInputProps) {
 
     const onClearFile = () => {
         setFileInfor(undefined)
+    }
+
+    const onListen = () => {
+
     }
 
     return (
@@ -110,12 +115,19 @@ function MessageInput(props: IMessageInputProps) {
                 fileInfor &&
                 <div className="px-2 py-1 rounded bg-primary/10 opacity-50 w-fit my-3 flex items-center">
                     <p className="text-sm mr-2">{fileInfor?.fileName}</p>
-                    <CircleX size="18px" onClick={onClearFile} className="cursor-pointer"/>
+                    <CircleX size="18px" onClick={onClearFile} className="cursor-pointer" />
                 </div>
             }
             <div className="flex justify-between">
                 <img src={import.meta.env.VITE_API_URL + botSelect?.icon} className="w-8 h-8 ml-2" />
                 <div className="flex">
+                    <button
+                        onClick={onListen}
+                        className="cursor-pointer mr-2 bg-primary/10 p-2 rounded-full hover:scale-110 transition-transform"
+                    >
+                        <Mic size="20px" className="text-primary"/>
+                    </button>
+
                     <>
                         <label
                             htmlFor={idInputFile}
