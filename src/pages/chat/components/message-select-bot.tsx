@@ -12,8 +12,6 @@ function MessageSelectBot(props: IMessageSelectBotProps) {
 
     const listBot = useGetListChatBot()
 
-    console.log("botSelected", botSelected, listBot)
-
     return (
         <div className="flex justify-end mb-1">
             {
@@ -21,7 +19,7 @@ function MessageSelectBot(props: IMessageSelectBotProps) {
                     <div key={bot.id} className="cursor-pointer mx-1" onClick={() => onChangeBot(bot)}>
                         <img
                             src={import.meta.env.VITE_API_URL + bot.icon}
-                            className={cn("w-8 h-8 p-1 rounded-full bg-secondary", botSelected.includes(bot.id) && "bg-red-100")}
+                            className={cn("w-6 h-6 p-1 rounded-full bg-secondary", botSelected.includes(bot.id) && "bg-red-100")}
                         />
                     </div>
                 ))
