@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import { useGetCurrentChatBot } from "@/redux/hooks/chat-bot";
 import { useGetCurrentMessageTyping, useSetMessageTypingDone } from "@/redux/hooks/message-typing";
 import { fileToBase64 } from "@/utils/base64";
-import { CirclePause, CircleX, CloudUpload, Mic, Send } from "lucide-react"
+import { CirclePause, CircleX, CloudUpload, Send } from "lucide-react"
 import { useEffect, useId, useRef, useState } from "react";
 
 export interface IDataSubmitInput {
@@ -81,9 +81,9 @@ function MessageInput(props: IMessageInputProps) {
         setFileInfor(undefined)
     }
 
-    const onListen = () => {
-
-    }
+    // const onListen = () => {
+    //
+    // }
 
     return (
         <div className={
