@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Build React project
+npm install
 echo "Building project with npm..."
 npm run build
 
