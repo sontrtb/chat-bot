@@ -50,7 +50,7 @@ function Login() {
 
     return (
         <div className="grid grid-cols-12 gap-4 h-screen relative">
-            <div className="hidden md:flex col-span-6 justify-center flex-col pl-24">
+            <div className="hidden xl:flex col-span-6 justify-center flex-col pl-24">
                 <TypeAnimation
                     sequence={[
                         'VĂN PHÒNG UBND THÀNH PHỐ HÀ NỘI',
@@ -88,7 +88,7 @@ function Login() {
                 />
                 <div className="h-24" />
             </div>
-            <div className="flex justify-end items-center md:pr-24 md:py-4  md:col-span-6 col-span-12">
+            <div className="flex justify-end items-center xl:pr-24 xl:py-4 max-w-xl xl:col-span-6 col-span-12 justify-self-center">
                 <div className="flex items-center space-x-2 absolute top-6 right-8">
                     <Switch
                         id="airplane-mode"
@@ -99,7 +99,7 @@ function Login() {
                     />
                     <Label htmlFor="airplane-mode">Chế độ tối</Label>
                 </div>
-                <Card className="md:w-[500px] m-auto w-11/12 z-10 bg-login-form-background backdrop-blur-sm">
+                <Card className="xl:w-[500px] m-auto w-11/12 z-10 bg-login-form-background backdrop-blur-sm">
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <CardHeader>
                             <CardTitle className="text-2xl">
@@ -110,7 +110,7 @@ function Login() {
                                     ]}
                                     cursor={false}
                                     speed={50}
-                                    className="text-2xl hidden md:block"
+                                    className="text-2xl hidden xl:block"
                                 />
                                 <TypeAnimation
                                     sequence={[
@@ -119,7 +119,7 @@ function Login() {
                                     ]}
                                     cursor={false}
                                     speed={50}
-                                    className="text-2xl block md:hidden h-20"
+                                    className="text-2xl block xl:hidden h-20"
                                 />
                             </CardTitle>
                             <CardDescription>{isMobile ? "HANOI ARTIFICIAL INTELLIGENCE" : "Đăng nhập tài khoản của bạn"}</CardDescription>
@@ -159,7 +159,7 @@ function Login() {
 
                             <p className="text-sm text-right my-4 underline">Lấy lại mật khẩu</p>
 
-                            <div className="hidden md:flex items-center justify-between">
+                            <div className="hidden xl:flex items-center justify-between">
                                 <Separator className="w-32" />
                                 <p className="text-sm text-center">Danh sách trí tuệ nhân tạo</p>
                                 <Separator className="w-32" />
@@ -174,7 +174,7 @@ function Login() {
                             </div>
 
                         </CardContent>
-                        <CardFooter className="hidden md:block opacity-60">
+                        <CardFooter className="hidden xl:block opacity-60">
                             <p className="text-sm text-center my-4 w-full font-medium">Cần tạo tài khoản nhanh</p>
                             <div className="grid grid-cols-3">
                                 <p className="col-span-1 text-sm underline w-full text-center">Lưu ý</p>
@@ -188,7 +188,7 @@ function Login() {
             </div>
             <img src="./logo.svg" className={cn("w-20 absolute top-6 left-8", theme === "dark" && "brightness-200")} />
             <div className={cn("w-36 h-36 absolute bottom-16 right-96 animate-float duration-10000 bg-primary-blue rounded-full blur-sm")} />
-            <div className={cn("w-56 h-56 absolute top-32 md:top-20 left-[40%] animate-float bg-primary-blue rounded-full blur-sm", theme === "dark" && "brightness-50")} />
+            <div className={cn("w-56 h-56 absolute top-32 xl:top-20 left-[40%] animate-float bg-primary-blue rounded-full blur-sm", theme === "dark" && "brightness-50")} />
         </div>
     )
 }

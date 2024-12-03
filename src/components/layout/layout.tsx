@@ -7,7 +7,7 @@ export default function Layout() {
   return (
     <SidebarProvider>
       <AppSidebar />
-      <SidebarInset className="h-screen md:pl-2">
+      <SidebarInset className="h-screen xl:pl-2">
         <ContentSidebar />
       </SidebarInset>
     </SidebarProvider>

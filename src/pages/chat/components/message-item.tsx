@@ -93,7 +93,7 @@ function MessageItem(props: IMessageItemProps) {
     return (
         <>
             <div className={cn("mb-3 flex", "justify-end")} ref={itemRef}>
-                <p className="px-5 py-2.5 rounded-3xl md:w-fit max-w-xs md:max-w-xl leading-8 bg-secondary">
+                <p className="px-5 py-2.5 rounded-3xl max-w-xs md:max-w-xl leading-8 bg-secondary">
                     {messageUser.message}
                 </p>
             </div>
@@ -114,10 +114,10 @@ function MessageItem(props: IMessageItemProps) {
                                 />
                                 {
                                     isLoading ?
-                                        <Skeleton className="h-8 w-1/2 md:w-96 rounded-md ml-4 mt-2" /> :
+                                        <Skeleton className="h-8 w-1/2 xl:w-96 rounded-md ml-4 mt-2" /> :
                                         <article
                                             className={cn(
-                                                "bg-secondary/50 prose dark:prose-invert ml-4 md:w-fit w-4/5 p-3 shadow-xl rouder rounded-xl border transition-transform duration-300 transform",
+                                                "bg-secondary/50 prose dark:prose-invert ml-4 p-3 shadow-xl rouder rounded-xl border transition-transform duration-300 transform",
                                                 isFocus && "scale-95"
                                             )}
                                             dangerouslySetInnerHTML={{ __html: marked.parse(textTmp ?? messACurrent?.message ?? "") as string }}
