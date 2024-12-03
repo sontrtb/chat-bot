@@ -1,4 +1,4 @@
-import MessageInput from "../chat/components/message-input"
+import MessageInput, { IDataSubmitInput } from "../chat/components/message-input"
 import { useNavigate } from "react-router-dom";
 import { useSetMessageTyping } from "@/redux/hooks/message-typing";
 import { Button } from "@/components/ui/button";
@@ -28,10 +28,10 @@ function HomeScreen() {
         queryFn: getListBot
     })
 
-    const handleSendMess = (mess: string) => {
+    const handleSendMess = (messSend: IDataSubmitInput) => {
         const newMess: IMessage = {
             id: -1,
-            message: mess,
+            message: messSend.message,
             userId: user?.id ?? "me",
             messageId: "-1",
             role: ERoleMessage.USER,
@@ -40,7 +40,9 @@ function HomeScreen() {
             onSuccess: (res) => {
                 setTimeout(() => {
                     setMessageTyping({
-                        message: newMess.message,
+                        message: messSend.message,
+                        fileName: messSend.fileName,
+                        fileData: messSend.fileData,
                         messageId: newMess.messageId
                     })
                 }, 500)

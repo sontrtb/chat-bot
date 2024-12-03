@@ -3,6 +3,11 @@ export enum ERoleMessage {
     ASSISTANT = "assistant"
 }
 
+export enum ELastMessage {
+    LAST = 1,
+    NON_LAST = 0
+}
+
 export interface IMessage {
     id: number;
     conId?: string;
@@ -11,7 +16,8 @@ export interface IMessage {
     userId: string;
     messageId: string;
     replyToId?: string;
-    role: ERoleMessage
+    role: ERoleMessage;
+    isLast?: ELastMessage;
 }
 
 export interface IMessageDisplay {

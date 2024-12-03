@@ -4,6 +4,8 @@ export interface IMessTypingState {
     isTyping?: boolean;
     message?: string;
     messageId?: string;
+    fileName?: string;
+    fileData?: string;
 }
 
 const initState: IMessTypingState = {
@@ -15,10 +17,24 @@ const messageTypingSlice = createSlice({
     initialState: initState,
     reducers: {
         setMessageTyping: (state, action: PayloadAction<IMessTypingState>) => {
-            return { ...state, message: action.payload.message, messageId: action.payload.messageId,isTyping: true };
+            return {
+                ...state,
+                message: action.payload.message,
+                messageId: action.payload.messageId,
+                fileName: action.payload.fileName,
+                fileData: action.payload.fileData,
+                isTyping: true
+            };
         },
         setMessageTypingDone: (state) => {
-            return { ...state, message: undefined, messageId: undefined,isTyping: false };
+            return {
+                ...state,
+                message: undefined,
+                messageId: undefined,
+                fileName: undefined,
+                fileData: undefined,
+                isTyping: false
+            };
         },
     },
 });

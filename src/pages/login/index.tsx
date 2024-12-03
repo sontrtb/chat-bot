@@ -5,7 +5,6 @@ import { Input, PasswordInput } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useNavigate } from "react-router-dom";
 import { useForm, SubmitHandler } from "react-hook-form"
-import Logo from "@/assets/logo/logo.png"
 import { Separator } from "@/components/ui/separator";
 import { Checkbox } from "@/components/ui/checkbox";
 import { TypeAnimation } from 'react-type-animation';
@@ -14,15 +13,16 @@ import { cn } from "@/lib/utils";
 import { Switch } from "@/components/ui/switch";
 import { useSetUser } from "@/redux/hooks/user";
 import { useMutation } from "@tanstack/react-query";
-import Gemma from "@/assets/bot/gemma.svg"
-import GPT from "@/assets/bot/gpt.svg"
-import Mete from "@/assets/bot/meta.svg"
-import Mistral from "@/assets/bot/mistral.svg"
-import Sonet from "@/assets/bot/sonet.svg"
-import Ubnd from "@/assets/bot/ubnd.svg"
 import { useIsMobile } from "@/hooks/use-mobile";
 
-const listBot = [Gemma, GPT, Mete, Mistral, Sonet, Ubnd]
+const listBot = [
+    "./svg/bots/gemma.svg",
+    "./svg/bots/gpt.svg",
+    "./svg/bots/meta.svg",
+    "./svg/bots/mistral.svg",
+    "./svg/bots/sonet.svg",
+    "./svg/bots/ubnd.svg"
+]
 
 function Login() {
     const navigate = useNavigate();
@@ -186,10 +186,9 @@ function Login() {
                 </Card>
 
             </div>
-            <img src={Logo} className={cn("w-20 absolute top-6 left-8", theme === "dark" && "brightness-200")} />
+            <img src="./logo.svg" className={cn("w-20 absolute top-6 left-8", theme === "dark" && "brightness-200")} />
             <div className={cn("w-36 h-36 absolute bottom-16 right-96 animate-float duration-10000 bg-primary-blue rounded-full blur-sm")} />
             <div className={cn("w-56 h-56 absolute top-32 md:top-20 left-[40%] animate-float bg-primary-blue rounded-full blur-sm", theme === "dark" && "brightness-50")} />
-            {/* <img src={RainbowRing} className={cn("h-[400px] absolute bottom-0 left-0 hidden md:block", theme === "dark" && "brightness-50")} /> */}
         </div>
     )
 }

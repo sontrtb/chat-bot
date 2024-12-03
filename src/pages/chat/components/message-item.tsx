@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { IMessage } from "@/types/message";
+import { ELastMessage, IMessage } from "@/types/message";
 import { memo, useEffect, useRef, useState } from "react";
 import { marked } from "marked";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -10,28 +10,35 @@ import { IBot } from "@/types/chatbot";
 import useGetMessage from "@/hooks/use-get-message";
 import { useGetListChatBot } from "@/redux/hooks/chat-bot";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useMutation } from "@tanstack/react-query";
+import { sendMess } from "@/api/chat";
+import { useSearchParams } from "react-router-dom";
 
 interface IMessageItemProps {
     messageUser: IMessage
-    messageAssistant: IMessage[]
+    messageAssistant?: IMessage[]
 }
 
 function MessageItem(props: IMessageItemProps) {
     const { messageUser, messageAssistant } = props;
+
+    const [searchParams] = useSearchParams();
+    const conId = searchParams.get("conId")
 
     const itemRef = useRef<HTMLDivElement>(null)
 
     const listBot = useGetListChatBot()
 
     const [listMessACurrent, setListMessACurrent] = useState<IMessage[]>(messageAssistant ?? [])
-    const [messACurrent, setMessACurrent] = useState<IMessage>(messageAssistant?.[0])
+    const [messACurrent, setMessACurrent] = useState<IMessage | undefined>(messageAssistant?.[0])
     const [isFocus, setIsFocus] = useState(false)
     const [textTmp, setTextTmp] = useState<string>()
 
     const botSelected = listBot.find(bot => bot.id === messACurrent?.userId)
 
     useEffect(() => {
-        setMessACurrent(messageAssistant?.[0])
+        const messACurrent = messageAssistant?.find(m => m.isLast === ELastMessage.LAST)
+        setMessACurrent(messACurrent ?? messageAssistant?.[0])
         setListMessACurrent(messageAssistant ?? [])
     }, [messageAssistant])
 
@@ -54,7 +61,7 @@ function MessageItem(props: IMessageItemProps) {
     }
 
     const handleCoppy = () => {
-        navigator.clipboard.writeText(messACurrent.message)
+        navigator.clipboard.writeText(messACurrent?.message ?? "")
             .then(onFocus)
     }
 
@@ -62,14 +69,23 @@ function MessageItem(props: IMessageItemProps) {
         // console.log(message.message)
     }
 
+    const sendMessMutation = useMutation({
+        mutationFn: sendMess
+    })
     const onChangeBotMess = (bot: IBot) => {
         onFocus()
         const messACurrentTmp = listMessACurrent.find(m => m.userId === bot.id)
         if (!messACurrentTmp) {
-            getMessage(messageUser.message, bot.id, messACurrent.replyToId)
+            getMessage({message: messageUser.message}, bot.id, messACurrent?.replyToId)
             return;
         }
 
+        sendMessMutation.mutate({
+            message: messageUser.message,
+            conId: conId ?? "",
+            target: bot.id,
+            replyToId: messACurrent?.replyToId ?? ""
+        })
         setTextTmp(undefined)
         setMessACurrent(messACurrentTmp)
     }
@@ -81,7 +97,6 @@ function MessageItem(props: IMessageItemProps) {
                     {messageUser.message}
                 </p>
             </div>
-
             {
                 listMessACurrent.length > 0 &&
                 <div className="mb-3 flex justify-start mt-8">
