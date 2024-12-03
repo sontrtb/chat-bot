@@ -121,12 +121,12 @@ function MessageInput(props: IMessageInputProps) {
             <div className="flex justify-between">
                 <img src={import.meta.env.VITE_API_URL + botSelect?.icon} className="w-8 h-8 ml-2" />
                 <div className="flex">
-                    <button
-                        onClick={onListen}
-                        className="cursor-pointer mr-2 bg-primary/10 p-2 rounded-full hover:scale-110 transition-transform"
-                    >
-                        <Mic size="20px" className="text-primary"/>
-                    </button>
+                    {/*<button*/}
+                    {/*    onClick={onListen}*/}
+                    {/*    className="cursor-pointer mr-2 bg-primary/10 p-2 rounded-full hover:scale-110 transition-transform"*/}
+                    {/*>*/}
+                    {/*    <Mic size="20px" className="text-primary"/>*/}
+                    {/*</button>*/}
 
                     <>
                         <label
