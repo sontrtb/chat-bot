@@ -9,6 +9,7 @@ export interface ILoginBody {
 
 const path = {
   login: "/u/login",
+  loginGuest: "/u/login-guest"
 };
 
 const login = async (data: ILoginBody): Promise<IUser> => {
@@ -25,7 +26,7 @@ const login = async (data: ILoginBody): Promise<IUser> => {
 const loginGuest = async (): Promise<IUser> => {
   return await rootApi(
     {
-      url: path.login,
+      url: path.loginGuest,
       method: "post",
     },
     { withToken: false },
