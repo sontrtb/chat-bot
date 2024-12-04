@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 import { useGetCurrentChatBot } from "@/redux/hooks/chat-bot";
 import { useGetCurrentMessageTyping, useSetMessageTypingDone } from "@/redux/hooks/message-typing";
 import { fileToBase64 } from "@/utils/base64";
-import { CirclePause, CircleX, CloudUpload, Mic, Pause, Send } from "lucide-react"
+import { CirclePause, CircleX, CloudUpload, LoaderCircle, Mic, Pause, Send } from "lucide-react"
 import { useEffect, useId, useRef, useState } from "react";
 import { useWavesurfer } from '@wavesurfer/react'
 import RecordPlugin from 'wavesurfer.js/dist/plugins/record.esm.js'
@@ -96,7 +96,7 @@ function MessageInput(props: IMessageInputProps) {
         onSuccess: (res) => {
             setText(res)
         }
-    }) 
+    })
     const { wavesurfer } = useWavesurfer({
         container: audioRecordRef,
         waveColor: '#0068b4',
@@ -126,20 +126,20 @@ function MessageInput(props: IMessageInputProps) {
         })
     }, [wavesurfer])
 
-    
+
     function startRecord() {
         if (record.current?.isRecording()) {
-          console.log('stop recording')
-          record.current.stopRecording()
-          setIsRecording(false)
-          return
+            console.log('stop recording')
+            record.current.stopRecording()
+            setIsRecording(false)
+            return
         }
-    
+
         record.current?.startRecording().then(() => {
-          console.log('recording')
-          setIsRecording(true)
+            console.log('recording')
+            setIsRecording(true)
         })
-      }
+    }
     // audio end
 
     return (
@@ -179,16 +179,18 @@ function MessageInput(props: IMessageInputProps) {
                 <img src={import.meta.env.VITE_API_URL + botSelect?.icon} className="w-8 h-8 ml-2" />
 
                 <div ref={audioRecordRef} className={cn("flex-1 px-4", !isRecording && "hidden")} />
-                
+
                 <div className="flex">
                     <button
+                        disabled={voiceToTextMutation.isPending}
                         onClick={startRecord}
                         className="cursor-pointer mr-2 bg-primary/10 p-2 rounded-full hover:scale-110 transition-transform"
                     >
-                        {
-                            isRecording ?
-                            <Pause size={mode === EModeApp.KIOSK ? "40px" : "20px"} className="text-primary"/> :
-                            <Mic size={mode === EModeApp.KIOSK ? "40px" : "20px"} className="text-primary" />
+                        {voiceToTextMutation.isPending ?
+                            <LoaderCircle size={mode === EModeApp.KIOSK ? "40px" : "20px"} className="text-primary animate-spin" /> :
+                            (isRecording ?
+                                <Pause size={mode === EModeApp.KIOSK ? "40px" : "20px"} className="text-primary" /> :
+                                <Mic size={mode === EModeApp.KIOSK ? "40px" : "20px"} className="text-primary" />)
                         }
                     </button>
                     <>
