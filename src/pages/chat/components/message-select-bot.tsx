@@ -1,3 +1,5 @@
+import { EModeApp, useGetMode } from "@/hooks/use-get-mode";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
 import { useGetListChatBot } from "@/redux/hooks/chat-bot"
 import { IBot } from "@/types/chatbot"
@@ -14,7 +16,14 @@ function MessageSelectBot(props: IMessageSelectBotProps) {
 
     const listBot = useGetListChatBot()
 
+    const isMobile = useIsMobile();
+    const mode = useGetMode();
+
+    const isDisableHover = isMobile || mode === EModeApp.KIOSK
+
     const [isHover, setIsHover] = useState(false)
+
+    const rightFullConst = mode === EModeApp.KIOSK ? 60 : 30
 
     return (
         <div className="flex justify-end">
@@ -29,7 +38,7 @@ function MessageSelectBot(props: IMessageSelectBotProps) {
                             disabled={disable}
                             key={bot.id}
                             className={cn("absolute hover:scale-125 ", disable && "cursor-wait")}
-                            style={{ right: `${index * (isHover ? 30 : 16)}px`, transition: "all 0.3s ease", }}
+                            style={{ right: `${index * ((isHover || isDisableHover) ? rightFullConst : 16)}px`, transition: "all 0.3s ease", }}
                             onClick={() => onChangeBot(bot)}
                         >
                             <img
