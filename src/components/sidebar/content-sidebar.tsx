@@ -10,9 +10,12 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/
 import AccordionBot from "../common/accordion-bot";
 import { useGetCurrentTheme, useSetTheme } from "@/redux/hooks/theme";
 import { Switch } from "../ui/switch";
+import { EModeApp, useGetMode } from "@/hooks/use-get-mode";
 
 function ContentSidebar() {
     const navigate = useNavigate();
+
+    const mode = useGetMode();
 
     const setTheme = useSetTheme();
     const theme = useGetCurrentTheme()
@@ -38,11 +41,11 @@ function ContentSidebar() {
 
                     <PopoverContent className="w-60 p-0 mr-4">
                         <div className="flex items-center hover:bg-secondary p-3 rounded cursor-pointer" >
-                            <UserRound size={20} />
+                            <UserRound size={mode === EModeApp.KIOSK ? "40px" : "20px"} />
                             <p className="ml-2 text-sm font-light">Thông tin tài khoản</p>
                         </div>
                         <div className="flex items-center hover:bg-secondary p-3 rounded cursor-pointer">
-                            <Moon size={20} />
+                            <Moon size={mode === EModeApp.KIOSK ? "40px" : "20px"} />
                             <p className="mx-2 text-sm font-light">Nền tối</p>
                             <Switch
                                 className="z-10"
@@ -53,12 +56,12 @@ function ContentSidebar() {
                             />
                         </div>
                         <div className="flex items-center hover:bg-secondary p-3 rounded cursor-pointer" onClick={() => { }}>
-                            <SquareArrowOutUpRight size={20} />
+                            <SquareArrowOutUpRight size={mode === EModeApp.KIOSK ? "40px" : "20px"} />
                             <p className="ml-2 text-sm font-light">Hỗ trợ</p>
                         </div>
                         <div className="border" />
                         <div className="flex items-center hover:bg-secondary p-3 rounded cursor-pointer" onClick={handleLogout}>
-                            <LogOut size={20} />
+                            <LogOut size={mode === EModeApp.KIOSK ? "40px" : "20px"} />
                             <p className="ml-2 text-sm font-light">Đăng xuất</p>
                         </div>
                     </PopoverContent>
@@ -75,12 +78,14 @@ function ContentSidebar() {
                                     <Button
                                         variant="secondary"
                                         size="icon"
-                                        className="border"
+                                        className={cn("border",  mode === EModeApp.KIOSK && "p-6")}
                                         onClick={() => {
                                             navigate("/")
                                         }}
                                     >
-                                        <PlusIcon style={{ height: "28px", width: "28px" }} />
+                                        <PlusIcon
+                                            style={{ height: mode === EModeApp.KIOSK ? "60px" : "28px", width: mode === EModeApp.KIOSK ? "60px" : "28px" }}
+                                        />
                                     </Button>
                                 </TooltipTrigger>
                                 <TooltipContent side="right">

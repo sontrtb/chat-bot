@@ -16,6 +16,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { EModeApp, useGetMode } from "@/hooks/use-get-mode"
 
 const SIDEBAR_COOKIE_NAME = "sidebar:state"
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
@@ -262,6 +263,7 @@ const SidebarTrigger = React.forwardRef<
   React.ComponentProps<typeof Button>
 >(({ className, onClick, ...props }, ref) => {
   const { toggleSidebar } = useSidebar()
+  const mode = useGetMode();
 
   return (
     <Button
@@ -269,14 +271,14 @@ const SidebarTrigger = React.forwardRef<
       data-sidebar="trigger"
       variant="secondary"
       size="icon"
-      className={cn(className)}
+      className={cn(className, mode === EModeApp.KIOSK && "p-6")}
       onClick={(event) => {
         onClick?.(event)
         toggleSidebar()
       }}
       {...props}
     >
-      <PanelLeft style={{height: "24px", width: "24px"}}/>
+      <PanelLeft style={{ height: mode === EModeApp.KIOSK ? "60px" : "28px", width: mode === EModeApp.KIOSK ? "60px" : "28px" }}/>
       <span className="sr-only">Toggle Sidebar</span>
     </Button>
   )
