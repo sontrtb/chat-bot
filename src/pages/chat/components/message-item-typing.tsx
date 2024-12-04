@@ -67,9 +67,9 @@ function MessageItemTyping(props: IMessageItemTypingProps) {
                     <div className="h-8" />
                     {
                         isLoading ?
-                            <Skeleton className="h-8 w-1/2 md:w-96 rounded-md ml-4 mt-2" /> :
+                            <Skeleton className="h-8 w-1/2 xl:w-96 rounded-md ml-4 mt-2" /> :
                             <article
-                                className="bg-secondary/50 prose dark:prose-invert ml-4 pt-1 md:w-fit w-4/5  p-3 shadow-xl rouder rounded-xl border"
+                                className="bg-secondary/50 prose dark:prose-invert ml-4 pt-1 xl:w-fit p-3 shadow-xl rouder rounded-xl border"
                                 dangerouslySetInnerHTML={{ __html: marked.parse(textTmp) as string }}
                             />
                     }

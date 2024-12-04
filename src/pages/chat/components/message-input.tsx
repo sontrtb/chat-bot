@@ -88,7 +88,7 @@ function MessageInput(props: IMessageInputProps) {
     return (
         <div className={
             cn(
-                "bg-secondary rounded-xl py-2 md:py-3 w-full  max-w-3xl mx-auto px-1 md:px-2 transition-transform duration-300 transform",
+                "bg-secondary rounded-xl py-2 xl:py-3 w-full  max-w-3xl mx-auto px-1 xl:px-2 transition-transform duration-300 transform",
                 isChangeBotDone ? "scale-105" : ""
             )}>
             <textarea

@@ -30,7 +30,7 @@ function ContentSidebar() {
             <div className="flex justify-end p-4">
                 <Popover>
                     <PopoverTrigger>
-                        <Avatar className="h-10 w-10 md:h-12 md:w-12">
+                        <Avatar className="h-10 w-10 xl:h-12 xl:w-12">
                             <AvatarImage src="./images/avatar.jpeg" alt="@shadcn" />
                             <AvatarFallback>AV</AvatarFallback>
                         </Avatar>
@@ -68,7 +68,7 @@ function ContentSidebar() {
             <div className={cn("absolute flex gap-2 top-4 z-10", isMobile ? "flex-row" : "flex-col")}>
                 {
                     (!open || isMobile) &&
-                    <div className="pl-2 md:fixed md:bottom-4 flex md:flex-col gap-2 md:left-4">
+                    <div className="pl-2 xl:fixed xl:bottom-4 flex xl:flex-col gap-2 xl:left-4">
                         <TooltipProvider delayDuration={0}>
                             <Tooltip>
                                 <TooltipTrigger>
