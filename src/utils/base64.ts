@@ -1,4 +1,4 @@
-async function fileToBase64(file: File): Promise<string | ArrayBuffer | null> {
+async function fileToBase64(file: File | Blob): Promise<string | ArrayBuffer | null> {
   return await new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);

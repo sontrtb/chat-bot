@@ -80,6 +80,7 @@ function HomeScreen() {
                 {
                     getListBotQuery.data?.map(bot => (
                         <div
+                            key={bot.id}
                             className="justify-end p-3 cursor-pointer bg-secondary rounded-lg flex xl:flex-row flex-col-reverse xl:items-start hover:shadow items-center hover:scale-105 transition-transform duration-300 transform"
                             onClick={() => changeChatBot(bot)}
                         >

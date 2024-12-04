@@ -63,6 +63,7 @@ function AccordionBot() {
                         {
                             getListBotQuery.data?.map(bot => (
                                 <img
+                                    key={bot.id}
                                     src={import.meta.env.VITE_API_URL + bot.icon}
                                     className={cn("p-2 hover:bg-neutral-200 rounded my-1 cursor-pointer", botSelect?.id === bot.id ? "border" : 'border-transparent', mode === EModeApp.KIOSK ? "w-16 h-16" : "w-10 h-10 ")}
                                     onClick={() => setChatBot(bot)}
