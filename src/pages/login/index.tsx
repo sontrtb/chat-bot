@@ -1,4 +1,4 @@
-import { ILoginBody, login } from "@/api/auth";
+import { ILoginBody, login, loginGuest } from "@/api/auth";
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input, PasswordInput } from "@/components/ui/input"
@@ -14,6 +14,7 @@ import { Switch } from "@/components/ui/switch";
 import { useSetUser } from "@/redux/hooks/user";
 import { useMutation } from "@tanstack/react-query";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { EModeApp, useGetMode } from "@/hooks/use-get-mode";
 
 const listBot = [
     "./svg/bots/gemma.svg",
@@ -30,6 +31,7 @@ function Login() {
     const theme = useGetCurrentTheme()
     const setTheme = useSetTheme();
 
+    const mode = useGetMode();
     const isMobile = useIsMobile()
 
     const {
@@ -48,6 +50,29 @@ function Login() {
         loginMuation.mutate(data)
     }
 
+    // login guest
+    const loginGuestMuation = useMutation({
+        mutationFn: loginGuest,
+        onSuccess: (res) => {
+            setUser(res)
+            navigate("/")
+        }
+    })
+    const onLoginGuest = () => {
+        loginGuestMuation.mutate()
+    }
+
+    if (mode === EModeApp.KIOSK) {
+        return (
+            <button onClick={onLoginGuest}>
+                <video autoPlay muted className="w-screen h-screen object-contain">
+                    <source src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4" />
+                    Your browser does not support HTML video.
+                </video>
+            </button>
+        )
+    }
+
     return (
         <div className="grid grid-cols-12 gap-4 h-screen relative">
             <div className="hidden xl:flex col-span-6 justify-center flex-col pl-24">
@@ -60,7 +85,7 @@ function Login() {
                     speed={50}
                     className="font-medium text-4xl text-center"
                 />
-                 <TypeAnimation
+                <TypeAnimation
                     sequence={[
                         'HANOI ARTIFICIAL INTELLIGENCE',
                         1000,
@@ -88,7 +113,7 @@ function Login() {
                 />
                 <div className="h-24" />
             </div>
-            <div className="flex justify-end items-center xl:pr-24 xl:py-4 max-w-xl xl:col-span-6 col-span-12 justify-self-center">
+            <div className="flex justify-end items-center xl:pr-24 xl:py-4 max-w-full xl:max-w-xl xl:col-span-6 col-span-12 justify-self-center">
                 <div className="flex items-center space-x-2 absolute top-6 right-8">
                     <Switch
                         id="airplane-mode"
@@ -119,7 +144,7 @@ function Login() {
                                     ]}
                                     cursor={false}
                                     speed={50}
-                                    className="text-2xl block xl:hidden h-20"
+                                    className="text-2xl block xl:hidden"
                                 />
                             </CardTitle>
                             <CardDescription>{isMobile ? "HANOI ARTIFICIAL INTELLIGENCE" : "Đăng nhập tài khoản của bạn"}</CardDescription>

@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/drawer"
 import { Button } from "../ui/button"
 import { Card, CardContent } from "../ui/card"
+import { EModeApp, useGetMode } from "@/hooks/use-get-mode"
 
 
 function AccordionBot() {
@@ -29,6 +30,7 @@ function AccordionBot() {
     const setListChatBot = useSetListChatBot()
 
     const isMobile = useIsMobile()
+    const mode = useGetMode();
 
     const getListBotQuery = useQuery({
         queryKey: [queryKey.getListBot],
@@ -48,7 +50,7 @@ function AccordionBot() {
     if (isMobile) {
         return (
             <Drawer>
-                <DrawerTrigger asChild>
+                <DrawerTrigger asChild className={cn(mode === EModeApp.KIOSK && "scale-[1.35] mt-1.5 ml-2")}>
                     <Button size="icon" variant="outline">
                         <img src={import.meta.env.VITE_API_URL + botSelect?.icon} className="w-10 h-10 p-2" />
                     </Button>
@@ -62,7 +64,7 @@ function AccordionBot() {
                             getListBotQuery.data?.map(bot => (
                                 <img
                                     src={import.meta.env.VITE_API_URL + bot.icon}
-                                    className={cn("w-10 h-10 p-2 hover:bg-neutral-200 rounded my-1 cursor-pointer", botSelect?.id === bot.id ? "border" : 'border-transparent')}
+                                    className={cn("p-2 hover:bg-neutral-200 rounded my-1 cursor-pointer", botSelect?.id === bot.id ? "border" : 'border-transparent', mode === EModeApp.KIOSK ? "w-16 h-16" : "w-10 h-10 ")}
                                     onClick={() => setChatBot(bot)}
                                 />
                             ))
@@ -90,7 +92,7 @@ function AccordionBot() {
                                     <HoverCardTrigger asChild>
                                         <img
                                             src={import.meta.env.VITE_API_URL + bot.icon}
-                                            className={cn("w-10 h-10 p-2 hover:bg-neutral-200 rounded my-1 cursor-pointer", botSelect?.id === bot.id ? "border" : 'border-transparent')}
+                                            className={cn("p-2 hover:bg-neutral-200 rounded my-1 cursor-pointer", botSelect?.id === bot.id ? "border" : 'border-transparent', mode === EModeApp.KIOSK ? "w-16 h-16" : "w-10 h-10 ")}
                                             onClick={() => setChatBot(bot)}
                                         />
                                     </HoverCardTrigger>
@@ -104,7 +106,7 @@ function AccordionBot() {
                         <div className="border" />
                     </AccordionContent>
                     <AccordionTrigger className="w-full flex-col">
-                        <img src={import.meta.env.VITE_API_URL + botSelect?.icon} className="w-10 h-10 p-2" />
+                        <img src={import.meta.env.VITE_API_URL + botSelect?.icon} className={cn("p-2",  mode === EModeApp.KIOSK ? "w-16 h-16" : "w-10 h-10")} />
                     </AccordionTrigger>
                 </AccordionItem>
             </Accordion>

@@ -22,4 +22,15 @@ const login = async (data: ILoginBody): Promise<IUser> => {
   );
 };
 
-export { login };
+const loginGuest = async (): Promise<IUser> => {
+  return await rootApi(
+    {
+      url: path.login,
+      method: "post",
+    },
+    { withToken: false },
+  );
+};
+
+
+export { login, loginGuest };

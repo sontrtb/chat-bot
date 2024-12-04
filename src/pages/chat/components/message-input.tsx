@@ -1,3 +1,4 @@
+import { EModeApp, useGetMode } from "@/hooks/use-get-mode";
 import { cn } from "@/lib/utils";
 import { useGetCurrentChatBot } from "@/redux/hooks/chat-bot";
 import { useGetCurrentMessageTyping, useSetMessageTypingDone } from "@/redux/hooks/message-typing";
@@ -19,6 +20,8 @@ interface IMessageInputProps {
 function MessageInput(props: IMessageInputProps) {
     const { onSubmit, autoFocus } = props;
 
+    const mode = useGetMode();
+    
     const idInputFile = useId()
 
     const inputRef = useRef<HTMLTextAreaElement>(null)
@@ -125,15 +128,14 @@ function MessageInput(props: IMessageInputProps) {
                     {/*    onClick={onListen}*/}
                     {/*    className="cursor-pointer mr-2 bg-primary/10 p-2 rounded-full hover:scale-110 transition-transform"*/}
                     {/*>*/}
-                    {/*    <Mic size="20px" className="text-primary"/>*/}
+                    {/*    <Mic size={mode === EModeApp.KIOSK ? "40px" : "20px"} className="text-primary"/>*/}
                     {/*</button>*/}
-
                     <>
                         <label
                             htmlFor={idInputFile}
                             className="cursor-pointer mr-2 bg-primary/10 p-2 rounded-full hover:scale-110 transition-transform"
                         >
-                            <CloudUpload size="20px" className="text-primary" />
+                            <CloudUpload size={mode === EModeApp.KIOSK ? "40px" : "20px"} className="text-primary" />
                         </label>
                         <input
                             type="file"
@@ -150,10 +152,10 @@ function MessageInput(props: IMessageInputProps) {
 
                     {messageTyping.isTyping ?
                         <button className="cursor-pointer mr-3 bg-primary/10 p-2 rounded-full hover:scale-110 transition-transform" onClick={handleCancel}>
-                            <CirclePause size="20px" className="text-primary" />
+                            <CirclePause size={mode === EModeApp.KIOSK ? "40px" : "20px"} className="text-primary" />
                         </button> :
                         <button className="cursor-pointer mr-3 bg-primary/10 p-2 rounded-full hover:scale-110 transition-transform" onClick={handleSubmit}>
-                            <Send size="20px" className="text-primary" />
+                            <Send size={mode === EModeApp.KIOSK ? "40px" : "20px"} className="text-primary" />
                         </button>
                     }
                 </div>

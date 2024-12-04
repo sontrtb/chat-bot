@@ -146,6 +146,10 @@
     
     --login-form-background: #20202088
   }
+
+  .kiosk {
+    --font-size: 30px;
+  }
 }
 
 @layer base {
@@ -160,5 +164,9 @@
     pre {
       width: 75vw;
     }
+  }
+
+  html {
+    font-size: var(--font-size);
   }
 }
