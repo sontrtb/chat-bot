@@ -16,6 +16,7 @@ function ContentSidebar() {
     const navigate = useNavigate();
 
     const mode = useGetMode();
+    const isKiosk = mode === EModeApp.KIOSK
 
     const setTheme = useSetTheme();
     const theme = useGetCurrentTheme()
@@ -28,44 +29,54 @@ function ContentSidebar() {
 
     const { open, isMobile } = useSidebar()
 
+    const renderChangeDarkMode = () => {
+        return (
+            <div className="flex items-center hover:bg-secondary p-3 rounded cursor-pointer">
+                <Moon size={isKiosk ? "40px" : "20px"} />
+                <p className="mx-2 text-sm font-light">Nền tối</p>
+                <Switch
+                    className="z-10"
+                    checked={theme === "dark"}
+                    onCheckedChange={e => {
+                        setTheme(e ? "dark" : "light")
+                    }}
+                />
+            </div>
+        )
+    }
+
     return (
         <>
             <div className="flex justify-end p-4">
-                <Popover>
-                    <PopoverTrigger>
-                        <Avatar className="h-10 w-10 xl:h-12 xl:w-12">
-                            <AvatarImage src="./images/avatar.jpeg" alt="@shadcn" />
-                            <AvatarFallback>AV</AvatarFallback>
-                        </Avatar>
-                    </PopoverTrigger>
+                {
+                    isKiosk ?
+                        renderChangeDarkMode() :
+                        <Popover>
+                            <PopoverTrigger>
+                                <Avatar className="h-10 w-10 xl:h-12 xl:w-12">
+                                    <AvatarImage src="./images/avatar.jpeg" alt="@shadcn" />
+                                    <AvatarFallback>AV</AvatarFallback>
+                                </Avatar>
+                            </PopoverTrigger>
 
-                    <PopoverContent className="w-60 p-0 mr-4">
-                        <div className="flex items-center hover:bg-secondary p-3 rounded cursor-pointer" >
-                            <UserRound size={mode === EModeApp.KIOSK ? "40px" : "20px"} />
-                            <p className="ml-2 text-sm font-light">Thông tin tài khoản</p>
-                        </div>
-                        <div className="flex items-center hover:bg-secondary p-3 rounded cursor-pointer">
-                            <Moon size={mode === EModeApp.KIOSK ? "40px" : "20px"} />
-                            <p className="mx-2 text-sm font-light">Nền tối</p>
-                            <Switch
-                                className="z-10"
-                                checked={theme === "dark"}
-                                onCheckedChange={e => {
-                                    setTheme(e ? "dark" : "light")
-                                }}
-                            />
-                        </div>
-                        <div className="flex items-center hover:bg-secondary p-3 rounded cursor-pointer" onClick={() => { }}>
-                            <SquareArrowOutUpRight size={mode === EModeApp.KIOSK ? "40px" : "20px"} />
-                            <p className="ml-2 text-sm font-light">Hỗ trợ</p>
-                        </div>
-                        <div className="border" />
-                        <div className="flex items-center hover:bg-secondary p-3 rounded cursor-pointer" onClick={handleLogout}>
-                            <LogOut size={mode === EModeApp.KIOSK ? "40px" : "20px"} />
-                            <p className="ml-2 text-sm font-light">Đăng xuất</p>
-                        </div>
-                    </PopoverContent>
-                </Popover>
+                            <PopoverContent className="w-60 p-0 mr-4">
+                                <div className="flex items-center hover:bg-secondary p-3 rounded cursor-pointer" >
+                                    <UserRound size={isKiosk ? "40px" : "20px"} />
+                                    <p className="ml-2 text-sm font-light">Thông tin tài khoản</p>
+                                </div>
+                                {renderChangeDarkMode()}
+                                <div className="flex items-center hover:bg-secondary p-3 rounded cursor-pointer" onClick={() => { }}>
+                                    <SquareArrowOutUpRight size={isKiosk ? "40px" : "20px"} />
+                                    <p className="ml-2 text-sm font-light">Hỗ trợ</p>
+                                </div>
+                                <div className="border" />
+                                <div className="flex items-center hover:bg-secondary p-3 rounded cursor-pointer" onClick={handleLogout}>
+                                    <LogOut size={isKiosk ? "40px" : "20px"} />
+                                    <p className="ml-2 text-sm font-light">Đăng xuất</p>
+                                </div>
+                            </PopoverContent>
+                        </Popover>
+                }
             </div>
 
             <div className={cn("absolute flex gap-2 top-4 z-10", isMobile ? "flex-row" : "flex-col")}>
@@ -78,7 +89,7 @@ function ContentSidebar() {
                                     <Button
                                         variant="secondary"
                                         size={mode !== EModeApp.KIOSK ? "icon" : "default"}
-                                        className={cn("border", mode === EModeApp.KIOSK && "p-6")}
+                                        className={cn("border", isKiosk && "p-6")}
                                         onClick={() => {
                                             navigate("/")
                                         }}
