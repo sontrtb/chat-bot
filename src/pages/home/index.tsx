@@ -11,6 +11,7 @@ import { useSetChatBot } from "@/redux/hooks/chat-bot";
 import { ERoleMessage, IMessage } from "@/types/message";
 import { useGetUser } from "@/redux/hooks/user";
 import { IBot } from "@/types/chatbot";
+import { EModeApp, useGetMode } from "@/hooks/use-get-mode";
 
 function HomeScreen() {
     const navigate = useNavigate();
@@ -18,6 +19,9 @@ function HomeScreen() {
     const setMessageTyping = useSetMessageTyping()
     const setChatBot = useSetChatBot()
     const user = useGetUser()
+
+    const mode = useGetMode();
+    const isKiosk = mode === EModeApp.KIOSK 
 
     const createChatMutation = useMutation({
         mutationFn: createNewChat
@@ -61,11 +65,11 @@ function HomeScreen() {
     return (
         <div className="m-auto p-3 xl:p-0">
             <h1 className="text-xl xl:text-3xl font-semibold mb-1 w-full xl:w-[48rem] m-auto text-center">
-                VĂN PHÒNG ỦY BAN NHÂN DÂN THÀNH PHỐ HÀ NỘI
+                {isKiosk ? "TRỢ LÝ ẢO TƯƠNG TÁC CÙNG BẠN" :"VĂN PHÒNG ỦY BAN NHÂN DÂN THÀNH PHỐ HÀ NỘI"}
             </h1>
             <h1 className="text-xl xl:text-3xl font-semibold w-full xl:w-[48rem] m-auto mb-8 xl:mb-0 text-center">
                 <span className="bg-gradient-to-r from-violet-500 via-yellow-500 to-red-500 text-transparent bg-clip-text">
-                    HANOI VIRTUAL ASSISTANT
+                    {isKiosk ? "Tôi có thể giúp gì cho bạn?" : "HANOI VIRTUAL ASSISTANT"}
                 </span>
             </h1>
 

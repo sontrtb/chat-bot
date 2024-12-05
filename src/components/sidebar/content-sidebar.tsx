@@ -1,7 +1,7 @@
 import { Outlet, useNavigate } from "react-router-dom";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { LogOut, Moon, PlusIcon, SquareArrowOutUpRight, UserRound } from "lucide-react";
+import { Instagram, LogOut, Moon, PlusIcon, SquareArrowOutUpRight } from "lucide-react";
 import { SidebarTrigger, useSidebar } from "@/components/ui/sidebar"
 import { cn } from "@/lib/utils";
 import { useLogoutUser } from "@/redux/hooks/user";
@@ -61,8 +61,8 @@ function ContentSidebar() {
 
                             <PopoverContent className="w-60 p-0 mr-4">
                                 <div className="flex items-center hover:bg-secondary p-3 rounded cursor-pointer" >
-                                    <UserRound size={isKiosk ? "40px" : "20px"} />
-                                    <p className="ml-2 text-sm font-light">Thông tin tài khoản</p>
+                                    <Instagram size={isKiosk ? "40px" : "20px"}/>
+                                    <p className="ml-2 text-sm font-light">Thông tin cá nhân</p>
                                 </div>
                                 {renderChangeDarkMode()}
                                 <div className="flex items-center hover:bg-secondary p-3 rounded cursor-pointer" onClick={() => { }}>
