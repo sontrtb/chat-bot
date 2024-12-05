@@ -25,6 +25,7 @@ function MessageInput(props: IMessageInputProps) {
     const { onSubmit, autoFocus } = props;
 
     const mode = useGetMode();
+    const isKiosk = mode === EModeApp.KIOSK
 
     const idInputFile = useId()
 
@@ -100,10 +101,10 @@ function MessageInput(props: IMessageInputProps) {
     const { wavesurfer } = useWavesurfer({
         container: audioRecordRef,
         waveColor: '#0068b4',
-        barWidth: mode === EModeApp.KIOSK ? 10 : 5,
-        barRadius: mode === EModeApp.KIOSK ? 10 : 5,
-        barHeight: mode === EModeApp.KIOSK ? 6 : 3,
-        height: mode === EModeApp.KIOSK ? 60 : 30,
+        barWidth: isKiosk ? 10 : 5,
+        barRadius: isKiosk ? 10 : 5,
+        barHeight: isKiosk ? 6 : 3,
+        height: isKiosk ? 60 : 30,
     })
 
     const record = useRef<RecordPlugin>()
@@ -187,38 +188,42 @@ function MessageInput(props: IMessageInputProps) {
                         className="cursor-pointer mr-2 bg-primary/10 p-2 rounded-full hover:scale-110 transition-transform"
                     >
                         {voiceToTextMutation.isPending ?
-                            <LoaderCircle size={mode === EModeApp.KIOSK ? "40px" : "20px"} className="text-primary animate-spin" /> :
+                            <LoaderCircle size={isKiosk ? "40px" : "20px"} className="text-primary animate-spin" /> :
                             (isRecording ?
-                                <Pause size={mode === EModeApp.KIOSK ? "40px" : "20px"} className="text-primary" /> :
-                                <Mic size={mode === EModeApp.KIOSK ? "40px" : "20px"} className="text-primary" />)
+                                <Pause size={isKiosk ? "40px" : "20px"} className="text-primary" /> :
+                                <Mic size={isKiosk ? "40px" : "20px"} className="text-primary" />)
                         }
                     </button>
-                    <>
-                        <label
-                            htmlFor={idInputFile}
-                            className="cursor-pointer mr-2 bg-primary/10 p-2 rounded-full hover:scale-110 transition-transform"
-                        >
-                            <CloudUpload size={mode === EModeApp.KIOSK ? "40px" : "20px"} className="text-primary" />
-                        </label>
-                        <input
-                            type="file"
-                            className="hidden"
-                            id={idInputFile}
-                            onChange={e => {
-                                const file = e.target.files?.[0]
-                                if (file) {
-                                    onUpfile(file)
-                                }
-                            }}
-                        />
-                    </>
+
+                    {
+                        !isKiosk &&
+                        <>
+                            <label
+                                htmlFor={idInputFile}
+                                className="cursor-pointer mr-2 bg-primary/10 p-2 rounded-full hover:scale-110 transition-transform"
+                            >
+                                <CloudUpload size={isKiosk ? "40px" : "20px"} className="text-primary" />
+                            </label>
+                            <input
+                                type="file"
+                                className="hidden"
+                                id={idInputFile}
+                                onChange={e => {
+                                    const file = e.target.files?.[0]
+                                    if (file) {
+                                        onUpfile(file)
+                                    }
+                                }}
+                            />
+                        </>
+                    }
 
                     {messageTyping.isTyping ?
                         <button className="cursor-pointer mr-3 bg-primary/10 p-2 rounded-full hover:scale-110 transition-transform" onClick={handleCancel}>
-                            <CirclePause size={mode === EModeApp.KIOSK ? "40px" : "20px"} className="text-primary" />
+                            <CirclePause size={isKiosk ? "40px" : "20px"} className="text-primary" />
                         </button> :
                         <button className="cursor-pointer mr-3 bg-primary/10 p-2 rounded-full hover:scale-110 transition-transform" onClick={handleSubmit}>
-                            <Send size={mode === EModeApp.KIOSK ? "40px" : "20px"} className="text-primary" />
+                            <Send size={isKiosk ? "40px" : "20px"} className="text-primary" />
                         </button>
                     }
                 </div>
