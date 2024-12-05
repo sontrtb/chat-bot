@@ -62,7 +62,7 @@ function ContentSidebar() {
                             <PopoverContent className="w-60 p-0 mr-4">
                                 <div className="flex items-center hover:bg-secondary p-3 rounded cursor-pointer" >
                                     <Instagram size={isKiosk ? "40px" : "20px"}/>
-                                    <p className="ml-2 text-sm font-light">Đổi ảnh đại diện</p>
+                                    <p className="ml-2 text-sm font-light">Thông tin cá nhân</p>
                                 </div>
                                 {renderChangeDarkMode()}
                                 <div className="flex items-center hover:bg-secondary p-3 rounded cursor-pointer" onClick={() => { }}>

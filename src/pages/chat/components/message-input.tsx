@@ -9,6 +9,7 @@ import { useWavesurfer } from '@wavesurfer/react'
 import RecordPlugin from 'wavesurfer.js/dist/plugins/record.esm.js'
 import { useMutation } from "@tanstack/react-query";
 import { voiceToText } from "@/api/tran";
+import MessageCamera from "./message-camera";
 
 export interface IDataSubmitInput {
     message: string;
@@ -143,6 +144,14 @@ function MessageInput(props: IMessageInputProps) {
     }
     // audio end
 
+    const onCapture = (data: string) => {
+        onSubmit?.({
+            message: "Ảnh chụp",
+            fileName: "photo.jpeg",
+            fileData: data
+        })
+    }
+
     return (
         <div className={
             cn(
@@ -182,6 +191,7 @@ function MessageInput(props: IMessageInputProps) {
                 <div ref={audioRecordRef} className={cn("flex-1 px-4", !isRecording && "hidden")} />
 
                 <div className="flex">
+                    <MessageCamera onCapture={onCapture}/>
                     <button
                         disabled={voiceToTextMutation.isPending}
                         onClick={startRecord}
@@ -194,7 +204,6 @@ function MessageInput(props: IMessageInputProps) {
                                 <Mic size={isKiosk ? "40px" : "20px"} className="text-primary" />)
                         }
                     </button>
-
                     {
                         !isKiosk &&
                         <>
