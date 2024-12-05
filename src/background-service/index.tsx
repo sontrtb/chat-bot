@@ -2,7 +2,7 @@ import { EModeApp, useGetMode } from "@/hooks/use-get-mode";
 import { ReactElement, useCallback, useEffect, useRef } from "react"
 import { useNavigate } from "react-router-dom";
 
-const TIME_OUT = 60000
+const TIME_OUT = 120000
 
 interface IBackgroundServiceProps {
     children: ReactElement
