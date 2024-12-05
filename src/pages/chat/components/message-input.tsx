@@ -167,7 +167,7 @@ function MessageInput(props: IMessageInputProps) {
                 }}
                 style={{ resize: "none", maxHeight: "300px" }}
                 className="outline-none bg-secondary w-full flex-1 px-4 font-light"
-                placeholder={mode !== EModeApp.KIOSK ? "Hãy hỏi tôi..." : "Bạn tên là gì thế?"}
+                placeholder={mode !== EModeApp.KIOSK ? "Hãy hỏi tôi..." : "Bạn nhập tên đi, mình sẽ làm thơ tặng bạn nhé!"}
             />
             {
                 fileInfor &&
