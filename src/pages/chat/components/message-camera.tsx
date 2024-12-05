@@ -115,7 +115,7 @@ function MessageCamera(props: IMessageCameraProps) {
             </DialogTrigger>
             <DialogContent className="max-w-fit">
                 <DialogTitle>Chụp ảnh</DialogTitle>
-                <div className="w-[80vw] flex flex-col items-center mt-2">
+                <div className="flex flex-col items-center mt-2">
                     {
                         dataImage ?
                             <img className="rounded-md" src={dataImage} /> :
