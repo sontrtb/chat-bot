@@ -65,7 +65,7 @@ function HomeScreen() {
             </h1>
             <h1 className="text-xl xl:text-3xl font-semibold w-full xl:w-[48rem] m-auto mb-8 xl:mb-0 text-center">
                 <span className="bg-gradient-to-r from-violet-500 via-yellow-500 to-red-500 text-transparent bg-clip-text">
-                    HANOI ARTIFICIAL INTELLIGENCE
+                    HANOI VIRTUAL ASSISTANT
                 </span>
             </h1>
 

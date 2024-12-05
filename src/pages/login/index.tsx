@@ -87,7 +87,7 @@ function Login() {
                 />
                 <TypeAnimation
                     sequence={[
-                        'HANOI ARTIFICIAL INTELLIGENCE',
+                        'HANOI VIRTUAL ASSISTANT',
                         1000,
                     ]}
                     speed={50}
