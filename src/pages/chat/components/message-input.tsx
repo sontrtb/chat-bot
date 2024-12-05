@@ -3,8 +3,12 @@ import { cn } from "@/lib/utils";
 import { useGetCurrentChatBot } from "@/redux/hooks/chat-bot";
 import { useGetCurrentMessageTyping, useSetMessageTypingDone } from "@/redux/hooks/message-typing";
 import { fileToBase64 } from "@/utils/base64";
-import { CirclePause, CircleX, CloudUpload, Send } from "lucide-react"
+import { CirclePause, CircleX, CloudUpload, LoaderCircle, Mic, Pause, Send } from "lucide-react"
 import { useEffect, useId, useRef, useState } from "react";
+import { useWavesurfer } from '@wavesurfer/react'
+import RecordPlugin from 'wavesurfer.js/dist/plugins/record.esm.js'
+import { useMutation } from "@tanstack/react-query";
+import { voiceToText } from "@/api/tran";
 
 export interface IDataSubmitInput {
     message: string;
@@ -21,10 +25,11 @@ function MessageInput(props: IMessageInputProps) {
     const { onSubmit, autoFocus } = props;
 
     const mode = useGetMode();
-    
+
     const idInputFile = useId()
 
     const inputRef = useRef<HTMLTextAreaElement>(null)
+    const audioRecordRef = useRef(null)
 
     const messageTyping = useGetCurrentMessageTyping()
     const setMessageTypingDone = useSetMessageTypingDone()
@@ -37,6 +42,7 @@ function MessageInput(props: IMessageInputProps) {
         fileData: string;
     }>()
     const [isChangeBotDone, setIsChangeBotDone] = useState(false)
+    const [isRecording, setIsRecording] = useState(false)
 
     useEffect(() => {
         if (inputRef.current) {
@@ -84,9 +90,57 @@ function MessageInput(props: IMessageInputProps) {
         setFileInfor(undefined)
     }
 
-    // const onListen = () => {
-    //
-    // }
+    // audio
+    const voiceToTextMutation = useMutation({
+        mutationFn: voiceToText,
+        onSuccess: (res) => {
+            setText(res)
+        }
+    })
+    const { wavesurfer } = useWavesurfer({
+        container: audioRecordRef,
+        waveColor: '#0068b4',
+        barWidth: mode === EModeApp.KIOSK ? 10 : 5,
+        barRadius: mode === EModeApp.KIOSK ? 10 : 5,
+        barHeight: mode === EModeApp.KIOSK ? 6 : 3,
+        height: mode === EModeApp.KIOSK ? 60 : 30,
+    })
+
+    const record = useRef<RecordPlugin>()
+
+    useEffect(() => {
+        record.current = wavesurfer?.registerPlugin(
+            RecordPlugin.create({
+                renderRecordedAudio: false,
+                scrollingWaveform: true,
+                scrollingWaveformWindow: 5
+            }),
+        )
+
+        record.current?.on('record-end', async (blob) => {
+            const base64 = await fileToBase64(blob)
+            voiceToTextMutation.mutate({
+                fileName: "record.webm",
+                fileData: base64 as string
+            })
+        })
+    }, [wavesurfer])
+
+
+    function startRecord() {
+        if (record.current?.isRecording()) {
+            console.log('stop recording')
+            record.current.stopRecording()
+            setIsRecording(false)
+            return
+        }
+
+        record.current?.startRecording().then(() => {
+            console.log('recording')
+            setIsRecording(true)
+        })
+    }
+    // audio end
 
     return (
         <div className={
@@ -112,7 +166,7 @@ function MessageInput(props: IMessageInputProps) {
                 }}
                 style={{ resize: "none", maxHeight: "300px" }}
                 className="outline-none bg-secondary w-full flex-1 px-4 font-light"
-                placeholder="Hãy hỏi tôi..."
+                placeholder={mode !== EModeApp.KIOSK ? "Hãy hỏi tôi..." : "Bạn tên là gì thế?"}
             />
             {
                 fileInfor &&
@@ -123,13 +177,22 @@ function MessageInput(props: IMessageInputProps) {
             }
             <div className="flex justify-between">
                 <img src={import.meta.env.VITE_API_URL + botSelect?.icon} className="w-8 h-8 ml-2" />
+
+                <div ref={audioRecordRef} className={cn("flex-1 px-4", !isRecording && "hidden")} />
+
                 <div className="flex">
-                    {/*<button*/}
-                    {/*    onClick={onListen}*/}
-                    {/*    className="cursor-pointer mr-2 bg-primary/10 p-2 rounded-full hover:scale-110 transition-transform"*/}
-                    {/*>*/}
-                    {/*    <Mic size={mode === EModeApp.KIOSK ? "40px" : "20px"} className="text-primary"/>*/}
-                    {/*</button>*/}
+                    <button
+                        disabled={voiceToTextMutation.isPending}
+                        onClick={startRecord}
+                        className="cursor-pointer mr-2 bg-primary/10 p-2 rounded-full hover:scale-110 transition-transform"
+                    >
+                        {voiceToTextMutation.isPending ?
+                            <LoaderCircle size={mode === EModeApp.KIOSK ? "40px" : "20px"} className="text-primary animate-spin" /> :
+                            (isRecording ?
+                                <Pause size={mode === EModeApp.KIOSK ? "40px" : "20px"} className="text-primary" /> :
+                                <Mic size={mode === EModeApp.KIOSK ? "40px" : "20px"} className="text-primary" />)
+                        }
+                    </button>
                     <>
                         <label
                             htmlFor={idInputFile}

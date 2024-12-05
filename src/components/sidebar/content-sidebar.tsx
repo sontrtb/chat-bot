@@ -77,15 +77,18 @@ function ContentSidebar() {
                                 <TooltipTrigger>
                                     <Button
                                         variant="secondary"
-                                        size="icon"
-                                        className={cn("border",  mode === EModeApp.KIOSK && "p-6")}
+                                        size={mode !== EModeApp.KIOSK ? "icon" : "default"}
+                                        className={cn("border", mode === EModeApp.KIOSK && "p-6")}
                                         onClick={() => {
                                             navigate("/")
                                         }}
                                     >
-                                        <PlusIcon
-                                            style={{ height: mode === EModeApp.KIOSK ? "60px" : "28px", width: mode === EModeApp.KIOSK ? "60px" : "28px" }}
-                                        />
+                                        {
+                                            mode !== EModeApp.KIOSK ? <PlusIcon
+                                                style={{ height: "28px", width: "28px" }}
+                                            /> : "Quay lại"
+                                        }
+
                                     </Button>
                                 </TooltipTrigger>
                                 <TooltipContent side="right">
@@ -93,16 +96,19 @@ function ContentSidebar() {
                                 </TooltipContent>
                             </Tooltip>
                         </TooltipProvider>
-                        <TooltipProvider delayDuration={0}>
-                            <Tooltip>
-                                <TooltipTrigger>
-                                    <SidebarTrigger className="border" />
-                                </TooltipTrigger>
-                                <TooltipContent side="right">
-                                    <p>Mở thanh bên</p>
-                                </TooltipContent>
-                            </Tooltip>
-                        </TooltipProvider>
+                        {
+                            mode !== EModeApp.KIOSK &&
+                            <TooltipProvider delayDuration={0}>
+                                <Tooltip>
+                                    <TooltipTrigger>
+                                        <SidebarTrigger className="border" />
+                                    </TooltipTrigger>
+                                    <TooltipContent side="right">
+                                        <p>Mở thanh bên</p>
+                                    </TooltipContent>
+                                </Tooltip>
+                            </TooltipProvider>
+                        }
                     </div>
                 }
                 <AccordionBot />
