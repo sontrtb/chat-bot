@@ -27,7 +27,7 @@ export function AppSidebar() {
     return (
         <Sidebar>
             <SidebarHeader>
-                <img src={"./logo.svg"} className="w-24 m-auto mt-6 brightness-200" />
+                <img src={"./logo_ubnd.svg"} className="w-24 m-auto mt-6 brightness-200" />
             </SidebarHeader>
             <SidebarContent>
                 <SidebarGroup>
