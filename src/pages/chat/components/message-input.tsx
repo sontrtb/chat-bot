@@ -175,7 +175,7 @@ function MessageInput(props: IMessageInputProps) {
                     }
                 }}
                 style={{ resize: "none", maxHeight: "300px" }}
-                className="outline-none bg-secondary w-full flex-1 px-4 font-light min-h-12"
+                className="outline-none bg-secondary w-full flex-1 px-4 font-light min-h-12 text-sm"
                 placeholder={mode !== EModeApp.KIOSK ? "Hãy hỏi tôi..." : "Bạn nhập tên đi, mình làm thơ tặng bạn nhé! Hoặc bấm chụp ảnh, mình sẽ gửi tặng bạn ảnh cùng đường hoa"}
             />
             {
