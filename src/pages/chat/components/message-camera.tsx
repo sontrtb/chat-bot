@@ -26,8 +26,6 @@ function MessageCamera(props: IMessageCameraProps) {
 
           if (videoDevices.length === 0) return;
 
-          console.log("videoDevices", videoDevices)
-
           if(!isKiosk) {
             setCurrentDeviceId(videoDevices[0].deviceId);
           } else {
@@ -131,19 +129,19 @@ function MessageCamera(props: IMessageCameraProps) {
                     <Instagram size={isKiosk ? "40px" : "20px"} />
                 </button>
             </DialogTrigger>
-            <DialogContent className="max-w-fit">
+            <DialogContent className="">
                 <DialogTitle>Chụp ảnh</DialogTitle>
                 <div className="flex flex-col items-center mt-2">
                     {
                         dataImage ?
-                            <img className="rounded-md" src={dataImage} /> :
+                            <img className="rounded-md w-full" src={dataImage} /> :
                             <Webcam
-                                className="rounded-md"
+                                className="rounded-md w-full"
                                 audio={false}
                                 ref={webcamRef}
                                 screenshotFormat="image/jpeg"
                                 videoConstraints={{
-                                    deviceId: currentDeviceId ?? undefined
+                                    deviceId: currentDeviceId ?? undefined,
                                 }}
                             />
                     }
