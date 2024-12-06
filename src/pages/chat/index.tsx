@@ -80,8 +80,8 @@ function ChatScreen() {
     return (
         <div
             className={cn(
-                "flex flex-col h-[calc(100vh_-_140px)] px-2 xl:px-0 bg-no-repeat bg-center bg-[length:80%] xl:bg-[length:600px]",
-                isKiosk ? "bg-[url('/images/background_ai.png')]" : "bg-[url('/images/background.png')]"
+                "flex flex-col px-2 xl:px-0 bg-no-repeat bg-center bg-[length:80%] xl:bg-[length:600px]",
+                isKiosk ? "bg-[url('/images/background_ai.png')] h-[calc(100vh_-_140px)]" : "bg-[url('/images/background.png')] h-[calc(100vh_-_80px)]"
             )}
         >
             <MessageList listMess={listMessFormat} setListMess={setListMess} />
