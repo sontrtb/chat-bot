@@ -5,11 +5,7 @@ import { Check, Instagram, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import Webcam from "react-webcam";
 
-const videoConstraints = {
-    // width: 1280,
-    // height: 1500,
-    facingMode: "user"
-};
+
 
 interface IMessageCameraProps {
     onCapture: (data: string) => void
@@ -20,6 +16,12 @@ function MessageCamera(props: IMessageCameraProps) {
 
     const mode = useGetMode();
     const isKiosk = mode === EModeApp.KIOSK
+
+    const videoConstraints = {
+        // width: 1280,
+        // height: 1500,
+        facingMode: isKiosk ? "environment" :"user"
+    };
 
     const webcamRef = useRef<Webcam>(null);
 
