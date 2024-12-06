@@ -16,6 +16,19 @@ function BackgroundService(props: IBackgroundServiceProps) {
     const mode = useGetMode();
     const isKiosk = mode === EModeApp.KIOSK 
 
+    // disable zoom
+    function onTouchHandler(event: TouchEvent){
+        if(event.touches.length > 1){
+            event.preventDefault()
+        }
+    }
+    useEffect(() => {
+        if(isKiosk) {
+            window.addEventListener("touchstart", onTouchHandler, false);
+        }
+        return () => window.removeEventListener('touchstart', onTouchHandler);
+    }, [isKiosk])
+
     // disable right click
     const onContextmenu = (event: MouseEvent) => {
         event.preventDefault()
@@ -28,20 +41,20 @@ function BackgroundService(props: IBackgroundServiceProps) {
         return () => document.removeEventListener('contextmenu', onContextmenu);
     }, [isKiosk])
 
-    // auto logout kiosk
-    const logOutGuest = useCallback(() => {
-        navigate("/login")
+    // auto go home kiosk
+    const logGoHome = useCallback(() => {
+        navigate("/")
     }, [navigate])
 
     const timeOutLogout = useRef<NodeJS.Timeout>()
     const onClick = useCallback(() => {
         clearTimeout(timeOutLogout.current)
-        timeOutLogout.current = setTimeout(logOutGuest, TIME_OUT)
-    }, [logOutGuest])
+        timeOutLogout.current = setTimeout(logGoHome, TIME_OUT)
+    }, [logGoHome])
 
     useEffect(() => {
         if(isKiosk) {
-            timeOutLogout.current = setTimeout(logOutGuest, TIME_OUT)
+            timeOutLogout.current = setTimeout(logGoHome, TIME_OUT)
             document.addEventListener('click', onClick);
         }
 
@@ -49,7 +62,7 @@ function BackgroundService(props: IBackgroundServiceProps) {
             document.removeEventListener('click', onClick)
             clearTimeout(timeOutLogout.current)
         }
-    }, [isKiosk, logOutGuest, onClick])
+    }, [isKiosk, logGoHome, onClick])
 
     return (
         <div>
