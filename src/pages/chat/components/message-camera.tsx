@@ -17,11 +17,25 @@ function MessageCamera(props: IMessageCameraProps) {
     const mode = useGetMode();
     const isKiosk = mode === EModeApp.KIOSK
 
-    const videoConstraints = {
-        // width: 1280,
-        // height: 1500,
-        facingMode: isKiosk ? "environment" :"user"
-    };
+    const [currentDeviceId, setCurrentDeviceId] = useState<string | undefined>(undefined);
+
+    useEffect(() => {
+        const getDevices = async () => {
+          const mediaDevices = await navigator.mediaDevices.enumerateDevices();
+          const videoDevices = mediaDevices.filter(device => device.kind === "videoinput");
+
+          if (videoDevices.length === 0) return;
+
+          if(!isKiosk) {
+            setCurrentDeviceId(videoDevices[0].deviceId);
+          } else {
+            const webcamKiosk = videoDevices.find(e => e.deviceId.toLocaleLowerCase().includes("logitech"))
+            setCurrentDeviceId(webcamKiosk?.deviceId);
+          }
+        };
+    
+        getDevices();
+      }, []);
 
     const webcamRef = useRef<Webcam>(null);
 
@@ -126,7 +140,9 @@ function MessageCamera(props: IMessageCameraProps) {
                                 audio={false}
                                 ref={webcamRef}
                                 screenshotFormat="image/jpeg"
-                                videoConstraints={videoConstraints}
+                                videoConstraints={{
+                                    deviceId: currentDeviceId ?? undefined
+                                }}
                             />
                     }
                     {renderBtnAction()}
