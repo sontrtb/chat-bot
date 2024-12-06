@@ -5,11 +5,17 @@ import Login from "@/pages/login";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import UnauthenticatedProtectedRoute from "./unauthenticated-protected-route";
 import BackgroundService from "@/background-service";
+import Temp from "@/pages/temp";
 
 const router = createBrowserRouter([
     {
         path: "/login",
         element: <Login />,
+
+    },
+    {
+        path: "/temp/:id",
+        element: <Temp />,
 
     },
     {
