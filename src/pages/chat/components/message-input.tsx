@@ -155,7 +155,7 @@ function MessageInput(props: IMessageInputProps) {
     return (
         <div className={
             cn(
-                "bg-secondary rounded-xl py-2 xl:py-3 w-full  max-w-3xl mx-auto px-1 xl:px-2 transition-transform duration-300 transform",
+                "bg-secondary rounded-xl py-2 mb-4 xl:py-3 w-full  max-w-3xl mx-auto px-1 xl:px-2 transition-transform duration-300 transform",
                 isChangeBotDone ? "scale-105" : ""
             )}>
             <textarea
@@ -176,7 +176,7 @@ function MessageInput(props: IMessageInputProps) {
                 }}
                 style={{ resize: "none", maxHeight: "300px" }}
                 className="outline-none bg-secondary w-full flex-1 px-4 font-light min-h-12"
-                placeholder={mode !== EModeApp.KIOSK ? "Hãy hỏi tôi..." : "Bạn nhập tên đi, mình sẽ làm thơ tặng bạn nhé!"}
+                placeholder={mode !== EModeApp.KIOSK ? "Hãy hỏi tôi..." : "Bạn nhập tên đi, mình làm thơ tặng bạn nhé! Hoặc bấm chụp ảnh, mình sẽ gửi tặng bạn ảnh cùng đường hoa"}
             />
             {
                 fileInfor &&

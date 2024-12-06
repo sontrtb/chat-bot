@@ -213,7 +213,7 @@ function Login() {
             </div>
             <img src="./logo.svg" className={cn("w-20 absolute top-6 left-8", theme === "dark" && "brightness-200")} />
             <div className={cn("w-36 h-36 absolute bottom-16 right-96 animate-float duration-10000 bg-primary-blue rounded-full blur-sm")} />
-            <div className={cn("w-56 h-56 absolute top-32 xl:top-20 left-[40%] animate-float bg-primary-blue rounded-full blur-sm", theme === "dark" && "brightness-50")} />
+            <div className={cn("w-56 h-56 absolute top-28 xl:top-16 left-[40%] animate-float bg-primary-blue rounded-full blur-sm", theme === "dark" && "brightness-50")} />
         </div>
     )
 }
