@@ -15,7 +15,7 @@ export interface IMessage {
     message: string;
     userId: string;
     messageId: string;
-    replyToId: string;
+    replyToId?: string;
     role: ERoleMessage;
     isLast?: ELastMessage;
     from?: string
