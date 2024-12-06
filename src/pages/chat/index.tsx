@@ -34,6 +34,7 @@ function ChatScreen() {
     useEffect(() => {
         const initList = state ? [state] : []
         setListMess([...initList, ...getMessagesQuery.data ?? []].reverse() ?? [])
+        window.history.replaceState({}, '')
     }, [getMessagesQuery.data, state])
 
     const sendMessage = async (messSend: IDataSubmitInput) => {

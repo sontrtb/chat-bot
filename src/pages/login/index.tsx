@@ -15,6 +15,7 @@ import { useSetUser } from "@/redux/hooks/user";
 import { useMutation } from "@tanstack/react-query";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { EModeApp, useGetMode } from "@/hooks/use-get-mode";
+import { useCallback, useEffect } from "react";
 
 const listBot = [
     "./svg/bots/gemma.svg",
@@ -58,9 +59,15 @@ function Login() {
             navigate("/")
         }
     })
-    const onLoginGuest = () => {
+    const onLoginGuest = useCallback(() => {
         loginGuestMuation.mutate()
-    }
+    }, [loginGuestMuation])
+
+    useEffect(() => {
+        if(mode === EModeApp.KIOSK) {
+            onLoginGuest()
+        }
+    }, [mode, onLoginGuest])
 
     if (mode === EModeApp.KIOSK) {
         return (
@@ -211,7 +218,7 @@ function Login() {
                 </Card>
 
             </div>
-            <img src="./logo_ubnd.svg" className={cn("w-20 absolute top-6 left-8", theme === "dark" && "brightness-200")} />
+            <img src="./logo.svg" className={cn("w-20 absolute top-6 left-8", theme === "dark" && "brightness-200")} />
             <div className={cn("w-36 h-36 absolute bottom-16 right-96 animate-float duration-10000 bg-primary-blue rounded-full blur-sm")} />
             <div className={cn("w-56 h-56 absolute top-32 xl:top-20 left-[40%] animate-float bg-primary-blue rounded-full blur-sm", theme === "dark" && "brightness-50")} />
         </div>
