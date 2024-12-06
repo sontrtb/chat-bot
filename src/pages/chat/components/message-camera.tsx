@@ -30,7 +30,7 @@ function MessageCamera(props: IMessageCameraProps) {
             setCurrentDeviceId(videoDevices[0].deviceId);
           } else {
             const webcamKiosk = videoDevices.find(e => e.label.toLocaleLowerCase().includes("logitech"))
-            setCurrentDeviceId(webcamKiosk?.deviceId);
+            setCurrentDeviceId(webcamKiosk?.deviceId ?? videoDevices[0].deviceId);
           }
         };
     
