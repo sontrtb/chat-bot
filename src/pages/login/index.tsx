@@ -15,7 +15,6 @@ import { useSetUser } from "@/redux/hooks/user";
 import { useMutation } from "@tanstack/react-query";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { EModeApp, useGetMode } from "@/hooks/use-get-mode";
-import { useCallback, useEffect } from "react";
 
 const listBot = [
     "./svg/bots/gemma.svg",
@@ -59,21 +58,15 @@ function Login() {
             navigate("/")
         }
     })
-    const onLoginGuest = useCallback(() => {
+    const onLoginGuest = () => {
         loginGuestMuation.mutate()
-    }, [loginGuestMuation])
-
-    useEffect(() => {
-        if(mode === EModeApp.KIOSK) {
-            onLoginGuest()
-        }
-    }, [mode, onLoginGuest])
+    }
 
     if (mode === EModeApp.KIOSK) {
         return (
             <button onClick={onLoginGuest}>
                 <video autoPlay muted loop className="w-screen h-screen object-contain">
-                    <source src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4" />
+                    <source src="./videos/tvc.mp4" type="video/mp4" />
                     Your browser does not support HTML video.
                 </video>
             </button>
