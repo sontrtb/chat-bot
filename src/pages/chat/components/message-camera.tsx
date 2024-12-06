@@ -26,16 +26,18 @@ function MessageCamera(props: IMessageCameraProps) {
 
           if (videoDevices.length === 0) return;
 
+          console.log("videoDevices", videoDevices)
+
           if(!isKiosk) {
             setCurrentDeviceId(videoDevices[0].deviceId);
           } else {
-            const webcamKiosk = videoDevices.find(e => e.deviceId.toLocaleLowerCase().includes("logitech"))
+            const webcamKiosk = videoDevices.find(e => e.label.toLocaleLowerCase().includes("logitech"))
             setCurrentDeviceId(webcamKiosk?.deviceId);
           }
         };
     
         getDevices();
-      }, []);
+      }, [isKiosk]);
 
     const webcamRef = useRef<Webcam>(null);
 
