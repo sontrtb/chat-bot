@@ -9,12 +9,23 @@ interface IBackgroundServiceProps {
 }
 
 function BackgroundService(props: IBackgroundServiceProps) {
-    const {children} = props
+    const { children } = props
 
     const navigate = useNavigate();
 
     const mode = useGetMode();
-    const isKiosk = mode === EModeApp.KIOSK 
+    const isKiosk = mode === EModeApp.KIOSK
+
+    // disable zoom
+    const onWheelHandler = (event: WheelEvent) => {
+        event.preventDefault();
+    }
+    useEffect(() => {
+        if (isKiosk) {
+            window.addEventListener("wheel", onWheelHandler, false);
+        }
+        return () => window.removeEventListener('wheel', onWheelHandler);
+    }, [isKiosk])
 
     // disable right click
     const onContextmenu = (event: MouseEvent) => {
@@ -22,7 +33,7 @@ function BackgroundService(props: IBackgroundServiceProps) {
     }
 
     useEffect(() => {
-        if(isKiosk) {
+        if (isKiosk) {
             document.addEventListener('contextmenu', onContextmenu);
         }
         return () => document.removeEventListener('contextmenu', onContextmenu);
@@ -40,7 +51,7 @@ function BackgroundService(props: IBackgroundServiceProps) {
     }, [logOut])
 
     useEffect(() => {
-        if(isKiosk) {
+        if (isKiosk) {
             timeOutLogout.current = setTimeout(logOut, TIME_OUT)
             document.addEventListener('click', onClick);
         }

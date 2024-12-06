@@ -4,6 +4,7 @@ export enum EModeApp {
 }
 
 const useGetMode = () => {
+    // return EModeApp.KIOSK 
     const href = window.location.href
     if(href.includes(EModeApp.KIOSK)) {
         return EModeApp.KIOSK 

@@ -60,6 +60,7 @@ const useGetMessage = (props: IUseGetMessageProps) => {
                 const decoder = new TextDecoder();
                 let textMessTmp = "";
                 let incompleteData = "";
+                let from: string;
 
                 function readStream() {
                     reader?.read().then(({ done, value }) => {
@@ -71,7 +72,8 @@ const useGetMessage = (props: IUseGetMessageProps) => {
                                 userId: target ?? botSelect?.id ?? "bot",
                                 messageId: `${new Date().getTime()}`,
                                 role: ERoleMessage.ASSISTANT,
-                                replyToId: replyToIdTmp
+                                replyToId: replyToIdTmp,
+                                from: from
                             };
                             onDoneTyping?.(newMess)
 
@@ -98,6 +100,9 @@ const useGetMessage = (props: IUseGetMessageProps) => {
                             try {
                                 const parsedData = JSON.parse(jsonData);
                                 const message = parsedData.result?.message || "";
+                                from = parsedData.result?.from;
+
+                                console.log("from", from)
                                 replyToIdTmp =  parsedData.result?.replyToId
                                 textMessTmp += message;
                                 onTyping?.(`${textMessTmp}`);

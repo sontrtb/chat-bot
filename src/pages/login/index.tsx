@@ -65,7 +65,7 @@ function Login() {
     if (mode === EModeApp.KIOSK) {
         return (
             <button onClick={onLoginGuest}>
-                <video autoPlay muted loop className="w-screen h-screen object-contain">
+                <video autoPlay muted loop className="w-screen h-screen object-cover">
                     <source src="./videos/tvc.mp4" type="video/mp4" />
                     Your browser does not support HTML video.
                 </video>

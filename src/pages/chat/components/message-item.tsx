@@ -76,7 +76,7 @@ function MessageItem(props: IMessageItemProps) {
         onFocus()
         const messACurrentTmp = listMessACurrent.find(m => m.userId === bot.id)
         if (!messACurrentTmp) {
-            getMessage({message: messageUser.message}, bot.id, messACurrent?.replyToId)
+            getMessage({ message: messageUser.message }, bot.id, messACurrent?.replyToId)
             return;
         }
 
@@ -107,11 +107,16 @@ function MessageItem(props: IMessageItemProps) {
                                 <AvatarFallback>AI</AvatarFallback>
                             </Avatar>
                             <div>
-                                <MessageSelectBot
-                                    onChangeBot={onChangeBotMess}
-                                    botSelected={listMessACurrent.map(m => m.userId)}
-                                    disable={!!textTmp}
-                                />
+                                {
+                                    !messACurrent?.from ?
+                                        <MessageSelectBot
+                                            onChangeBot={onChangeBotMess}
+                                            botSelected={listMessACurrent.map(m => m.userId)}
+                                            disable={!!textTmp}
+                                        /> :
+                                        <div className="h-8" />
+                                }
+
                                 {
                                     isLoading ?
                                         <Skeleton className="h-8 w-1/2 xl:w-96 rounded-md ml-4 mt-2" /> :
