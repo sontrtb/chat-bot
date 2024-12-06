@@ -191,19 +191,21 @@ function MessageInput(props: IMessageInputProps) {
                 <div ref={audioRecordRef} className={cn("flex-1 px-4", !isRecording && "hidden")} />
 
                 <div className="flex">
-                    <MessageCamera onCapture={onCapture}/>
-                    <button
-                        disabled={voiceToTextMutation.isPending}
-                        onClick={startRecord}
-                        className="cursor-pointer mr-2 bg-primary/10 p-2 rounded-full hover:scale-110 transition-transform"
-                    >
-                        {voiceToTextMutation.isPending ?
-                            <LoaderCircle size={isKiosk ? "40px" : "20px"} className="text-primary animate-spin" /> :
-                            (isRecording ?
-                                <Pause size={isKiosk ? "40px" : "20px"} className="text-primary" /> :
-                                <Mic size={isKiosk ? "40px" : "20px"} className="text-primary" />)
-                        }
-                    </button>
+                    <MessageCamera onCapture={onCapture} />{
+                        !isKiosk &&
+                        <button
+                            disabled={voiceToTextMutation.isPending}
+                            onClick={startRecord}
+                            className="cursor-pointer mr-2 bg-primary/10 p-2 rounded-full hover:scale-110 transition-transform"
+                        >
+                            {voiceToTextMutation.isPending ?
+                                <LoaderCircle size={isKiosk ? "40px" : "20px"} className="text-primary animate-spin" /> :
+                                (isRecording ?
+                                    <Pause size={isKiosk ? "40px" : "20px"} className="text-primary" /> :
+                                    <Mic size={isKiosk ? "40px" : "20px"} className="text-primary" />)
+                            }
+                        </button>
+                    }
                     {
                         !isKiosk &&
                         <>
