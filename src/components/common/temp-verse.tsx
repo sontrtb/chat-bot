@@ -28,7 +28,7 @@ function TempVerse(props: ITempVerseProp) {
                 style={{ height: sizeContent.height + 200 }}
                 className={cn("w-full")} src="/images/temp-verse.png" />
             <div className="absolute w-full h-full bottom-0 flex items-center justify-center">
-                <div className="max-w-xl mb-10" ref={ref} style={{ fontFamily: "cursive" }}>
+                <div className="max-w-xl mb-10" ref={ref} style={{ fontFamily: "Dancing Script" }}>
                     {children}
                 </div>
             </div>
