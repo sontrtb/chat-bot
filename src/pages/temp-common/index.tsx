@@ -19,8 +19,6 @@ function TempCommon() {
         enabled: !!id
     })
 
-    console.log("getDataTempQuery", getDataTempQuery.data)
-
 
     switch (type) {
         case ETypeTemp.VERSE:
