@@ -28,7 +28,8 @@ function TempCommon() {
                 <div >
                     <TempVerse>
                         <div
-                            dangerouslySetInnerHTML={{ __html: marked.parse(getDataTempQuery.data ?? "") as string }}
+                            className="text-slate-700"
+                            dangerouslySetInnerHTML={{ __html: marked.parse(getDataTempQuery.data ?? "sd s ds d") as string }}
                         />
                     </TempVerse>
                 </div>
