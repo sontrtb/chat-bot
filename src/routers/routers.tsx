@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import UnauthenticatedProtectedRoute from "./unauthenticated-protected-route";
 import BackgroundService from "@/background-service";
 import Temp from "@/pages/temp";
+import TempCommon from "@/pages/temp-common";
 
 const router = createBrowserRouter([
     {
@@ -16,6 +17,11 @@ const router = createBrowserRouter([
     {
         path: "/temp/:id",
         element: <Temp />,
+
+    },
+    {
+        path: "/temp-common/:type/:id",
+        element: <TempCommon />,
 
     },
     {
