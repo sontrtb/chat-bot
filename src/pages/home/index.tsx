@@ -63,7 +63,7 @@ function HomeScreen() {
     }
 
     return (
-        <BackgroundParticles className="m-auto p-3 xl:p-0">
+        <BackgroundParticles className="m-auto p-3 xl:p-0 z-10">
             <>
                 <h1 className="text-xl xl:text-3xl font-semibold mb-1 w-full xl:w-[48rem] m-auto text-center">
                     {isKiosk ? "TRỢ LÝ ẢO TƯƠNG TÁC CÙNG BẠN" : "VĂN PHÒNG ỦY BAN NHÂN DÂN THÀNH PHỐ HÀ NỘI"}

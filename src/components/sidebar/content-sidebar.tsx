@@ -47,7 +47,7 @@ function ContentSidebar() {
 
     return (
         <>
-            <div className="flex justify-end p-4">
+            <div className="flex justify-end p-4 z-10">
                 {
                     isKiosk ?
                         renderChangeDarkMode() :
