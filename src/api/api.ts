@@ -43,7 +43,7 @@ async function rootApi<T = undefined>(
     timeout: 30000,
   });
 
-  
+
   if (defaultOptions.withToken) {
     const state = store.getState();
     apiClient.defaults.headers.common.Authorization = `Bearer ${state.user.user?.token}`;
@@ -51,10 +51,13 @@ async function rootApi<T = undefined>(
 
   return await new Promise((resolve, rejects) => {
     apiClient
-      .request(config)
+      .request({
+        ...config,
+      })
       .then((res: AxiosResponse<IDataResponse<T>>): void => {
-        if(res.data.statusCode === "BAD_REQUEST") {
-          if(defaultOptions?.displayError) {
+        console.log("res", res)
+        if (res.data.statusCode === "BAD_REQUEST") {
+          if (defaultOptions?.displayError) {
             toast.error(res?.data?.body ?? "Có lỗi xảy ra")
           }
           rejects(res.data);
@@ -62,7 +65,12 @@ async function rootApi<T = undefined>(
         resolve(res.data.result)
       })
       .catch((err: AxiosError<IDataResponse<T>>) => {
-        if(defaultOptions?.displayError) {
+        if(err.code === "ERR_NETWORK") {
+          localStorage.clear()
+          window.location.href = "/login"
+          return
+        }
+        if (defaultOptions?.displayError) {
           toast.error(err.response?.data?.message ?? "Có lỗi xảy ra")
         }
         rejects(err.response?.data);
