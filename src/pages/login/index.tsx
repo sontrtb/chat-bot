@@ -147,7 +147,7 @@ function Login() {
                                     className="text-2xl block xl:hidden"
                                 />
                             </CardTitle>
-                            <CardDescription>{isMobile ? "HANOI ARTIFICIAL INTELLIGENCE" : "Đăng nhập tài khoản của bạn"}</CardDescription>
+                            <CardDescription>{isMobile ? "HANOI VIRTUAL ASSISTANT" : "Đăng nhập tài khoản của bạn"}</CardDescription>
                         </CardHeader>
                         <CardContent>
                             <div>
