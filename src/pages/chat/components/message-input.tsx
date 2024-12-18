@@ -4,7 +4,7 @@ import { useGetCurrentChatBot } from "@/redux/hooks/chat-bot";
 import { useGetCurrentMessageTyping, useSetMessageTypingDone } from "@/redux/hooks/message-typing";
 import { fileToBase64 } from "@/utils/base64";
 import { CirclePause, CircleX, CloudUpload, LoaderCircle, Mic, Pause, Send } from "lucide-react"
-import { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import { useWavesurfer } from '@wavesurfer/react'
 import RecordPlugin from 'wavesurfer.js/dist/plugins/record.esm.js'
 import { useMutation } from "@tanstack/react-query";
@@ -151,6 +151,19 @@ function MessageInput(props: IMessageInputProps) {
     //         fileData: data
     //     })
     // }
+
+    const handlePaste = (e: ClipboardEvent): void => {
+        if (e.clipboardData?.files.length) {
+          const file = e.clipboardData.files[0];
+          onUpfile(file)          
+        }
+      };
+
+    useLayoutEffect(() => {
+        document.addEventListener("paste", handlePaste)
+
+        return () => document.removeEventListener("paste", handlePaste)
+    }, [])
 
     return (
         <div className={
